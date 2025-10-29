@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import app from './app.js';
-import connectDB from './config/db.js';
-import { initPriorityModel } from './services/priorityService.js';
+import connectDB from './src/config/db.js';
+import { initPriorityModel } from './src/services/priorityService.js';
 
 dotenv.config();
 

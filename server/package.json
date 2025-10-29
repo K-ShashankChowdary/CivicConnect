@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true && nodemon src/server.js",
+    "dev": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true && nodemon server.js",
     "start": "node src/server.js",
     "kill-port": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true"
   },
