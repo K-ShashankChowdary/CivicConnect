@@ -1,0 +1,31 @@
+{
+  "name": "municipal-complaints-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "lsof -ti:5173 | xargs kill -9 2>/dev/null || true && vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "kill-port": "lsof -ti:5173 | xargs kill -9 2>/dev/null || true"
+  },
+  "dependencies": {
+    "@emotion/react": "11.13.3",
+    "@emotion/styled": "11.13.0",
+    "@mui/icons-material": "6.1.2",
+    "@mui/material": "6.1.2",
+    "axios": "1.7.7",
+    "prop-types": "15.8.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.26.2"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.5",
+    "@types/react-dom": "18.3.2",
+    "@vitejs/plugin-react": "4.3.4",
+    "eslint": "9.12.0",
+    "eslint-plugin-react": "7.37.1",
+    "vite": "5.4.10"
+  }
+}

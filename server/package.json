@@ -1,0 +1,33 @@
+{
+  "name": "municipal-complaints-server",
+  "version": "1.0.0",
+  "description": "Backend API for municipal complaints portal with AI-powered prioritization.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true && nodemon src/server.js",
+    "start": "node src/server.js",
+    "kill-port": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs": "4.11.0",
+    "bcryptjs": "2.4.3",
+    "cloudinary": "^1.41.3",
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
+    "dotenv": "16.4.5",
+    "express": "4.19.2",
+    "express-validator": "7.0.1",
+    "helmet": "7.1.0",
+    "jsonwebtoken": "9.0.2",
+    "mongoose": "8.5.1",
+    "morgan": "1.10.0",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.4"
+  }
+}

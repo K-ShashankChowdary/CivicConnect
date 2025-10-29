@@ -1,0 +1,1501 @@
+category,impact,description,priority
+parks_recreation,critical,Major safety hazard at Indiranagar 100 Feet Road since last night,0.92
+air_quality,high,Dust pollution from construction since last night,0.71
+building_maintenance,critical,Major structural damage,0.87
+street_lighting,critical,Complete darkness on main road,0.89
+waste_management,medium,Scattered litter in Bannerghatta Road,0.43
+parks_recreation,high,Overgrown vegetation blocking path,0.66
+noise_pollution,critical,Construction noise violating limits,0.87
+public_safety,low,Safety sign needed,0.21
+public_transport,medium,Bus stop needs cleaning at HSR Layout Sector 1,0.40
+public_safety,medium,Poor visibility at intersection since yesterday,0.51
+public_transport,critical,Major safety hazard on Volvo bus,0.94
+water_supply,medium,Slow water drainage in locality this morning,0.50
+sanitation,critical,Open drain overflow creating health hazard during peak hours,0.91
+public_safety,high,Unsafe construction at Kengeri Satellite Town,0.77
+waste_management,high,Overflowing bins causing health hazard in cross,0.70
+waste_management,low,Single overflowing dustbin at Kanakapura Road,0.30
+waste_management,medium,Segregated waste mixed by collectors at pura,0.44
+street_lighting,low,Light bulb replacement needed at Mysore Road since yesterday,0.27
+parks_recreation,medium,Minor equipment issue,0.48
+air_quality,medium,Occasional bad smell,0.49
+air_quality,medium,Moderate air quality concern,0.49
+electricity,critical,Sparking electrical wires near sector,0.99
+public_safety,low,Safety sign needed,0.22
+animal_control,low,Single stray animal,0.25
+roads,medium,Faded zebra crossing on Tumkur Road,0.48
+electricity,high,Electrical pole leaning dangerously at pura,0.73
+public_safety,high,Broken railing at dangerous height,0.75
+public_transport,medium,Inadequate bus frequency during peak hours,0.42
+air_quality,low,Small dust issue,0.30
+water_supply,high,Water tanker not arriving for 100 days for past 2 weeks,0.80
+traffic,critical,Metro construction causing complete traffic standstill since yesterday,0.93
+animal_control,low,Occasional animal sighting,0.25
+animal_control,critical,Dangerous animal in populated area,0.96
+building_maintenance,low,Cosmetic repair needed since monsoon,0.23
+electricity,medium,Street light flickering at Vijayanagar,0.55
+sanitation,high,Sewage smell affecting nagar,0.74
+electricity,high,Power surge damaging appliances in Commercial Street since monsoon,0.77
+roads,low,Slight pavement unevenness on layout,0.29
+parks_recreation,low,Trash bin full,0.23
+public_safety,medium,Broken fence at JP Nagar 7th Phase during peak hours,0.54
+parks_recreation,critical,Structural damage to park facility,0.95
+waste_management,low,Green bin needs emptying at Jayanagar 4th Block,0.23
+parks_recreation,critical,Toxic substance in park since yesterday,0.88
+waste_management,medium,Missed dry waste collection in Bannerghatta Road,0.44
+animal_control,critical,Multiple animal attacks reported for past 2 weeks,0.96
+building_maintenance,medium,Door/window repair needed,0.42
+noise_pollution,medium,Intermittent disturbance,0.40
+noise_pollution,low,Minor traffic sounds during peak hours,0.21
+roads,medium,Construction debris on Commercial Street since Diwali,0.48
+electricity,critical,Power outage affecting 15 blocks,0.96
+traffic,critical,Metro construction causing complete traffic standstill,0.94
+noise_pollution,low,Minor traffic sounds,0.24
+roads,medium,Broken speed breaker at pura,0.49
+traffic,critical,Major accident blocking Outer Ring Road,0.93
+roads,critical,Road completely blocked by safety hazard after recent rains,0.88
+traffic,high,Illegal parking blocking entire street at locality,0.68
+electricity,low,Light bulb replacement needed at Jayadeva Flyover,0.29
+public_transport,critical,Major safety hazard on Volvo bus,0.89
+roads,medium,Uneven road surface at pura since yesterday,0.48
+drainage,critical,Storm drain completely blocked,0.97
+building_maintenance,medium,General maintenance required,0.47
+electricity,medium,Voltage fluctuation in ward,0.48
+public_safety,high,Broken railing at dangerous height,0.79
+sanitation,high,Sewage smell affecting cross,0.71
+traffic,critical,Major accident blocking Outer Ring Road,0.90
+public_safety,critical,Major safety hazard affecting 150 people,0.96
+roads,low,Slight pavement unevenness on area,0.24
+animal_control,critical,Multiple animal attacks reported,0.94
+animal_control,low,Birds nesting,0.24
+public_transport,high,Severe delays on Purple Line Metro,0.67
+air_quality,medium,Moderate air quality concern after recent rains,0.45
+noise_pollution,high,Loud construction during night hours,0.68
+roads,medium,Broken speed breaker at area,0.48
+parks_recreation,low,Routine upkeep required for 3 days,0.27
+street_lighting,high,Broken street light creating hazard,0.74
+public_transport,critical,Major safety hazard on Volvo bus,0.90
+public_safety,high,Unsafe construction at Indiranagar 100 Feet Road,0.72
+building_maintenance,low,Cosmetic repair needed,0.25
+traffic,high,Illegal parking blocking entire street at ward,0.69
+animal_control,low,Single stray animal for 3 days,0.29
+animal_control,low,Birds nesting,0.27
+traffic,critical,Multi-vehicle collision on flyover this morning,0.86
+animal_control,critical,Dangerous animal in populated area since monsoon,0.93
+building_maintenance,critical,Major structural damage,0.85
+air_quality,low,Brief pollution event,0.21
+air_quality,low,Brief pollution event,0.21
+building_maintenance,medium,General maintenance required,0.44
+street_lighting,critical,Complete darkness on main road after recent rains,0.90
+traffic,high,Vendor encroachment causing traffic jam at Commercial Street,0.74
+street_lighting,low,Minor electrical concern in colony,0.30
+water_supply,high,Significant water pressure drop in layout,0.72
+building_maintenance,high,Wall damage at Residency Road,0.71
+public_transport,high,Metro station escalator broken at locality,0.74
+public_transport,high,Severe delays on Purple Line Metro,0.72
+street_lighting,high,Most street lights not working on Malleshwaram 8th Cross,0.72
+water_supply,medium,Intermittent water supply in Tin Factory,0.51
+parks_recreation,high,Vandalism damage at cross during peak hours,0.73
+waste_management,low,Small amount of trash near ward,0.21
+electricity,medium,Intermittent power supply in Dairy Circle since yesterday,0.50
+air_quality,high,Strong chemical odor,0.69
+water_supply,medium,Minor water leak at Old Airport Road since Diwali,0.51
+electricity,medium,Voltage fluctuation in layout since last night,0.53
+parks_recreation,high,Park gate damaged at Koramangala 5th Block,0.66
+sanitation,critical,Open drain overflow creating health hazard,0.99
+drainage,low,Minor blockage,0.26
+public_transport,high,Metro station escalator broken at ward,0.71
+parks_recreation,low,Small repair needed for over a week,0.27
+noise_pollution,critical,Continuous loud music affecting 5 residents,0.91
+parks_recreation,high,Broken playground equipment,0.67
+drainage,low,Minor blockage,0.25
+parks_recreation,medium,Grass overgrown at Koramangala 5th Block during peak hours,0.48
+waste_management,medium,Scattered litter in Hebbal Flyover,0.50
+noise_pollution,critical,Extremely loud industrial noise 24/7 since monsoon,0.87
+animal_control,critical,Rabid animal sighting,0.92
+parks_recreation,high,Vandalism damage at area,0.72
+air_quality,high,Foul smell affecting area,0.70
+waste_management,critical,Dangerous waste overflow near school at ward,0.87
+sanitation,low,Slight drain smell at Rajajinagar Double Road since monsoon,0.20
+building_maintenance,critical,Building collapse risk,0.88
+electricity,low,Light bulb replacement needed at Church Street,0.27
+drainage,high,Standing water for days,0.73
+water_supply,medium,Intermittent water supply in Sarjapur Road,0.46
+roads,medium,Minor road damage at sector,0.43
+water_supply,high,Water tanker not arriving for 150 days since Diwali,0.79
+building_maintenance,medium,Door/window repair needed since Diwali,0.46
+sanitation,low,Drain cover loose at Church Street,0.23
+drainage,high,Standing water for days this morning,0.80
+street_lighting,medium,Dim lighting at locality for 3 days,0.50
+drainage,high,Heavy waterlogging at BTM Layout 2nd Stage since monsoon,0.74
+public_safety,low,Small hazard at Yeshwanthpur Circle after recent rains,0.25
+drainage,low,Routine cleaning needed since Diwali,0.21
+sanitation,high,Sewage smell affecting area,0.80
+street_lighting,critical,Multiple poles damaged in KR Market for over a week,0.89
+water_supply,low,Minor water quality concern in Yeshwanthpur Circle,0.29
+water_supply,critical,Emergency water shutoff needed at HSR Layout Sector 1,0.96
+roads,high,Heavy waterlogging making Vijayanagar impassable,0.77
+sanitation,critical,Major sewage backup affecting 20 homes since last night,0.91
+water_supply,medium,Slow water drainage in cross,0.54
+air_quality,critical,Gas leak in public area this morning,0.89
+building_maintenance,high,Broken windows creating hazard,0.67
+parks_recreation,critical,Dangerous equipment in playground,0.93
+drainage,critical,Storm drain completely blocked since monsoon,0.91
+building_maintenance,low,Minor maintenance,0.27
+roads,high,Footpath encroachment blocking pedestrians at area,0.68
+water_supply,high,BWSSB water pipe broken causing illegal construction,0.78
+public_safety,critical,Gas leak in public area since yesterday,0.93
+public_transport,high,Severe delays on Purple Line Metro since yesterday,0.69
+water_supply,low,Dripping faucet at Chickpet Main Road this morning,0.21
+building_maintenance,low,Minor issue after recent rains,0.25
+traffic,high,Vendor encroachment causing traffic jam at Yelahanka New Town for 3 days,0.68
+electricity,critical,Sparking electrical wires near nagar,0.99
+street_lighting,low,Power outlet issue at Basavanagudi Bull Temple Road,0.23
+building_maintenance,high,Broken windows creating hazard since last night,0.74
+roads,low,Minor road wear at Bannerghatta Road,0.25
+traffic,low,Temporary delay due to VIP movement,0.22
+sanitation,high,Sewage water on street at Residency Road,0.77
+public_transport,high,Multiple BMTC buses not running on route 100 after recent rains,0.67
+drainage,high,Standing water for days after recent rains,0.73
+drainage,high,Standing water for days,0.78
+waste_management,medium,Segregated waste mixed by collectors at extension,0.42
+street_lighting,medium,Intermittent lighting at pura,0.48
+animal_control,low,Low-priority animal issue after recent rains,0.26
+waste_management,high,Large garbage pile attracting stray dogs in Vijayanagar,0.66
+public_safety,medium,Uneven surface causing trips for over a week,0.46
+traffic,low,Temporary delay due to VIP movement,0.21
+water_supply,medium,Minor water leak at Jayadeva Flyover,0.51
+public_transport,critical,BMTC bus accident with injuries at Residency Road,0.91
+sanitation,medium,Partial sewer blockage at area,0.52
+building_maintenance,high,Broken windows creating hazard,0.65
+building_maintenance,medium,Door/window repair needed,0.42
+animal_control,low,Birds nesting since last night,0.29
+street_lighting,critical,Complete darkness on main road,0.92
+public_safety,low,Small hazard at Dairy Circle,0.27
+roads,medium,Faded zebra crossing on Church Street,0.41
+sanitation,critical,Sewage overflow near elementary school for past 2 weeks,0.93
+noise_pollution,low,Brief noise complaint for past 2 weeks,0.28
+traffic,critical,Namma Metro work blocking all lanes at layout,0.92
+noise_pollution,low,Brief noise complaint,0.27
+air_quality,low,Brief pollution event during peak hours,0.29
+building_maintenance,low,Cosmetic repair needed,0.22
+roads,critical,Flyover collapse at Old Airport Road,0.90
+roads,medium,Broken speed breaker at pura since monsoon,0.49
+air_quality,critical,Gas leak in public area since Diwali,0.89
+water_supply,critical,Burst BWSSB water main flooding Basavanagudi Bull Temple Road this morning,0.90
+noise_pollution,medium,Moderate noise disturbance,0.43
+drainage,medium,Moderate drainage issue during peak hours,0.53
+electricity,low,Dim lighting in cross since last night,0.25
+traffic,medium,Traffic police absent at busy junction nagar,0.49
+air_quality,high,Dust pollution from construction,0.69
+electricity,critical,Exposed high voltage cables at Shivajinagar during peak hours,0.91
+water_supply,high,No Cauvery water supply to 150 households,0.74
+traffic,critical,Road completely blocked at Malleshwaram 8th Cross,0.87
+water_supply,critical,Contaminated Cauvery water supply affecting extension,0.91
+drainage,low,Small drainage concern since Diwali,0.24
+sanitation,low,Drain cover loose at Kanakapura Road,0.22
+waste_management,high,Illegal dumping blocking nagar,0.75
+air_quality,medium,Minor pollution issue,0.47
+animal_control,high,Animal creating safety hazard,0.72
+building_maintenance,medium,Door/window repair needed since monsoon,0.40
+public_safety,high,Dangerous tree about to fall after recent rains,0.70
+noise_pollution,low,Temporary construction noise,0.30
+electricity,medium,Power cut during peak hours at colony since yesterday,0.54
+public_safety,high,Deep open pit at cross,0.74
+parks_recreation,medium,Park needs maintenance,0.49
+air_quality,high,Foul smell affecting area,0.71
+sanitation,low,Slight drain smell at Bannerghatta Road after recent rains,0.25
+waste_management,critical,Illegal biomedical waste dumping at Electronic City Phase 1,0.91
+parks_recreation,low,Routine upkeep required,0.22
+drainage,high,Heavy waterlogging at Chickpet Main Road during peak hours,0.72
+air_quality,critical,Gas leak in public area,0.98
+building_maintenance,high,Wall damage at Residency Road for past 2 weeks,0.74
+traffic,high,Vendor encroachment causing traffic jam at Silk Board Junction for 3 days,0.70
+building_maintenance,low,Minor maintenance,0.27
+air_quality,medium,Occasional bad smell,0.44
+building_maintenance,critical,Immediate repair needed this morning,0.89
+noise_pollution,high,Heavy machinery noise at Yelahanka New Town,0.68
+street_lighting,low,Light bulb replacement needed at Commercial Street this morning,0.23
+street_lighting,critical,Street light pole fallen at Church Street,0.92
+public_transport,medium,Metro card recharge machine not working at sector this morning,0.47
+sanitation,medium,Bad odor from drain at Kanakapura Road for 3 days,0.51
+noise_pollution,medium,Moderate noise disturbance after recent rains,0.42
+electricity,low,Dim lighting in colony,0.27
+roads,low,Small pothole on Bannerghatta Road,0.23
+drainage,low,Small drainage concern,0.22
+electricity,high,Multiple street lights not working on Vijayanagar,0.77
+water_supply,critical,Burst BWSSB water main flooding HSR Layout Sector 1,0.91
+building_maintenance,critical,Building collapse risk,0.92
+electricity,low,Light bulb replacement needed at Residency Road after recent rains,0.28
+noise_pollution,high,Loud generator running continuously for over a week,0.74
+roads,medium,Construction debris on Commercial Street this morning,0.48
+public_transport,low,Single BMTC bus late,0.24
+street_lighting,high,Street light pole leaning at KR Market since Diwali,0.71
+parks_recreation,low,Small repair needed since Diwali,0.24
+waste_management,low,Small amount of trash near cross,0.21
+public_safety,high,Exposed electrical wires at RT Nagar Main Road,0.76
+traffic,critical,Metro construction causing complete traffic standstill,0.88
+electricity,critical,Exposed high voltage cables at KR Market for over a week,0.98
+waste_management,low,Green bin needs emptying at HSR Layout Sector 1,0.25
+traffic,critical,Major accident blocking Outer Ring Road,0.89
+roads,medium,Broken speed breaker at sector since last night,0.46
+public_safety,low,Small hazard at Malleshwaram 8th Cross,0.23
+public_transport,low,Minor complaint about bus conductor,0.26
+drainage,high,Multiple drains blocked for 3 days,0.76
+animal_control,low,Birds nesting,0.23
+public_safety,high,Broken railing at dangerous height,0.71
+public_safety,critical,Major safety hazard affecting 100 people,0.91
+sanitation,low,Drain cover loose at Vijayanagar,0.30
+drainage,critical,Major flooding due to drain failure,0.99
+public_transport,medium,Inadequate bus frequency during peak hours,0.40
+parks_recreation,critical,Dangerous equipment in playground,0.88
+public_safety,low,Minor safety issue,0.29
+sanitation,critical,Sewage overflow near elementary school since yesterday,0.93
+noise_pollution,low,Low-level noise issue,0.29
+roads,high,Fallen tree blocking cross since last night,0.69
+air_quality,low,Temporary smell,0.20
+public_safety,high,Exposed electrical wires at Yelahanka New Town this morning,0.79
+water_supply,low,Minor water quality concern in Rajajinagar Double Road,0.27
+public_transport,medium,BMTC bus delays on route 30,0.48
+traffic,low,Minor traffic slowdown at layout,0.24
+electricity,low,Minor electrical concern in colony for 3 days,0.22
+air_quality,medium,Occasional bad smell,0.50
+electricity,medium,Voltage fluctuation in ward for over a week,0.48
+waste_management,high,Illegal dumping blocking area this morning,0.66
+parks_recreation,critical,Dangerous equipment in playground,0.89
+parks_recreation,critical,Structural damage to park facility,0.92
+noise_pollution,medium,Intermittent disturbance during peak hours,0.41
+air_quality,low,Brief pollution event for 3 days,0.21
+public_safety,high,Unsafe construction at BTM Layout 2nd Stage during peak hours,0.74
+electricity,high,Electrical pole leaning dangerously at ward,0.70
+drainage,medium,Partial blockage,0.46
+parks_recreation,high,Broken playground equipment,0.71
+waste_management,medium,Overflowing community bin at colony since Diwali,0.41
+air_quality,critical,Chemical smell causing health issues this morning,0.92
+traffic,low,Minor traffic slowdown at zone,0.29
+sanitation,critical,Sewage overflow near elementary school after recent rains,0.94
+roads,critical,Metro construction causing road collapse at Kengeri Satellite Town since monsoon,0.94
+traffic,low,Temporary delay due to VIP movement,0.27
+water_supply,critical,Emergency water shutoff needed at Kanakapura Road,0.90
+building_maintenance,critical,Safety hazard at building,0.95
+water_supply,low,Dripping faucet at Basavanagudi Bull Temple Road,0.24
+street_lighting,medium,Several street lights out on RT Nagar Main Road since monsoon,0.43
+electricity,medium,Power cut during peak hours at pura,0.54
+animal_control,high,Stray dog menace at Jayanagar 4th Block,0.73
+street_lighting,critical,Complete darkness on main road for over a week,0.92
+parks_recreation,critical,Structural damage to park facility after recent rains,0.94
+sanitation,low,Drain cover loose at Hosur Road,0.25
+public_safety,critical,Gas leak in public area for 3 days,0.98
+public_safety,critical,Immediate evacuation needed at Kanakapura Road,0.96
+sanitation,medium,Partial sewer blockage at zone for 3 days,0.46
+traffic,medium,School zone congestion at Jayanagar 4th Block,0.49
+public_safety,critical,Building collapse risk at MG Road during peak hours,0.94
+parks_recreation,medium,Park needs maintenance,0.42
+air_quality,medium,Moderate air quality concern,0.42
+sanitation,high,Sewage smell affecting zone for past 2 weeks,0.72
+air_quality,critical,Toxic fumes from factory,0.97
+parks_recreation,low,Small repair needed,0.30
+noise_pollution,low,Minor traffic sounds,0.24
+noise_pollution,high,Loud construction during night hours,0.74
+noise_pollution,high,Loud generator running continuously,0.65
+waste_management,low,Bin placement issue at Kengeri Satellite Town during peak hours,0.20
+roads,medium,Construction debris on Basavanagudi Bull Temple Road,0.48
+building_maintenance,low,Cosmetic repair needed,0.21
+traffic,low,Temporary delay due to VIP movement after recent rains,0.25
+air_quality,high,Smoke from burning waste,0.76
+parks_recreation,high,Park lighting completely out,0.71
+waste_management,high,Plastic waste scattered across Jayadeva Flyover,0.69
+building_maintenance,medium,Small leak,0.41
+building_maintenance,critical,Immediate repair needed,0.94
+public_safety,high,Exposed electrical wires at Yeshwanthpur Circle for past 2 weeks,0.71
+street_lighting,high,Dark stretch creating safety issue at zone,0.71
+public_safety,high,Unsafe construction at BTM Layout 2nd Stage,0.80
+traffic,high,Severe traffic jam on Silk Board Junction,0.66
+traffic,low,Single lane closure at Jayadeva Flyover,0.23
+water_supply,critical,Borwell contamination affecting 50 residents,0.91
+waste_management,high,Plastic waste scattered across Basavanagudi Bull Temple Road since monsoon,0.73
+drainage,low,Slight water accumulation,0.24
+public_transport,high,Severe delays on Purple Line Metro for 3 days,0.66
+animal_control,medium,Minor animal nuisance,0.44
+noise_pollution,medium,Construction noise during day for past 2 weeks,0.42
+air_quality,high,Smoke from burning waste,0.76
+traffic,high,Illegal parking blocking entire street at pura for 3 days,0.67
+sanitation,medium,Partial sewer blockage at sector,0.47
+water_supply,medium,Water discoloration reported in ward for over a week,0.45
+drainage,medium,Slow drainage at Yeshwanthpur Circle since last night,0.46
+street_lighting,critical,Electrical hazard from street light at extension,0.90
+traffic,low,Temporary delay due to VIP movement,0.29
+animal_control,low,Minor wildlife concern,0.28
+roads,medium,Minor road damage at sector,0.44
+waste_management,critical,Toxic waste dumped near Chickpet Main Road for past 2 weeks,0.85
+public_safety,high,Dangerous tree about to fall for over a week,0.76
+noise_pollution,low,Brief noise complaint for 3 days,0.21
+traffic,medium,School zone congestion at Yeshwanthpur Circle,0.44
+electricity,high,Electrical pole leaning dangerously at layout,0.72
+noise_pollution,medium,Minor noise complaint,0.40
+roads,high,Footpath encroachment blocking pedestrians at cross,0.74
+waste_management,critical,Illegal biomedical waste dumping at Church Street this morning,0.94
+waste_management,critical,Hazardous material spill in extension,0.86
+sanitation,low,Small blockage at nagar,0.21
+animal_control,high,Animal creating safety hazard since monsoon,0.70
+animal_control,medium,Animal control needed,0.48
+animal_control,high,Monkey troop causing damage,0.68
+noise_pollution,critical,Construction noise violating limits,0.86
+building_maintenance,high,Wall damage at Church Street,0.69
+street_lighting,high,Most street lights not working on Church Street,0.77
+animal_control,critical,Immediate animal control needed,0.88
+public_safety,critical,Major safety hazard affecting 30 people,0.90
+electricity,critical,Transformer explosion at Tumkur Road,0.98
+parks_recreation,critical,Structural damage to park facility since monsoon,0.88
+noise_pollution,high,Excessive noise from commercial area this morning,0.68
+drainage,low,Small drainage concern,0.21
+parks_recreation,low,Minor park maintenance needed,0.29
+air_quality,high,Smoke from burning waste,0.70
+drainage,high,Drainage causing road damage,0.70
+roads,medium,Minor road damage at area,0.44
+public_safety,critical,Dangerous structure at ward,0.96
+parks_recreation,medium,Minor equipment issue,0.48
+animal_control,high,Stray dog menace at Gandhi Bazaar this morning,0.76
+public_safety,medium,Damaged playground equipment,0.49
+building_maintenance,low,Routine upkeep,0.28
+public_safety,high,Dangerous tree about to fall,0.71
+roads,critical,Dangerous crater on main road at nagar after recent rains,0.91
+traffic,critical,Metro construction causing complete traffic standstill,0.88
+street_lighting,low,Dim lighting in extension,0.26
+public_transport,medium,BMTC bus delays on route 20,0.43
+parks_recreation,high,Vandalism damage at locality,0.65
+drainage,medium,Slow drainage at BTM Layout 2nd Stage,0.54
+roads,medium,Faded zebra crossing on Whitefield Main Road,0.43
+roads,high,Major crater in middle of road at sector,0.71
+public_transport,medium,Bus stop needs cleaning at BTM Layout 2nd Stage during peak hours,0.42
+traffic,high,Auto rickshaw strike causing chaos at area,0.68
+traffic,critical,Multi-vehicle collision on flyover for 3 days,0.86
+public_transport,low,Minor complaint about bus conductor since monsoon,0.21
+air_quality,high,Dust pollution from construction,0.70
+air_quality,medium,Moderate air quality concern since monsoon,0.43
+air_quality,medium,Dust from unpaved road,0.42
+traffic,low,Single lane closure at Shivajinagar since last night,0.27
+traffic,critical,Namma Metro work blocking all lanes at sector,0.86
+drainage,critical,Severe waterlogging affecting 5 homes since yesterday,0.96
+electricity,high,Multiple street lights not working on Vijayanagar since yesterday,0.75
+electricity,medium,Intermittent power supply in RT Nagar Main Road this morning,0.55
+sanitation,high,Drain overflow during rain at RT Nagar Main Road,0.76
+public_safety,critical,Gas leak in public area,0.98
+waste_management,critical,Illegal biomedical waste dumping at Kanakapura Road this morning,0.88
+electricity,low,Dim lighting in extension,0.21
+animal_control,medium,Occasional animal issue,0.40
+street_lighting,high,Most street lights not working on Hebbal Flyover,0.78
+street_lighting,critical,Street light pole fallen at MG Road since yesterday,0.90
+parks_recreation,low,Minor landscaping issue since monsoon,0.28
+animal_control,critical,Multiple animal attacks reported,0.90
+air_quality,low,Slight odor,0.22
+sanitation,low,Small blockage at nagar for over a week,0.23
+waste_management,low,Small amount of trash near locality since monsoon,0.22
+animal_control,critical,Rabid animal sighting during peak hours,0.95
+waste_management,high,Pourakarmikas not collecting waste for 20 days,0.65
+drainage,high,Drainage causing road damage,0.74
+street_lighting,critical,Multiple poles damaged in Jayanagar 4th Block,0.97
+public_transport,critical,BMTC depot strike affecting 100 routes after recent rains,0.94
+roads,critical,Dangerous crater on main road at nagar,0.96
+building_maintenance,high,Roof leaking badly,0.74
+noise_pollution,low,Low-level noise issue,0.21
+noise_pollution,low,Brief noise complaint for over a week,0.21
+waste_management,high,Illegal dumping blocking pura,0.66
+sanitation,critical,Raw sewage leak in residential area since last night,0.91
+waste_management,critical,Dangerous waste overflow near school at locality,0.95
+roads,low,Small pothole on Commercial Street,0.26
+noise_pollution,low,Occasional disturbance,0.21
+public_safety,medium,Uneven surface causing trips,0.53
+roads,medium,Broken speed breaker at locality,0.41
+public_safety,critical,Dangerous structure at cross since yesterday,0.96
+drainage,critical,Drainage system collapse,0.97
+building_maintenance,high,Roof leaking badly for past 2 weeks,0.71
+traffic,medium,Traffic police absent at busy junction colony,0.50
+traffic,medium,Faded road markings at Bannerghatta Road,0.40
+waste_management,high,Illegal dumping blocking cross,0.69
+building_maintenance,medium,Paint peeling,0.45
+waste_management,high,Multiple overflowing BBMP bins in Majestic Bus Stand,0.67
+sanitation,medium,Minor sewage issue in nagar this morning,0.51
+traffic,low,Street light not working causing confusion at Sarjapur Road since last night,0.20
+public_safety,critical,Immediate evacuation needed at BTM Layout 2nd Stage,0.94
+public_safety,medium,Minor safety concern at cross,0.54
+building_maintenance,medium,Door/window repair needed since Diwali,0.43
+street_lighting,critical,Electrical hazard from street light at area,0.92
+public_transport,low,Metro station announcement unclear,0.25
+street_lighting,high,Dark stretch creating safety issue at extension,0.70
+drainage,critical,Emergency drainage issue,0.95
+building_maintenance,medium,Small leak this morning,0.46
+traffic,low,Minor traffic slowdown at ward,0.25
+noise_pollution,high,Excessive noise from commercial area since last night,0.66
+roads,critical,Major road cave-in on pura,0.93
+drainage,high,Drainage causing road damage for past 2 weeks,0.75
+building_maintenance,low,Cosmetic repair needed,0.24
+drainage,high,Multiple drains blocked,0.75
+street_lighting,high,Dark stretch creating safety issue at layout,0.75
+noise_pollution,low,Brief noise complaint for 3 days,0.25
+traffic,medium,School zone congestion at Kengeri Satellite Town,0.41
+noise_pollution,medium,Minor noise complaint for over a week,0.44
+parks_recreation,critical,Dangerous equipment in playground,0.89
+public_transport,medium,Metro card recharge machine not working at extension,0.47
+electricity,low,Light bulb replacement needed at JP Nagar 7th Phase,0.25
+traffic,high,Traffic signal not working at Commercial Street,0.67
+street_lighting,high,Broken street light creating hazard,0.75
+water_supply,low,Minor water quality concern in Hosur Road,0.22
+parks_recreation,high,Overgrown vegetation blocking path,0.66
+animal_control,medium,Stray cattle concern for past 2 weeks,0.50
+water_supply,low,Minor water quality concern in Koramangala 5th Block since Diwali,0.30
+public_safety,high,Deep open pit at sector,0.76
+noise_pollution,high,Heavy machinery noise at Koramangala 5th Block,0.69
+waste_management,medium,Wet waste not collected on schedule at locality,0.45
+drainage,low,Preventive maintenance required,0.25
+public_safety,critical,Dangerous structure at colony,0.90
+water_supply,medium,Slow water drainage in sector,0.47
+public_transport,low,Minor complaint about bus conductor,0.27
+public_safety,critical,Dangerous structure at cross,0.95
+street_lighting,low,Single street light not working at Indiranagar 100 Feet Road,0.28
+parks_recreation,medium,Path needs cleaning during peak hours,0.47
+animal_control,high,Multiple stray animals,0.74
+public_safety,critical,Major safety hazard affecting 200 people for 3 days,0.92
+animal_control,high,Cattle blocking road,0.77
+water_supply,critical,Water main break flooding 5 homes,0.97
+roads,critical,Flyover collapse at Silk Board Junction,0.94
+air_quality,high,Smoke from burning waste,0.74
+noise_pollution,low,Low-level noise issue since last night,0.26
+waste_management,low,Minor litter on area,0.22
+water_supply,low,Small leak from Chickpet Main Road,0.29
+roads,critical,Structural damage to flyover at Residency Road during peak hours,0.97
+noise_pollution,medium,Moderate noise disturbance,0.45
+parks_recreation,critical,Toxic substance in park,0.94
+electricity,high,Transformer overheating at extension,0.70
+electricity,critical,Electrical fire hazard in ward,0.98
+electricity,low,Single street light not working at Gandhi Bazaar after recent rains,0.23
+street_lighting,medium,Street lights on during day at Bellary Road,0.47
+public_transport,high,Bus stop shelter collapsed at Shivajinagar,0.67
+noise_pollution,low,Occasional disturbance,0.28
+sanitation,critical,Raw sewage leak in residential area,0.98
+sanitation,medium,Drain needs cleaning at Dairy Circle,0.51
+drainage,low,Routine cleaning needed during peak hours,0.24
+traffic,critical,Metro construction causing complete traffic standstill,0.90
+water_supply,low,Water meter reading issue at area since last night,0.24
+sanitation,critical,Major sewage backup affecting 10 homes since last night,0.92
+roads,critical,Dangerous crater on main road at colony,0.97
+traffic,medium,Faded road markings at Sarjapur Road,0.44
+public_safety,low,Routine safety check needed,0.22
+public_transport,medium,Inadequate bus frequency during peak hours,0.49
+public_safety,critical,Building collapse risk at Chickpet Main Road since last night,0.99
+sanitation,critical,Open drain overflow creating health hazard,0.91
+air_quality,medium,Occasional bad smell,0.47
+street_lighting,high,Street light pole leaning at Rajajinagar Double Road this morning,0.75
+public_safety,critical,Dangerous structure at cross,0.99
+animal_control,medium,Minor animal nuisance,0.44
+public_safety,critical,Major safety hazard affecting 75 people,0.91
+air_quality,low,Brief pollution event this morning,0.25
+animal_control,medium,Minor animal nuisance since Diwali,0.40
+animal_control,high,Monkey troop causing damage,0.74
+public_transport,medium,Bus stop needs cleaning at Commercial Street,0.43
+air_quality,medium,Dust from unpaved road,0.45
+sanitation,high,Broken manhole cover at area,0.77
+public_transport,low,Minor complaint about bus conductor,0.27
+drainage,medium,Moderate drainage issue since Diwali,0.55
+building_maintenance,low,Routine upkeep this morning,0.24
+parks_recreation,medium,Benches need repair,0.42
+public_safety,critical,Building collapse risk at Bannerghatta Road for 3 days,0.97
+sanitation,medium,Minor sewage issue in cross for 3 days,0.53
+parks_recreation,high,Broken playground equipment after recent rains,0.66
+public_safety,medium,Minor safety concern at pura,0.49
+street_lighting,low,Minor electrical concern in layout,0.26
+electricity,critical,Power outage affecting 10 blocks,0.94
+street_lighting,low,Power outlet issue at Hebbal Flyover,0.28
+waste_management,high,Illegal dumping blocking locality since last night,0.72
+water_supply,low,Water meter reading issue at colony,0.28
+drainage,low,Small drainage concern after recent rains,0.20
+air_quality,high,Foul smell affecting area,0.78
+sanitation,critical,Raw sewage leak in residential area,0.97
+electricity,critical,Sparking electrical wires near pura,0.93
+parks_recreation,critical,Major safety hazard at Vijayanagar,0.86
+public_transport,critical,BMTC depot strike affecting 25 routes,0.88
+air_quality,critical,Chemical smell causing health issues,0.92
+air_quality,medium,Intermittent odor for past 2 weeks,0.45
+building_maintenance,low,Cosmetic repair needed,0.23
+sanitation,high,Clogged sewer line in Tin Factory,0.77
+waste_management,medium,Missed dry waste collection in Tin Factory,0.47
+public_transport,high,Severe delays on Purple Line Metro since last night,0.68
+electricity,low,Minor electrical concern in zone,0.25
+public_safety,critical,Dangerous structure at nagar,0.95
+public_safety,low,Minor concern at area for over a week,0.21
+water_supply,low,Dripping faucet at Bellary Road,0.26
+roads,critical,Flyover collapse at Vijayanagar for 3 days,0.88
+building_maintenance,high,Roof leaking badly since last night,0.68
+public_transport,critical,BMTC depot strike affecting 30 routes,0.85
+animal_control,low,Birds nesting,0.29
+traffic,high,Traffic signal not working at Whitefield Main Road,0.67
+air_quality,critical,Gas leak in public area,0.97
+public_transport,critical,Major safety hazard on Volvo bus,0.89
+water_supply,critical,Severe water contamination in BTM Layout 2nd Stage,0.94
+water_supply,low,Dripping faucet at Church Street,0.25
+sanitation,high,Sewage water on street at Mysore Road since Diwali,0.77
+noise_pollution,medium,Construction noise during day,0.42
+roads,high,Large pothole causing two-wheeler accidents on Yeshwanthpur Circle,0.78
+drainage,low,Minor blockage since monsoon,0.25
+traffic,medium,BBMP road work causing delays at pura,0.49
+sanitation,medium,Slow drainage in Commercial Street,0.54
+sanitation,critical,Sewage system failure at Hosur Road,0.95
+air_quality,medium,Moderate air quality concern,0.46
+electricity,low,Light bulb replacement needed at Silk Board Junction,0.26
+roads,low,Slight pavement unevenness on area during peak hours,0.29
+electricity,medium,Intermittent power supply in Tin Factory since last night,0.47
+animal_control,low,Occasional animal sighting this morning,0.22
+traffic,critical,Road completely blocked at Tin Factory,0.94
+electricity,high,Transformer overheating at locality,0.76
+air_quality,high,Foul smell affecting area during peak hours,0.74
+noise_pollution,low,Brief noise complaint,0.29
+street_lighting,critical,Complete darkness on main road,0.90
+noise_pollution,critical,Continuous loud music affecting 20 residents,0.91
+public_transport,medium,BMTC bus delays on route 15,0.41
+air_quality,low,Small dust issue,0.24
+roads,low,Minor crack in footpath at ward since last night,0.21
+drainage,medium,Slow drainage at Tin Factory for over a week,0.46
+public_safety,medium,Poor visibility at intersection,0.53
+building_maintenance,high,Broken windows creating hazard,0.74
+public_transport,high,Metro station escalator broken at area,0.71
+air_quality,critical,Toxic fumes from factory this morning,0.89
+noise_pollution,high,Loud construction during night hours since monsoon,0.70
+drainage,high,Multiple drains blocked,0.79
+electricity,critical,Electrical fire hazard in zone for 3 days,0.96
+traffic,low,Temporary delay due to VIP movement during peak hours,0.28
+sanitation,low,Small blockage at colony,0.25
+street_lighting,high,Frequent light failures on locality,0.68
+roads,low,Faded road markings at Dairy Circle,0.30
+air_quality,critical,Industrial pollution emergency this morning,0.90
+building_maintenance,medium,Paint peeling,0.44
+public_transport,low,Single BMTC bus late,0.22
+parks_recreation,high,Broken playground equipment since yesterday,0.72
+noise_pollution,medium,Intermittent disturbance since yesterday,0.49
+water_supply,medium,Low water pressure in Dairy Circle for 3 days,0.50
+building_maintenance,high,Broken windows creating hazard,0.68
+animal_control,critical,Immediate animal control needed,0.91
+air_quality,critical,Industrial pollution emergency,0.89
+parks_recreation,medium,Park needs maintenance,0.45
+water_supply,high,Large water leak in Yeshwanthpur Circle since yesterday,0.78
+sanitation,critical,Open drain overflow creating health hazard,0.99
+public_transport,high,Bus stop shelter collapsed at Chickpet Main Road,0.67
+noise_pollution,medium,Intermittent disturbance,0.49
+parks_recreation,low,Trash bin full,0.21
+public_transport,medium,Bus schedule not followed at Marathahalli Outer Ring Road,0.50
+public_safety,critical,Dangerous structure at area since yesterday,0.99
+water_supply,low,Small leak from Brigade Road during peak hours,0.25
+public_transport,high,Multiple BMTC buses not running on route 20 during peak hours,0.66
+electricity,medium,Power cut during peak hours at locality during peak hours,0.54
+public_safety,critical,Immediate evacuation needed at Mysore Road,0.92
+street_lighting,medium,Light timing issue at KR Market this morning,0.44
+street_lighting,critical,Street light pole fallen at Sarjapur Road,0.96
+traffic,low,Temporary delay due to VIP movement,0.28
+parks_recreation,critical,Major safety hazard at Chickpet Main Road,0.92
+animal_control,medium,Stray dogs in area for over a week,0.50
+building_maintenance,high,Wall damage at Rajajinagar Double Road,0.71
+sanitation,low,Routine drain maintenance needed this morning,0.30
+public_transport,critical,BMTC depot strike affecting 5 routes since Diwali,0.86
+street_lighting,low,Minor electrical concern in ward since yesterday,0.26
+public_transport,medium,BMTC bus delays on route 25,0.45
+traffic,low,Temporary delay due to VIP movement,0.29
+air_quality,medium,Minor pollution issue,0.45
+water_supply,high,Large water leak in Kengeri Satellite Town,0.74
+sanitation,medium,Partial sewer blockage at colony during peak hours,0.50
+public_transport,medium,Metro card recharge machine not working at ward since Diwali,0.40
+noise_pollution,medium,Occasional loud noise,0.47
+water_supply,medium,Slow water drainage in area,0.49
+sanitation,high,Clogged sewer line in Jayadeva Flyover since last night,0.72
+drainage,low,Small drainage concern,0.27
+air_quality,high,Smoke from burning waste,0.77
+waste_management,low,Single overflowing dustbin at RT Nagar Main Road this morning,0.23
+roads,critical,Major road cave-in on ward,0.96
+drainage,critical,Major flooding due to drain failure,0.91
+street_lighting,critical,Electrical hazard from street light at colony,0.91
+public_safety,high,Deep open pit at colony,0.75
+street_lighting,high,Street light pole leaning at Gandhi Bazaar,0.70
+public_transport,critical,Complete Namma Metro service shutdown,0.94
+roads,medium,Uneven road surface at locality since monsoon,0.46
+traffic,medium,Traffic police absent at busy junction sector since Diwali,0.47
+street_lighting,high,Frequent light failures on ward,0.71
+building_maintenance,low,Small touch-up required,0.27
+water_supply,low,Minor water quality concern in Basavanagudi Bull Temple Road,0.28
+building_maintenance,critical,Building collapse risk,0.85
+traffic,low,Minor traffic slowdown at ward,0.24
+waste_management,critical,Hazardous material spill in colony,0.95
+water_supply,medium,Intermittent water supply in Commercial Street,0.53
+water_supply,high,Broken fire hydrant flooding Rajajinagar Double Road,0.75
+roads,low,Faded road markings at Residency Road,0.28
+sanitation,high,Sewage smell affecting cross,0.74
+animal_control,medium,Stray dogs in area,0.41
+air_quality,low,Brief pollution event,0.28
+animal_control,critical,Multiple animal attacks reported,0.95
+sanitation,low,Minor drainage concern in area,0.29
+building_maintenance,critical,Dangerous cracks in building,0.89
+street_lighting,medium,Light timing issue at Shivajinagar during peak hours,0.42
+drainage,low,Small drainage concern,0.22
+parks_recreation,critical,Dangerous equipment in playground,0.86
+traffic,medium,BBMP road work causing delays at ward this morning,0.45
+public_safety,high,Dangerous tree about to fall since last night,0.73
+building_maintenance,critical,Immediate repair needed,0.93
+public_transport,high,Overcrowded BMTC buses causing safety issues,0.65
+animal_control,critical,Aggressive stray dog pack,0.89
+electricity,low,Single street light not working at Tin Factory,0.23
+building_maintenance,low,Minor maintenance since last night,0.28
+parks_recreation,low,Minor landscaping issue,0.30
+electricity,medium,Electrical meter malfunction at Old Airport Road,0.51
+animal_control,high,Multiple stray animals,0.72
+sanitation,critical,Open drain overflow creating health hazard,0.99
+animal_control,high,Stray dog menace at Brigade Road,0.74
+public_safety,medium,Uneven surface causing trips,0.52
+building_maintenance,critical,Dangerous cracks in building,0.93
+animal_control,medium,Stray cattle concern,0.42
+public_safety,low,Routine safety check needed,0.25
+public_safety,critical,Major safety hazard affecting 200 people,0.93
+electricity,low,Minor electrical concern in sector,0.21
+parks_recreation,medium,Path needs cleaning since last night,0.49
+water_supply,medium,Water discoloration reported in layout,0.46
+electricity,medium,Power cut during peak hours at extension since monsoon,0.50
+water_supply,medium,Low water pressure in Dairy Circle,0.54
+animal_control,medium,Animal control needed,0.46
+waste_management,medium,Missed dry waste collection in MG Road,0.44
+animal_control,low,Occasional animal sighting,0.28
+noise_pollution,high,Excessive noise from commercial area,0.70
+public_safety,medium,Minor safety concern at sector for past 2 weeks,0.47
+electricity,low,Single street light not working at Commercial Street after recent rains,0.28
+drainage,critical,Severe waterlogging affecting 20 homes,0.98
+sanitation,low,Slight drain smell at Silk Board Junction for 3 days,0.27
+street_lighting,high,Dark stretch creating safety issue at cross,0.74
+air_quality,medium,Minor pollution issue,0.43
+public_transport,critical,Complete Namma Metro service shutdown,0.86
+noise_pollution,medium,Minor noise complaint,0.44
+parks_recreation,critical,Dangerous equipment in playground,0.93
+noise_pollution,critical,Extremely loud industrial noise 24/7 this morning,0.88
+noise_pollution,medium,Intermittent disturbance,0.45
+street_lighting,low,Power outlet issue at Commercial Street,0.24
+electricity,medium,Street light flickering at Jayadeva Flyover since monsoon,0.47
+roads,high,Footpath encroachment blocking pedestrians at cross,0.70
+noise_pollution,high,Excessive noise from commercial area since monsoon,0.69
+public_transport,low,Minor complaint about bus conductor,0.28
+sanitation,medium,Partial sewer blockage at extension,0.54
+air_quality,medium,Moderate air quality concern,0.45
+street_lighting,critical,Complete darkness on main road,0.97
+parks_recreation,medium,Benches need repair during peak hours,0.44
+water_supply,high,Significant water pressure drop in ward,0.72
+water_supply,low,Dripping faucet at Residency Road,0.24
+building_maintenance,medium,Door/window repair needed since yesterday,0.42
+building_maintenance,critical,Major structural damage,0.88
+noise_pollution,medium,Minor noise complaint since monsoon,0.49
+parks_recreation,critical,Toxic substance in park,0.94
+animal_control,critical,Dangerous animal in populated area,0.91
+roads,high,Footpath encroachment blocking pedestrians at locality for 3 days,0.77
+street_lighting,high,Dark stretch creating safety issue at nagar since monsoon,0.75
+sanitation,low,Drain cover loose at Yeshwanthpur Circle,0.21
+public_safety,high,Dangerous tree about to fall,0.71
+roads,high,Road surface completely damaged on Chickpet Main Road since yesterday,0.72
+animal_control,critical,Dangerous animal in populated area,0.90
+parks_recreation,high,Park gate damaged at RT Nagar Main Road,0.74
+parks_recreation,low,Routine upkeep required,0.26
+public_transport,low,Minor complaint about bus conductor,0.26
+noise_pollution,medium,Intermittent disturbance since monsoon,0.42
+street_lighting,critical,Multiple poles damaged in HSR Layout Sector 1 since last night,0.94
+water_supply,critical,Major water pipe rupture causing stray animals,0.98
+parks_recreation,low,Minor landscaping issue for over a week,0.20
+sanitation,high,Drain overflow during rain at Electronic City Phase 1,0.75
+public_transport,medium,Metro card recharge machine not working at ward,0.47
+drainage,medium,Partial blockage during peak hours,0.49
+traffic,high,Vendor encroachment causing traffic jam at Dairy Circle,0.74
+animal_control,critical,Dangerous animal in populated area,0.95
+parks_recreation,critical,Dangerous equipment in playground,0.89
+water_supply,critical,Brown water coming from taps in zone,0.93
+parks_recreation,low,Small repair needed,0.29
+waste_management,medium,Wet waste not collected on schedule at area after recent rains,0.44
+traffic,low,Street light not working causing confusion at Tin Factory for 3 days,0.20
+street_lighting,medium,Several street lights out on Malleshwaram 8th Cross,0.43
+electricity,high,Transformer overheating at area,0.70
+traffic,high,Illegal parking blocking entire street at layout,0.74
+electricity,medium,Street light flickering at Yeshwanthpur Circle,0.49
+water_supply,high,Water tanker not arriving for 150 days since Diwali,0.70
+electricity,critical,Transformer explosion at Rajajinagar Double Road,0.90
+water_supply,low,Dripping faucet at Basavanagudi Bull Temple Road for over a week,0.29
+air_quality,low,Minor air quality concern since Diwali,0.23
+public_safety,low,Minor concern at extension for 3 days,0.22
+water_supply,high,Significant water pressure drop in locality,0.73
+water_supply,low,Dripping faucet at Hosur Road for past 2 weeks,0.20
+noise_pollution,high,Loud generator running continuously this morning,0.66
+sanitation,high,Sewage water on street at Kengeri Satellite Town,0.71
+waste_management,high,Illegal dumping blocking ward for over a week,0.66
+water_supply,critical,Major water pipe rupture causing waterlogging,0.93
+animal_control,medium,Stray cattle concern,0.44
+parks_recreation,low,Minor landscaping issue since Diwali,0.20
+sanitation,critical,Raw sewage leak in residential area for past 2 weeks,0.97
+traffic,low,Single lane closure at Jayadeva Flyover,0.28
+street_lighting,high,Street light pole leaning at Residency Road,0.70
+public_transport,medium,Inadequate bus frequency during peak hours,0.49
+animal_control,critical,Dangerous animal in populated area,0.97
+parks_recreation,medium,Minor equipment issue for 3 days,0.44
+sanitation,critical,Sewage overflow near elementary school,0.96
+water_supply,low,Slight water pressure issue in colony,0.25
+electricity,low,Minor electrical concern in colony since Diwali,0.28
+sanitation,low,Routine drain maintenance needed for past 2 weeks,0.30
+sanitation,medium,Partial sewer blockage at layout,0.49
+traffic,critical,Multi-vehicle collision on flyover since last night,0.95
+street_lighting,medium,Light timing issue at Jayadeva Flyover,0.44
+parks_recreation,medium,Minor equipment issue during peak hours,0.46
+air_quality,critical,Gas leak in public area since Diwali,0.91
+sanitation,critical,Sewage system failure at Brigade Road,0.99
+public_transport,low,Minor complaint about bus conductor for past 2 weeks,0.25
+public_transport,critical,Major safety hazard on Volvo bus,0.92
+parks_recreation,critical,Major safety hazard at Tin Factory,0.87
+drainage,low,Slight water accumulation,0.24
+noise_pollution,critical,Industrial machinery causing health issues since Diwali,0.92
+animal_control,medium,Stray cattle concern,0.44
+public_transport,high,Multiple BMTC buses not running on route 200,0.69
+drainage,low,Small drainage concern,0.20
+building_maintenance,low,Routine upkeep,0.27
+sanitation,low,Routine drain maintenance needed,0.26
+public_transport,medium,BMTC bus delays on route 20 since last night,0.44
+building_maintenance,low,Minor maintenance since Diwali,0.20
+air_quality,low,Slight odor for past 2 weeks,0.22
+noise_pollution,high,Heavy machinery noise at Electronic City Phase 1 since last night,0.66
+noise_pollution,medium,Occasional loud noise,0.46
+animal_control,low,Minor wildlife concern,0.27
+drainage,medium,Minor waterlogging,0.48
+waste_management,low,Green bin needs emptying at Tin Factory this morning,0.26
+electricity,high,Power surge damaging appliances in Commercial Street since monsoon,0.71
+traffic,low,Temporary delay due to VIP movement for past 2 weeks,0.27
+traffic,critical,Multi-vehicle collision on flyover,0.92
+drainage,high,Multiple drains blocked,0.73
+waste_management,critical,Hazardous material spill in ward,0.93
+roads,medium,Faded zebra crossing on Basavanagudi Bull Temple Road since yesterday,0.47
+traffic,medium,BBMP road work causing delays at nagar,0.48
+electricity,low,Single street light not working at Yelahanka New Town,0.27
+sanitation,critical,Major sewage backup affecting 150 homes,0.94
+electricity,low,Power outlet issue at BTM Layout 2nd Stage,0.29
+traffic,critical,Namma Metro work blocking all lanes at locality,0.93
+air_quality,medium,Minor pollution issue during peak hours,0.44
+traffic,critical,Major accident blocking Outer Ring Road,0.87
+public_safety,low,Minor concern at colony,0.27
+public_safety,high,Dangerous tree about to fall since monsoon,0.74
+building_maintenance,high,Wall damage at Majestic Bus Stand,0.67
+noise_pollution,medium,Intermittent disturbance for past 2 weeks,0.49
+parks_recreation,high,Vandalism damage at extension,0.74
+street_lighting,low,Power outlet issue at Brigade Road,0.24
+water_supply,medium,Slow water drainage in nagar,0.53
+public_transport,high,Overcrowded BMTC buses causing safety issues,0.73
+air_quality,low,Minor air quality concern,0.24
+parks_recreation,medium,Grass overgrown at Shivajinagar,0.41
+drainage,low,Routine cleaning needed after recent rains,0.25
+sanitation,medium,Bad odor from drain at Old Airport Road,0.48
+air_quality,high,Foul smell affecting area since yesterday,0.75
+waste_management,medium,Missed dry waste collection in Koramangala 5th Block,0.41
+electricity,high,Transformer overheating at locality since last night,0.75
+parks_recreation,medium,Path needs cleaning,0.47
+traffic,medium,School zone congestion at Vijayanagar,0.42
+public_safety,medium,Uneven surface causing trips,0.54
+electricity,medium,Power cut during peak hours at zone since last night,0.50
+noise_pollution,low,Brief noise complaint,0.27
+building_maintenance,high,Roof leaking badly,0.65
+public_safety,high,Exposed electrical wires at Peenya Industrial Area,0.75
+public_safety,high,Unsafe construction at BTM Layout 2nd Stage,0.72
+electricity,low,Single street light not working at Malleshwaram 8th Cross since yesterday,0.22
+electricity,high,Frequent power cuts in Vijayanagar,0.73
+animal_control,high,Stray dog menace at Basavanagudi Bull Temple Road since last night,0.73
+animal_control,high,Animal creating safety hazard,0.75
+water_supply,low,Minor water quality concern in Old Airport Road,0.29
+parks_recreation,critical,Major safety hazard at Gandhi Bazaar since monsoon,0.89
+sanitation,medium,Partial sewer blockage at pura,0.50
+noise_pollution,critical,Extremely loud industrial noise 24/7,0.91
+water_supply,critical,Major water pipe rupture causing road damage,0.95
+drainage,critical,Drainage system collapse,0.92
+sanitation,critical,Open drain overflow creating health hazard,0.99
+public_safety,critical,Major safety hazard affecting 30 people,0.93
+street_lighting,critical,Multiple poles damaged in Kengeri Satellite Town,0.90
+sanitation,high,Broken manhole cover at colony,0.76
+public_transport,critical,Complete Namma Metro service shutdown,0.93
+parks_recreation,medium,Grass overgrown at Majestic Bus Stand,0.48
+street_lighting,high,Most street lights not working on Mysore Road,0.72
+drainage,medium,Moderate drainage issue for past 2 weeks,0.47
+public_safety,critical,Immediate evacuation needed at Bellary Road,0.97
+sanitation,low,Minor drainage concern in locality,0.21
+roads,high,Large pothole causing two-wheeler accidents on Koramangala 5th Block,0.72
+animal_control,low,Occasional animal sighting,0.28
+animal_control,high,Stray dog menace at Marathahalli Outer Ring Road,0.69
+roads,critical,Major road cave-in on pura since yesterday,0.90
+animal_control,high,Monkey troop causing damage for over a week,0.72
+building_maintenance,low,Minor issue,0.25
+noise_pollution,low,Low-level noise issue since yesterday,0.23
+electricity,high,Multiple street lights not working on JP Nagar 7th Phase,0.71
+water_supply,medium,Water discoloration reported in zone,0.51
+animal_control,critical,Dangerous animal in populated area during peak hours,0.98
+waste_management,low,Single overflowing dustbin at Indiranagar 100 Feet Road since yesterday,0.28
+sanitation,low,Slight drain smell at Vijayanagar since Diwali,0.21
+traffic,critical,Road completely blocked at Marathahalli Outer Ring Road,0.89
+waste_management,low,Bin placement issue at Old Airport Road,0.29
+traffic,high,Illegal parking blocking entire street at nagar,0.72
+building_maintenance,critical,Building collapse risk for over a week,0.93
+street_lighting,medium,Several street lights out on Tin Factory for over a week,0.46
+water_supply,high,Broken fire hydrant flooding Whitefield Main Road since last night,0.76
+roads,low,Minor crack in footpath at extension,0.25
+public_transport,critical,Complete Namma Metro service shutdown,0.89
+waste_management,medium,Missed dry waste collection in Commercial Street since monsoon,0.45
+noise_pollution,medium,Construction noise during day,0.49
+roads,medium,Broken speed breaker at layout,0.40
+roads,high,Fallen tree blocking zone since last night,0.71
+electricity,low,Power outlet issue at Marathahalli Outer Ring Road since last night,0.21
+air_quality,low,Slight odor,0.21
+roads,critical,Road completely blocked by power cut,0.88
+traffic,medium,Faded road markings at Basavanagudi Bull Temple Road,0.46
+roads,medium,Construction debris on Majestic Bus Stand for over a week,0.45
+drainage,high,Standing water for days,0.80
+parks_recreation,critical,Park flooding affecting 20 visitors,0.87
+water_supply,medium,Low water pressure in Bellary Road,0.54
+public_safety,critical,Major safety hazard affecting 150 people,0.91
+drainage,medium,Minor waterlogging since Diwali,0.53
+air_quality,medium,Intermittent odor,0.47
+noise_pollution,medium,Construction noise during day,0.40
+parks_recreation,critical,Park flooding affecting 75 visitors,0.94
+water_supply,medium,Minor water leak at Majestic Bus Stand,0.53
+animal_control,low,Low-priority animal issue since last night,0.23
+water_supply,low,Water meter reading issue at nagar,0.30
+public_safety,critical,Dangerous structure at cross,0.95
+roads,high,Major crater in middle of road at nagar during peak hours,0.70
+animal_control,low,Minor wildlife concern,0.20
+water_supply,low,Small leak from Kengeri Satellite Town,0.26
+public_transport,low,Metro station announcement unclear,0.25
+public_safety,medium,Broken fence at Residency Road,0.50
+building_maintenance,medium,Door/window repair needed for 3 days,0.44
+noise_pollution,high,Loud construction during night hours,0.69
+water_supply,high,Broken fire hydrant flooding Residency Road,0.70
+drainage,medium,Partial blockage,0.45
+noise_pollution,high,Music event exceeding limits,0.70
+sanitation,high,Drain overflow during rain at Yelahanka New Town during peak hours,0.73
+street_lighting,medium,Dim lighting at nagar,0.42
+traffic,medium,Faded road markings at Majestic Bus Stand since Diwali,0.47
+roads,high,Footpath encroachment blocking pedestrians at layout,0.75
+water_supply,high,Large water leak in Tumkur Road,0.71
+animal_control,high,Multiple stray animals,0.68
+street_lighting,low,Minor electrical concern in layout this morning,0.30
+noise_pollution,high,Loud generator running continuously,0.73
+electricity,critical,Exposed high voltage cables at Kanakapura Road for over a week,0.98
+water_supply,medium,Minor water leak at Tumkur Road,0.52
+sanitation,critical,Sewage system failure at Rajajinagar Double Road for 3 days,0.94
+public_safety,low,Routine safety check needed,0.23
+electricity,medium,Voltage fluctuation in colony,0.53
+noise_pollution,low,Occasional disturbance,0.29
+public_transport,high,Severe delays on Purple Line Metro since monsoon,0.71
+parks_recreation,medium,Path needs cleaning since yesterday,0.42
+traffic,critical,Metro construction causing complete traffic standstill,0.89
+noise_pollution,low,Occasional disturbance since last night,0.26
+public_transport,low,Metro station announcement unclear since yesterday,0.29
+parks_recreation,low,Small repair needed after recent rains,0.22
+electricity,high,Transformer overheating at ward,0.72
+building_maintenance,medium,Door/window repair needed,0.47
+animal_control,low,Birds nesting,0.27
+air_quality,medium,Minor pollution issue,0.44
+air_quality,low,Temporary smell,0.29
+parks_recreation,medium,Park needs maintenance,0.46
+noise_pollution,critical,Industrial machinery causing health issues,0.91
+animal_control,low,Low-priority animal issue after recent rains,0.28
+roads,high,Footpath encroachment blocking pedestrians at extension for over a week,0.72
+animal_control,low,Minor wildlife concern,0.28
+street_lighting,medium,Several street lights out on Mysore Road,0.47
+drainage,high,Multiple drains blocked,0.76
+electricity,high,Multiple street lights not working on RT Nagar Main Road,0.80
+street_lighting,medium,Street lights on during day at Gandhi Bazaar,0.43
+street_lighting,medium,Light timing issue at Residency Road,0.41
+roads,low,Minor road wear at RT Nagar Main Road for past 2 weeks,0.22
+waste_management,low,Bin placement issue at Tin Factory since Diwali,0.23
+traffic,critical,Road completely blocked at Church Street since monsoon,0.92
+roads,low,Small pothole on Bellary Road since monsoon,0.21
+air_quality,critical,Chemical smell causing health issues,0.89
+air_quality,low,Minor air quality concern,0.30
+animal_control,low,Low-priority animal issue,0.26
+waste_management,medium,Scattered litter in Yeshwanthpur Circle,0.41
+sanitation,high,Sewage smell affecting pura,0.70
+water_supply,medium,Intermittent water supply in Kengeri Satellite Town,0.46
+animal_control,high,Multiple stray animals,0.75
+parks_recreation,high,Park gate damaged at Dairy Circle since Diwali,0.67
+waste_management,low,Minor litter on sector for past 2 weeks,0.20
+parks_recreation,low,Small repair needed,0.27
+electricity,medium,Street light flickering at Sarjapur Road for past 2 weeks,0.53
+traffic,low,Street light not working causing confusion at Silk Board Junction,0.26
+animal_control,high,Animal creating safety hazard,0.71
+building_maintenance,medium,Minor structural concern,0.40
+sanitation,low,Small blockage at locality during peak hours,0.20
+animal_control,low,Birds nesting,0.29
+air_quality,high,Smoke from burning waste,0.74
+roads,critical,Flyover collapse at RT Nagar Main Road,0.95
+drainage,critical,Emergency drainage issue,0.92
+water_supply,high,Water meter reading dispute at Indiranagar 100 Feet Road,0.74
+waste_management,low,Green bin needs emptying at Vijayanagar,0.26
+animal_control,high,Multiple stray animals,0.75
+water_supply,critical,Water main break flooding 10 homes,0.94
+water_supply,low,Dripping faucet at Rajajinagar Double Road,0.30
+traffic,medium,School zone congestion at Sarjapur Road since last night,0.48
+air_quality,high,Strong chemical odor,0.69
+electricity,medium,Intermittent power supply in Church Street,0.47
+sanitation,critical,Sewage overflow near elementary school,0.96
+street_lighting,high,Street light pole leaning at Kanakapura Road,0.76
+air_quality,low,Slight odor since monsoon,0.26
+building_maintenance,medium,Door/window repair needed for over a week,0.43
+electricity,critical,Sparking electrical wires near locality,0.91
+sanitation,critical,Open drain overflow creating health hazard,0.99
+traffic,medium,Faded road markings at Old Airport Road,0.45
+sanitation,medium,Minor sewage issue in extension during peak hours,0.54
+traffic,critical,Namma Metro work blocking all lanes at area,0.87
+street_lighting,critical,Multiple poles damaged in Hosur Road,0.90
+roads,high,Footpath encroachment blocking pedestrians at pura,0.76
+waste_management,low,Small amount of trash near locality,0.26
+drainage,medium,Drain needs cleaning,0.51
+waste_management,critical,Toxic waste dumped near Majestic Bus Stand,0.93
+air_quality,low,Minor air quality concern this morning,0.28
+public_transport,low,Metro station announcement unclear,0.28
+public_safety,critical,Building collapse risk at Kengeri Satellite Town since Diwali,0.95
+sanitation,high,Sewage water on street at Rajajinagar Double Road during peak hours,0.80
+air_quality,medium,Moderate air quality concern during peak hours,0.44
+electricity,high,Power surge damaging appliances in Commercial Street for past 2 weeks,0.74
+animal_control,critical,Aggressive stray dog pack during peak hours,0.94
+water_supply,critical,Contaminated Cauvery water supply affecting cross since yesterday,0.93
+roads,medium,Uneven road surface at area,0.49
+waste_management,high,Multiple overflowing BBMP bins in Bannerghatta Road since last night,0.68
+public_safety,high,Deep open pit at ward,0.80
+street_lighting,low,Power outlet issue at Kengeri Satellite Town,0.25
+building_maintenance,high,Broken windows creating hazard,0.67
+waste_management,critical,Chemical waste leak affecting 50 residents for past 2 weeks,0.89
+roads,high,Large pothole causing two-wheeler accidents on Yeshwanthpur Circle,0.73
+drainage,low,Preventive maintenance required,0.24
+parks_recreation,medium,Park needs maintenance since yesterday,0.47
+roads,critical,Major road cave-in on extension,0.92
+public_safety,critical,Gas leak in public area,0.94
+noise_pollution,high,Excessive noise from commercial area,0.72
+waste_management,low,Bin placement issue at Kanakapura Road,0.24
+roads,low,Faded road markings at KR Market,0.25
+public_safety,medium,Broken fence at Electronic City Phase 1 for over a week,0.50
+roads,critical,Flyover collapse at Tin Factory,0.94
+animal_control,low,Minor wildlife concern,0.27
+traffic,low,Single lane closure at Malleshwaram 8th Cross,0.26
+building_maintenance,medium,Small leak,0.41
+air_quality,critical,Toxic fumes from factory,0.95
+parks_recreation,medium,Minor equipment issue,0.45
+sanitation,critical,Sewage overflow near elementary school,0.93
+drainage,critical,Major flooding due to drain failure,0.93
+traffic,low,Minor traffic slowdown at colony,0.26
+traffic,medium,Heavy traffic during peak hours at Hebbal Flyover,0.42
+public_safety,medium,Minor safety concern at nagar,0.55
+building_maintenance,high,Broken windows creating hazard,0.72
+drainage,low,Preventive maintenance required since Diwali,0.23
+waste_management,high,Plastic waste scattered across Old Airport Road since monsoon,0.70
+animal_control,medium,Occasional animal issue,0.42
+animal_control,low,Birds nesting after recent rains,0.27
+sanitation,medium,Slow drainage in Whitefield Main Road since Diwali,0.53
+waste_management,low,Green bin needs emptying at Hebbal Flyover during peak hours,0.27
+public_safety,medium,Damaged playground equipment,0.47
+parks_recreation,high,Broken playground equipment for over a week,0.74
+waste_management,critical,Hazardous material spill in ward,0.87
+drainage,medium,Partial blockage,0.55
+roads,medium,Minor road damage at cross,0.46
+air_quality,high,Factory emissions exceeding limits,0.72
+traffic,critical,Road completely blocked at Whitefield Main Road,0.93
+street_lighting,high,Frequent light failures on nagar for over a week,0.69
+traffic,high,Vendor encroachment causing traffic jam at Dairy Circle,0.66
+animal_control,low,Low-priority animal issue,0.21
+traffic,critical,Major accident blocking Outer Ring Road,0.91
+animal_control,low,Occasional animal sighting,0.25
+sanitation,medium,Bad odor from drain at Mysore Road,0.48
+building_maintenance,medium,Minor structural concern,0.47
+electricity,low,Dim lighting in nagar,0.23
+air_quality,medium,Dust from unpaved road since yesterday,0.43
+building_maintenance,critical,Immediate repair needed,0.89
+noise_pollution,critical,Industrial machinery causing health issues,0.91
+building_maintenance,high,Wall damage at Basavanagudi Bull Temple Road,0.66
+noise_pollution,low,Low-level noise issue since last night,0.27
+traffic,medium,Traffic police absent at busy junction ward,0.48
+street_lighting,low,Dim lighting in extension since Diwali,0.25
+street_lighting,critical,Street light pole fallen at Basavanagudi Bull Temple Road,0.95
+public_transport,medium,Bus schedule not followed at Sarjapur Road,0.49
+street_lighting,high,Dark stretch creating safety issue at cross,0.73
+building_maintenance,critical,Safety hazard at building since last night,0.93
+roads,medium,Uneven road surface at locality,0.40
+sanitation,low,Drain cover loose at HSR Layout Sector 1 since last night,0.20
+roads,medium,Faded zebra crossing on Peenya Industrial Area,0.49
+electricity,low,Single street light not working at Kengeri Satellite Town,0.30
+street_lighting,medium,Intermittent lighting at zone,0.42
+traffic,medium,Faded road markings at Kanakapura Road since monsoon,0.42
+waste_management,medium,Scattered litter in Bellary Road,0.50
+parks_recreation,critical,Dangerous equipment in playground,0.92
+noise_pollution,high,Music event exceeding limits since monsoon,0.72
+electricity,low,Minor electrical concern in zone during peak hours,0.29
+public_transport,low,Metro station announcement unclear,0.28
+air_quality,low,Minor air quality concern,0.30
+roads,high,Heavy waterlogging making Basavanagudi Bull Temple Road impassable,0.71
+parks_recreation,low,Small repair needed,0.29
+street_lighting,medium,Intermittent lighting at sector since monsoon,0.44
+sanitation,critical,Sewage overflow near elementary school,0.95
+waste_management,medium,Moderate waste accumulation in Church Street,0.42
+traffic,critical,Namma Metro work blocking all lanes at locality,0.92
+drainage,critical,Storm drain completely blocked,0.94
+waste_management,medium,Missed dry waste collection in Sarjapur Road,0.44
+public_safety,medium,Broken fence at Old Airport Road,0.50
+street_lighting,high,Dark stretch creating safety issue at colony,0.75
+animal_control,high,Animal creating safety hazard,0.68
+public_transport,high,Severe delays on Purple Line Metro since yesterday,0.69
+street_lighting,medium,Several street lights out on Whitefield Main Road,0.48
+air_quality,critical,Gas leak in public area,0.93
+air_quality,high,Factory emissions exceeding limits,0.71
+parks_recreation,critical,Dangerous equipment in playground,0.93
+parks_recreation,critical,Toxic substance in park,0.90
+traffic,low,Temporary delay due to VIP movement for past 2 weeks,0.23
+electricity,low,Power outlet issue at Bannerghatta Road for past 2 weeks,0.26
+noise_pollution,critical,Construction noise violating limits,0.86
+public_safety,high,Dangerous tree about to fall for over a week,0.74
+waste_management,medium,Segregated waste mixed by collectors at nagar for over a week,0.49
+sanitation,critical,Raw sewage leak in residential area,0.93
+parks_recreation,high,Park gate damaged at Jayanagar 4th Block since yesterday,0.67
+parks_recreation,high,Park gate damaged at Peenya Industrial Area,0.75
+roads,high,Heavy waterlogging making Mysore Road impassable for 3 days,0.75
+noise_pollution,low,Low-level noise issue for past 2 weeks,0.25
+street_lighting,critical,Multiple poles damaged in KR Market,0.94
+traffic,critical,Metro construction causing complete traffic standstill,0.86
+animal_control,medium,Minor animal nuisance,0.48
+electricity,low,Light bulb replacement needed at Jayadeva Flyover,0.22
+waste_management,low,Minor litter on area since Diwali,0.23
+electricity,high,Electrical pole leaning dangerously at locality since monsoon,0.80
+traffic,high,Traffic signal not working at BTM Layout 2nd Stage,0.75
+building_maintenance,medium,Small leak,0.50
+public_transport,critical,Major safety hazard on Volvo bus since monsoon,0.94
+street_lighting,low,Dim lighting in locality,0.27
+roads,medium,Uneven road surface at area,0.48
+street_lighting,critical,Street light pole fallen at Sarjapur Road,0.90
+animal_control,high,Multiple stray animals,0.76
+building_maintenance,high,Water damage to building for past 2 weeks,0.75
+roads,low,Minor crack in footpath at cross this morning,0.27
+electricity,low,Light bulb replacement needed at RT Nagar Main Road after recent rains,0.30
+street_lighting,low,Minor electrical concern in extension,0.23
+traffic,high,Auto rickshaw strike causing chaos at layout,0.74
+water_supply,low,Minor water quality concern in RT Nagar Main Road,0.24
+water_supply,low,Small leak from Hosur Road,0.30
+waste_management,high,Plastic waste scattered across KR Market,0.71
+air_quality,critical,Gas leak in public area since monsoon,0.95
+drainage,high,Multiple drains blocked,0.75
+street_lighting,medium,Several street lights out on Whitefield Main Road,0.47
+electricity,critical,Sparking electrical wires near colony,0.93
+air_quality,high,Strong chemical odor,0.72
+traffic,critical,Major accident blocking Outer Ring Road,0.89
+parks_recreation,critical,Toxic substance in park,0.93
+public_transport,high,Metro station escalator broken at locality,0.75
+waste_management,low,Bin placement issue at Hebbal Flyover,0.27
+animal_control,low,Low-priority animal issue since monsoon,0.27
+parks_recreation,medium,Path needs cleaning since monsoon,0.42
+air_quality,high,Foul smell affecting area,0.77
+sanitation,medium,Slow drainage in Dairy Circle,0.53
+parks_recreation,medium,Grass overgrown at Tumkur Road,0.49
+water_supply,critical,Brown water coming from taps in sector,0.96
+parks_recreation,medium,Benches need repair for 3 days,0.47
+air_quality,low,Slight odor,0.29
+building_maintenance,low,Cosmetic repair needed,0.25
+drainage,high,Standing water for days,0.79
+waste_management,medium,Segregated waste mixed by collectors at locality,0.46
+building_maintenance,low,Small touch-up required,0.30
+parks_recreation,low,Minor landscaping issue since yesterday,0.27
+noise_pollution,low,Low-level noise issue,0.24
+noise_pollution,critical,Industrial machinery causing health issues,0.87
+waste_management,medium,Missed dry waste collection in Yeshwanthpur Circle,0.42
+roads,low,Slight pavement unevenness on ward,0.29
+public_transport,high,Severe delays on Purple Line Metro,0.72
+waste_management,high,Overflowing bins causing health hazard in colony,0.67
+street_lighting,high,Most street lights not working on Yeshwanthpur Circle,0.78
+building_maintenance,critical,Building collapse risk,0.92
+traffic,high,Vendor encroachment causing traffic jam at Marathahalli Outer Ring Road,0.74
+sanitation,high,Broken manhole cover at pura,0.72
+electricity,medium,Power cut during peak hours at cross,0.46
+street_lighting,high,Dark stretch creating safety issue at ward,0.72
+street_lighting,critical,All street lights out on highway,0.97
+electricity,medium,Voltage fluctuation in zone,0.45
+noise_pollution,high,Loud generator running continuously since last night,0.70
+parks_recreation,high,Broken playground equipment,0.73
+water_supply,low,Minor water quality concern in Malleshwaram 8th Cross,0.21
+sanitation,high,Broken manhole cover at ward,0.74
+building_maintenance,medium,Door/window repair needed during peak hours,0.45
+water_supply,critical,Burst BWSSB water main flooding Vijayanagar,0.97
+street_lighting,medium,Several street lights out on JP Nagar 7th Phase,0.47
+building_maintenance,medium,Paint peeling,0.45
+street_lighting,critical,Multiple poles damaged in Rajajinagar Double Road since monsoon,0.90
+roads,medium,Uneven road surface at area,0.42
+waste_management,medium,Scattered litter in Bannerghatta Road,0.48
+public_transport,high,Multiple BMTC buses not running on route 50,0.70
+animal_control,low,Birds nesting since monsoon,0.22
+electricity,medium,Electrical meter malfunction at Electronic City Phase 1 this morning,0.47
+traffic,low,Street light not working causing confusion at Chickpet Main Road since Diwali,0.27
+electricity,critical,Sparking electrical wires near area,0.96
+building_maintenance,high,Wall damage at Bellary Road,0.65
+air_quality,medium,Moderate air quality concern,0.46
+electricity,medium,Street light flickering at Bannerghatta Road since yesterday,0.46
+drainage,medium,Partial blockage,0.54
+roads,high,Footpath encroachment blocking pedestrians at extension,0.69
+street_lighting,low,Power outlet issue at Koramangala 5th Block,0.30
+public_safety,high,Dangerous tree about to fall,0.79
+public_transport,low,Bus stop information board faded at Jayadeva Flyover,0.20
+public_transport,medium,Bus schedule not followed at Brigade Road for 3 days,0.43
+public_safety,low,Small hazard at MG Road,0.20
+building_maintenance,critical,Immediate repair needed,0.88
+public_transport,medium,Bus schedule not followed at Gandhi Bazaar for over a week,0.48
+traffic,low,Single lane closure at Malleshwaram 8th Cross this morning,0.23
+street_lighting,critical,Street light pole fallen at Old Airport Road for past 2 weeks,0.91
+public_transport,low,Minor complaint about bus conductor,0.21
+parks_recreation,high,Vandalism damage at cross,0.68
+drainage,critical,Major flooding due to drain failure,0.94
+electricity,low,Minor electrical concern in extension since monsoon,0.26
+street_lighting,critical,Electrical hazard from street light at layout,0.94
+water_supply,critical,Emergency water shutoff needed at KR Market this morning,0.95
+waste_management,low,Bin placement issue at Kengeri Satellite Town,0.23
+air_quality,low,Slight odor,0.23
+electricity,medium,Voltage fluctuation in extension,0.47
+roads,low,Faded road markings at Jayanagar 4th Block,0.26
+parks_recreation,critical,Dangerous equipment in playground,0.88
+electricity,high,Multiple street lights not working on Peenya Industrial Area,0.71
+traffic,low,Street light not working causing confusion at Sarjapur Road,0.28
+roads,critical,Structural damage to flyover at HSR Layout Sector 1,0.93
+air_quality,critical,Chemical smell causing health issues,0.90
+building_maintenance,critical,Immediate repair needed,0.86
+drainage,low,Routine cleaning needed,0.23
+roads,high,Heavy waterlogging making Kengeri Satellite Town impassable during peak hours,0.77
+animal_control,critical,Aggressive stray dog pack,0.93
+public_transport,critical,Complete Namma Metro service shutdown,0.89
+public_safety,critical,Immediate evacuation needed at JP Nagar 7th Phase,0.92
+traffic,high,Traffic signal not working at Basavanagudi Bull Temple Road,0.71
+roads,high,Large pothole causing two-wheeler accidents on Bellary Road,0.78
+noise_pollution,high,Heavy machinery noise at Sarjapur Road,0.68
+public_safety,medium,Uneven surface causing trips,0.48
+traffic,critical,Multi-vehicle collision on flyover,0.92
+parks_recreation,critical,Structural damage to park facility for past 2 weeks,0.91
+air_quality,high,Dust pollution from construction,0.69
+drainage,critical,Drainage system collapse since monsoon,0.95
+street_lighting,low,Light bulb replacement needed at Old Airport Road during peak hours,0.24
+drainage,low,Preventive maintenance required since monsoon,0.21
+electricity,medium,Voltage fluctuation in zone,0.47
+parks_recreation,medium,Path needs cleaning,0.49
+animal_control,high,Monkey troop causing damage,0.74
+building_maintenance,low,Minor maintenance,0.21
+public_transport,low,Metro station announcement unclear since monsoon,0.28
+public_safety,medium,Uneven surface causing trips since last night,0.55
+traffic,critical,Namma Metro work blocking all lanes at colony for over a week,0.94
+public_transport,low,Bus stop information board faded at Tumkur Road,0.21
+water_supply,high,Water meter reading dispute at HSR Layout Sector 1,0.80
+animal_control,critical,Dangerous animal in populated area for over a week,0.97
+waste_management,medium,Wet waste not collected on schedule at nagar since last night,0.42
+noise_pollution,critical,Dangerous noise levels at Hosur Road for 3 days,0.88
+public_transport,high,Multiple BMTC buses not running on route 150,0.68
+roads,critical,Road completely blocked by traffic jam,0.97
+public_transport,low,Metro station announcement unclear for over a week,0.22
+waste_management,medium,Moderate waste accumulation in Whitefield Main Road this morning,0.43
+building_maintenance,high,Significant structural issues,0.67
+building_maintenance,low,Minor issue,0.28
+building_maintenance,high,Wall damage at Mysore Road for over a week,0.72
+water_supply,critical,Brown water coming from taps in nagar this morning,0.92
+street_lighting,low,Light bulb replacement needed at Peenya Industrial Area since monsoon,0.24
+air_quality,low,Brief pollution event,0.26
+public_transport,low,Bus stop information board faded at KR Market,0.21
+public_safety,medium,Broken fence at Tin Factory,0.48
+roads,high,Footpath encroachment blocking pedestrians at area after recent rains,0.72
+water_supply,low,Water meter reading issue at layout,0.27
+public_safety,critical,Gas leak in public area,0.94
+drainage,critical,Severe waterlogging affecting 25 homes this morning,0.95
+building_maintenance,high,Significant structural issues,0.70
+electricity,critical,Exposed high voltage cables at HSR Layout Sector 1,0.93
+sanitation,critical,Open drain overflow creating health hazard,0.94
+roads,low,Slight pavement unevenness on sector,0.30
+public_transport,high,Overcrowded BMTC buses causing safety issues,0.68
+public_transport,critical,BMTC bus accident with injuries at Tin Factory,0.89
+water_supply,low,Slight water pressure issue in area,0.26
+street_lighting,low,Light bulb replacement needed at Dairy Circle,0.21
+traffic,critical,Road completely blocked at Dairy Circle,0.93
+sanitation,high,Sewage smell affecting locality,0.74
+water_supply,low,Slight water pressure issue in pura,0.29
+traffic,critical,Namma Metro work blocking all lanes at ward,0.91
+air_quality,high,Smoke from burning waste this morning,0.74
+sanitation,low,Minor drainage concern in zone for over a week,0.26
+parks_recreation,high,Broken playground equipment,0.66
+sanitation,high,Clogged sewer line in Brigade Road,0.78
+noise_pollution,critical,Dangerous noise levels at Jayanagar 4th Block this morning,0.93
+sanitation,high,Sewage smell affecting layout,0.71
+street_lighting,critical,Electrical hazard from street light at zone,0.94
+drainage,high,Drainage causing road damage,0.80
+street_lighting,critical,All street lights out on highway,0.91
+air_quality,high,Foul smell affecting area,0.72
+air_quality,medium,Occasional bad smell after recent rains,0.49
+street_lighting,medium,Intermittent lighting at area since last night,0.49
+public_safety,medium,Poor visibility at intersection,0.54
+animal_control,critical,Multiple animal attacks reported,0.91
+traffic,low,Temporary delay due to VIP movement,0.21
+parks_recreation,critical,Dangerous equipment in playground for over a week,0.94
+public_transport,high,Bus stop shelter collapsed at Jayadeva Flyover since monsoon,0.72
+building_maintenance,medium,Door/window repair needed,0.49
+waste_management,medium,Scattered litter in HSR Layout Sector 1,0.41
+sanitation,medium,Bad odor from drain at Church Street since monsoon,0.52
+sanitation,low,Minor drainage concern in cross,0.26
+electricity,low,Dim lighting in layout,0.24
+water_supply,medium,Slow water drainage in ward,0.46
+noise_pollution,critical,Dangerous noise levels at JP Nagar 7th Phase,0.93
+public_safety,low,Routine safety check needed since monsoon,0.28
+roads,medium,Uneven road surface at cross for 3 days,0.46
+building_maintenance,critical,Immediate repair needed,0.86
+roads,medium,Faded zebra crossing on Kanakapura Road since yesterday,0.46
+building_maintenance,medium,Paint peeling,0.50
+public_safety,critical,Dangerous structure at colony since Diwali,0.92
+waste_management,medium,Moderate waste accumulation in Jayadeva Flyover,0.46
+public_transport,low,Single BMTC bus late since yesterday,0.26
+public_transport,critical,BMTC bus accident with injuries at Tumkur Road,0.93
+roads,high,Large pothole causing two-wheeler accidents on Hebbal Flyover,0.72
+public_transport,critical,Complete Namma Metro service shutdown after recent rains,0.87
+public_transport,high,Severe delays on Purple Line Metro this morning,0.75
+electricity,medium,Power cut during peak hours at locality,0.49
+sanitation,medium,Partial sewer blockage at pura after recent rains,0.49
+water_supply,high,Broken fire hydrant flooding Dairy Circle,0.79
+waste_management,high,Large garbage pile attracting stray dogs in Tumkur Road for 3 days,0.70
+noise_pollution,critical,Construction noise violating limits during peak hours,0.88
+water_supply,medium,Water discoloration reported in cross,0.45
+parks_recreation,low,Trash bin full,0.28
+waste_management,critical,Open garbage burning causing pollution at Jayanagar 4th Block for past 2 weeks,0.90
+animal_control,low,Occasional animal sighting,0.25
+noise_pollution,low,Brief noise complaint,0.29
+public_transport,high,Bus stop shelter collapsed at Tumkur Road,0.66
+electricity,critical,Transformer explosion at Peenya Industrial Area after recent rains,0.90
+animal_control,medium,Animal control needed,0.45
+public_transport,medium,Bus schedule not followed at Tumkur Road for 3 days,0.43
+waste_management,high,Multiple overflowing BBMP bins in BTM Layout 2nd Stage,0.70
+waste_management,critical,Hazardous material spill in nagar this morning,0.90
+animal_control,high,Animal creating safety hazard for past 2 weeks,0.76
+animal_control,high,Monkey troop causing damage during peak hours,0.74
+drainage,high,Multiple drains blocked,0.72
+sanitation,high,Sewage smell affecting ward since Diwali,0.73
+public_safety,medium,Damaged playground equipment,0.49
+building_maintenance,high,Water damage to building,0.70
+roads,medium,Construction debris on Hebbal Flyover,0.44
+waste_management,high,Large garbage pile attracting stray dogs in Electronic City Phase 1 after recent rains,0.66
+air_quality,high,Foul smell affecting area since monsoon,0.73
+electricity,critical,Transformer explosion at Basavanagudi Bull Temple Road,0.99
+roads,low,Slight pavement unevenness on pura,0.27
+waste_management,low,Small amount of trash near area,0.28
+waste_management,low,Minor litter on sector,0.21
+drainage,critical,Emergency drainage issue,0.94
+drainage,critical,Severe waterlogging affecting 25 homes,0.99
+animal_control,high,Animal creating safety hazard,0.77
+animal_control,high,Monkey troop causing damage for 3 days,0.73
+noise_pollution,medium,Minor noise complaint,0.43
+sanitation,high,Broken manhole cover at locality,0.79
+sanitation,critical,Sewage overflow near elementary school,0.95
+air_quality,critical,Gas leak in public area since yesterday,0.96
+waste_management,medium,Overflowing community bin at extension,0.48
+traffic,high,Traffic signal not working at Hebbal Flyover,0.72
+water_supply,high,Water tanker not arriving for 10 days,0.76
+public_safety,high,Deep open pit at area,0.76
+street_lighting,low,Power outlet issue at Vijayanagar,0.27
+air_quality,low,Minor air quality concern since last night,0.24
+public_transport,high,Severe delays on Purple Line Metro,0.70
+drainage,low,Slight water accumulation,0.27
+noise_pollution,low,Temporary construction noise,0.25
+waste_management,low,Small amount of trash near zone,0.27
+public_transport,medium,BMTC bus delays on route 15,0.42
+air_quality,medium,Dust from unpaved road,0.40
+building_maintenance,critical,Building collapse risk,0.90
+sanitation,low,Routine drain maintenance needed,0.25
+roads,medium,Multiple potholes on Indiranagar 100 Feet Road,0.44
+parks_recreation,medium,Path needs cleaning,0.46
+street_lighting,high,Dark stretch creating safety issue at zone,0.78
+animal_control,medium,Stray dogs in area,0.43
+drainage,high,Heavy waterlogging at Electronic City Phase 1,0.78
+public_safety,medium,Poor visibility at intersection,0.54
+public_safety,critical,Major safety hazard affecting 100 people,0.94
+drainage,medium,Moderate drainage issue,0.50
+roads,medium,Faded zebra crossing on Vijayanagar since yesterday,0.44
+public_safety,low,Minor safety issue,0.22
+traffic,medium,School zone congestion at Shivajinagar,0.44
+noise_pollution,medium,Occasional loud noise,0.45
+drainage,critical,Drainage system collapse,0.99
+noise_pollution,critical,Dangerous noise levels at JP Nagar 7th Phase,0.88
+traffic,high,Illegal parking blocking entire street at pura,0.69
+public_transport,critical,Complete Namma Metro service shutdown since yesterday,0.89
+parks_recreation,low,Small repair needed,0.28
+drainage,medium,Minor waterlogging,0.51
+noise_pollution,high,Heavy machinery noise at MG Road this morning,0.70
+roads,critical,Metro construction causing road collapse at Mysore Road,0.88
+street_lighting,critical,Street light pole fallen at HSR Layout Sector 1 this morning,0.94
+noise_pollution,low,Occasional disturbance,0.29
+roads,low,Small pothole on Whitefield Main Road after recent rains,0.29
+noise_pollution,low,Minor traffic sounds,0.28
+air_quality,medium,Minor pollution issue during peak hours,0.45
+animal_control,low,Single stray animal,0.28
+public_safety,medium,Damaged playground equipment,0.53
+public_safety,high,Exposed electrical wires at HSR Layout Sector 1,0.78
+public_transport,critical,Major safety hazard on Volvo bus for past 2 weeks,0.88
+public_safety,low,Small hazard at Yelahanka New Town,0.29
+public_safety,low,Safety sign needed since Diwali,0.25
+air_quality,critical,Gas leak in public area since last night,0.98
+noise_pollution,low,Low-level noise issue,0.23
+roads,critical,Road completely blocked by garbage accumulation,0.96
+drainage,high,Drain overflow during rain,0.72
+public_transport,high,Severe delays on Purple Line Metro since yesterday,0.67
+noise_pollution,critical,Construction noise violating limits,0.91
+electricity,medium,Intermittent power supply in Kanakapura Road,0.50
+public_transport,low,Minor complaint about bus conductor,0.29
+building_maintenance,low,Small touch-up required,0.25
+building_maintenance,low,Minor maintenance,0.22
+roads,low,Minor crack in footpath at pura,0.25
+sanitation,medium,Bad odor from drain at Mysore Road,0.52
+traffic,high,Illegal parking blocking entire street at zone,0.66
+electricity,high,Transformer overheating at area since last night,0.75
+drainage,medium,Partial blockage after recent rains,0.50
+parks_recreation,critical,Park flooding affecting 30 visitors since last night,0.89
+building_maintenance,low,Minor maintenance for 3 days,0.22
+electricity,medium,Voltage fluctuation in pura,0.48
+roads,critical,Dangerous crater on main road at colony,0.92
+water_supply,medium,Low water pressure in Basavanagudi Bull Temple Road,0.52
+street_lighting,low,Power outlet issue at Jayanagar 4th Block,0.21
+building_maintenance,medium,General maintenance required,0.40
+sanitation,critical,Sewage system failure at HSR Layout Sector 1,0.91
+sanitation,low,Slight drain smell at Rajajinagar Double Road,0.30
+traffic,medium,Traffic police absent at busy junction colony during peak hours,0.44
+public_transport,high,Overcrowded BMTC buses causing safety issues,0.72
+traffic,critical,Metro construction causing complete traffic standstill,0.85
+sanitation,critical,Raw sewage leak in residential area,0.97
+public_transport,medium,Inadequate bus frequency during peak hours since yesterday,0.41
+street_lighting,critical,All street lights out on highway,0.93
+traffic,low,Street light not working causing confusion at Bellary Road,0.20
+air_quality,critical,Industrial pollution emergency for 3 days,0.90
+street_lighting,high,Most street lights not working on MG Road,0.76
+water_supply,critical,Brown water coming from taps in colony since last night,0.96
+electricity,medium,Power cut during peak hours at zone,0.50
+electricity,critical,Exposed high voltage cables at Malleshwaram 8th Cross,0.97
+animal_control,medium,Stray dogs in area,0.47
+air_quality,high,Factory emissions exceeding limits,0.70
+street_lighting,critical,Electrical hazard from street light at sector for over a week,0.90
+sanitation,medium,Drain needs cleaning at MG Road,0.49
+public_transport,medium,Metro card recharge machine not working at ward,0.47
+street_lighting,low,Single street light not working at Old Airport Road since monsoon,0.22
+parks_recreation,low,Routine upkeep required during peak hours,0.23
+sanitation,high,Drain overflow during rain at Hebbal Flyover,0.75
+street_lighting,medium,Dim lighting at extension,0.49
+air_quality,critical,Chemical smell causing health issues,0.93
+water_supply,low,Dripping faucet at Jayanagar 4th Block for 3 days,0.30
+electricity,medium,Electrical meter malfunction at Jayadeva Flyover,0.47
+electricity,high,Transformer overheating at ward,0.72
+animal_control,high,Multiple stray animals,0.75
+water_supply,medium,Slow water drainage in area for over a week,0.52
+public_transport,critical,BMTC depot strike affecting 150 routes since yesterday,0.89
+air_quality,high,Smoke from burning waste,0.75
+noise_pollution,low,Occasional disturbance this morning,0.22
+traffic,medium,Heavy traffic during peak hours at Rajajinagar Double Road,0.42
+street_lighting,low,Single street light not working at Koramangala 5th Block,0.21
+building_maintenance,medium,Door/window repair needed,0.48
+traffic,medium,Heavy traffic during peak hours at Jayadeva Flyover,0.41
+building_maintenance,medium,Small leak,0.41
+traffic,low,Minor traffic slowdown at sector during peak hours,0.27
+water_supply,medium,Intermittent water supply in Kengeri Satellite Town,0.53
+electricity,medium,Electrical meter malfunction at Bannerghatta Road,0.51
+drainage,medium,Drain needs cleaning,0.51
+animal_control,low,Low-priority animal issue since yesterday,0.28
+roads,high,Footpath encroachment blocking pedestrians at nagar,0.74
+public_safety,low,Small hazard at Yelahanka New Town,0.24
+electricity,low,Light bulb replacement needed at Jayadeva Flyover,0.29
+air_quality,low,Small dust issue,0.23
+public_safety,critical,Major safety hazard affecting 25 people since monsoon,0.97
+water_supply,medium,Minor water leak at Vijayanagar,0.49
+roads,medium,Minor road damage at ward,0.42
+animal_control,critical,Dangerous animal in populated area,0.95
+street_lighting,high,Broken street light creating hazard,0.75
+electricity,medium,Power cut during peak hours at nagar,0.48
+sanitation,medium,Partial sewer blockage at layout since yesterday,0.50
+traffic,critical,Road completely blocked at Tumkur Road,0.91
+building_maintenance,high,Water damage to building this morning,0.71
+waste_management,critical,Dangerous waste overflow near school at cross since yesterday,0.85
+public_safety,low,Small hazard at Bannerghatta Road,0.25
+traffic,medium,BBMP road work causing delays at extension,0.41
+traffic,low,Temporary delay due to VIP movement for 3 days,0.22
+building_maintenance,critical,Building collapse risk,0.90
+water_supply,low,Small leak from Hebbal Flyover,0.26
+noise_pollution,low,Temporary construction noise this morning,0.25
+waste_management,high,Overflowing bins causing health hazard in extension,0.73
+public_transport,high,Metro station escalator broken at layout since yesterday,0.67
+sanitation,low,Small blockage at colony,0.24
+parks_recreation,medium,Grass overgrown at Tumkur Road,0.47
+water_supply,low,Dripping faucet at Church Street,0.24
+air_quality,high,Smoke from burning waste,0.76
+air_quality,high,Foul smell affecting area,0.77
+electricity,low,Minor electrical concern in pura,0.27
+parks_recreation,medium,Benches need repair,0.42
+water_supply,medium,Water discoloration reported in sector since yesterday,0.49
+public_safety,low,Small hazard at Bannerghatta Road,0.24
+waste_management,high,Large garbage pile attracting stray dogs in Rajajinagar Double Road,0.73
+noise_pollution,critical,Dangerous noise levels at Old Airport Road,0.94
+public_safety,critical,Building collapse risk at Jayanagar 4th Block,0.92
+noise_pollution,critical,Dangerous noise levels at RT Nagar Main Road since yesterday,0.94
+electricity,low,Minor electrical concern in cross this morning,0.21
+street_lighting,high,Most street lights not working on Church Street,0.77
+noise_pollution,high,Loud generator running continuously,0.73
+drainage,medium,Slow drainage at Jayanagar 4th Block,0.51
+street_lighting,medium,Intermittent lighting at area since yesterday,0.45
+building_maintenance,low,Minor maintenance this morning,0.23
+street_lighting,high,Most street lights not working on Majestic Bus Stand,0.70
+water_supply,high,Large water leak in Indiranagar 100 Feet Road,0.76
+drainage,medium,Partial blockage,0.50
+roads,high,Heavy waterlogging making JP Nagar 7th Phase impassable for over a week,0.71
+drainage,critical,Major flooding due to drain failure,0.98
+sanitation,low,Small blockage at extension,0.25
+parks_recreation,critical,Toxic substance in park since monsoon,0.87
+roads,low,Faded road markings at Tin Factory,0.25
+noise_pollution,medium,Intermittent disturbance,0.48
+street_lighting,critical,All street lights out on highway,0.89
+water_supply,critical,Brown water coming from taps in ward,0.91
+traffic,medium,BBMP road work causing delays at sector,0.46
+roads,medium,Minor road damage at colony for past 2 weeks,0.44
+building_maintenance,critical,Dangerous cracks in building,0.93
+street_lighting,high,Most street lights not working on Sarjapur Road,0.68
+public_transport,medium,Inadequate bus frequency during peak hours since yesterday,0.46
+roads,low,Minor crack in footpath at cross,0.23
+animal_control,medium,Occasional animal issue,0.48
+parks_recreation,high,Overgrown vegetation blocking path,0.65
+street_lighting,low,Power outlet issue at KR Market,0.24
+air_quality,high,Strong chemical odor,0.71
+parks_recreation,high,Park gate damaged at Commercial Street,0.73
+electricity,high,Transformer overheating at nagar,0.77
+electricity,high,Power surge damaging appliances in Whitefield Main Road for 3 days,0.74
+electricity,critical,Electrical fire hazard in nagar,0.92
+public_transport,low,Bus stop information board faded at Jayadeva Flyover since Diwali,0.27
+water_supply,high,Water tanker not arriving for 75 days since last night,0.70
+animal_control,low,Birds nesting since last night,0.26
+parks_recreation,high,Park lighting completely out,0.68
+traffic,high,Severe traffic jam on Silk Board Junction,0.74
+noise_pollution,critical,Construction noise violating limits,0.86
+roads,critical,Metro construction causing road collapse at Kengeri Satellite Town,0.97
+traffic,critical,Namma Metro work blocking all lanes at zone,0.88
+public_transport,critical,Complete Namma Metro service shutdown for over a week,0.85
+building_maintenance,critical,Dangerous cracks in building since Diwali,0.91
+street_lighting,low,Dim lighting in extension,0.26
+noise_pollution,high,Music event exceeding limits for over a week,0.72
+drainage,low,Small drainage concern,0.22
+parks_recreation,high,Overgrown vegetation blocking path for 3 days,0.72
+water_supply,high,Significant water pressure drop in extension,0.76
+waste_management,low,Minor litter on pura,0.29
+water_supply,medium,Low water pressure in Jayanagar 4th Block,0.50
+animal_control,critical,Immediate animal control needed,0.97
+roads,low,Slight pavement unevenness on pura,0.24
+electricity,low,Dim lighting in nagar,0.23
+public_safety,high,Dangerous tree about to fall,0.70
+street_lighting,high,Most street lights not working on Malleshwaram 8th Cross,0.70
+water_supply,high,No Cauvery water supply to 30 households for 3 days,0.75
+public_safety,high,Broken railing at dangerous height,0.79
+water_supply,critical,Brown water coming from taps in area,0.95
+traffic,low,Temporary delay due to VIP movement,0.30
+electricity,medium,Electrical meter malfunction at Residency Road for 3 days,0.53
+electricity,high,Transformer overheating at area,0.74
+public_transport,medium,Bus schedule not followed at Peenya Industrial Area,0.41
+electricity,medium,Street light flickering at Bellary Road,0.53
+roads,critical,Major road cave-in on cross,0.98
+air_quality,medium,Intermittent odor,0.42
+public_safety,high,Broken railing at dangerous height since yesterday,0.78
+animal_control,medium,Stray dogs in area after recent rains,0.41
+building_maintenance,medium,Paint peeling,0.44
+air_quality,high,Foul smell affecting area,0.75
+public_transport,high,Overcrowded BMTC buses causing safety issues for past 2 weeks,0.67
+drainage,low,Small drainage concern this morning,0.27
+public_transport,critical,BMTC bus accident with injuries at Church Street for past 2 weeks,0.91
