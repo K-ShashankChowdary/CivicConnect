@@ -1,60 +1,72 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Configure axios to send cookies with requests
-  const authorizedApi = useMemo(
-    () => {
-      const api = axios.create({
-        baseURL: '/api',
-        withCredentials: true // Send cookies with requests
-      });
+  const authorizedApi = useMemo(() => {
+    const api = axios.create({
+      baseURL: "/api",
+      withCredentials: true, // Send cookies with requests
+    });
 
-      // Add response interceptor to handle token refresh
-      api.interceptors.response.use(
-        (response) => response,
-        async (error) => {
-          const originalRequest = error.config;
+    // Add response interceptor to handle token refresh
+    api.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        const status = error.response?.status;
+        const message = error.response?.data?.message;
 
-          // If access token expired, try to refresh
-          if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        // If access token expired, try to refresh
+        const isAccessTokenExpired =
+          status === 401 &&
+          typeof message === "string" &&
+          message.toLowerCase().includes("expired");
 
-            try {
-              await axios.post('/api/auth/refresh', {}, { withCredentials: true });
-              // Retry the original request
-              return api(originalRequest);
-            } catch (refreshError) {
-              // Refresh failed, logout user
-              setUser(null);
-              window.location.href = '/login';
-              return Promise.reject(refreshError);
-            }
+        if (
+          isAccessTokenExpired &&
+          originalRequest &&
+          !originalRequest._retry
+        ) {
+          originalRequest._retry = true;
+
+          try {
+            await axios.post(
+              "/api/auth/refresh",
+              {},
+              { withCredentials: true }
+            );
+            // Retry the original request
+            return api(originalRequest);
+          } catch (refreshError) {
+            // Refresh failed, logout user
+            setUser(null);
+            window.location.href = "/login";
+            return Promise.reject(refreshError);
           }
-
-          return Promise.reject(error);
         }
-      );
 
-      return api;
-    },
-    []
-  );
+        return Promise.reject(error);
+      }
+    );
+
+    return api;
+  }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const { data } = await authorizedApi.get('/auth/profile');
+        const { data } = await authorizedApi.get("/auth/profile");
         setUser(data.data.user);
       } catch (error) {
-        console.error('Failed to fetch profile', error);
+        console.error("Failed to fetch profile", error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -65,8 +77,8 @@ export const AuthProvider = ({ children }) => {
   }, [authorizedApi]);
 
   const login = async (credentials) => {
-    const { data } = await axios.post('/api/auth/login', credentials, {
-      withCredentials: true // Send cookies
+    const { data } = await axios.post("/api/auth/login", credentials, {
+      withCredentials: true, // Send cookies
     });
     const { user: profile } = data.data;
     setUser(profile);
@@ -74,8 +86,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (payload) => {
-    const { data } = await axios.post('/api/auth/register', payload, {
-      withCredentials: true // Send cookies
+    const { data } = await axios.post("/api/auth/register", payload, {
+      withCredentials: true, // Send cookies
     });
     const { user: profile } = data.data;
     setUser(profile);
@@ -84,9 +96,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await authorizedApi.post('/auth/logout');
+      await authorizedApi.post("/auth/logout");
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
       setUser(null);
     }
@@ -99,7 +111,7 @@ export const AuthProvider = ({ children }) => {
       login,
       register,
       logout,
-      api: authorizedApi
+      api: authorizedApi,
     }),
     [user, loading, authorizedApi]
   );
@@ -108,13 +120,13 @@ export const AuthProvider = ({ children }) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return context;
 };

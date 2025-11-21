@@ -1,27 +1,35 @@
-import { validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 
-import Complaint from '../models/Complaint.js';
-import AppError from '../utils/AppError.js';
-import asyncHandler from '../utils/asyncHandler.js';
-import { predictPriority } from '../services/priorityService.js';
+import Complaint from "../models/Complaint.js";
+import AppError from "../utils/AppError.js";
+import asyncHandler from "../utils/asyncHandler.js";
+import { predictPriority } from "../services/priorityService.js";
 
 export const createComplaint = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError('Validation failed', 422, errors.array());
+    throw new AppError("Validation failed", 422, errors.array());
   }
 
   const { title, category, description, location } = req.body;
 
+  const attachments =
+    Array.isArray(req.files) && req.files.length > 0
+      ? req.files.map((file) => file.path)
+      : [];
+
   const { score, priorityLevel, impactLevel, tags } = await predictPriority({
     category,
     description,
-    location
+    location,
   });
 
   // Validate score
   if (isNaN(score) || score === null || score === undefined) {
-    throw new AppError('Failed to calculate priority score. Please try again.', 500);
+    throw new AppError(
+      "Failed to calculate priority score. Please try again.",
+      500
+    );
   }
 
   const complaint = await Complaint.create({
@@ -34,27 +42,28 @@ export const createComplaint = asyncHandler(async (req, res) => {
     priorityScore: score,
     priorityLevel,
     tags,
-    createdBy: req.user._id
+    attachments,
+    createdBy: req.user._id,
   });
 
   res.status(201).json({
     success: true,
-    data: complaint
+    data: complaint,
   });
 });
 
 export const getMyComplaints = asyncHandler(async (req, res) => {
   const { status, priorityLevel, q } = req.query;
-  
+
   const filter = { createdBy: req.user._id };
-  
+
   if (status) filter.status = status;
   if (priorityLevel) filter.priorityLevel = priorityLevel;
   if (q) {
     filter.$or = [
-      { title: { $regex: q, $options: 'i' } },
-      { description: { $regex: q, $options: 'i' } },
-      { location: { $regex: q, $options: 'i' } }
+      { title: { $regex: q, $options: "i" } },
+      { description: { $regex: q, $options: "i" } },
+      { location: { $regex: q, $options: "i" } },
     ];
   }
 
@@ -66,10 +75,13 @@ export const getMyComplaints = asyncHandler(async (req, res) => {
 });
 
 export const getComplaintById = asyncHandler(async (req, res) => {
-  const complaint = await Complaint.findOne({ _id: req.params.id, createdBy: req.user._id }).lean();
+  const complaint = await Complaint.findOne({
+    _id: req.params.id,
+    createdBy: req.user._id,
+  }).lean();
 
   if (!complaint) {
-    throw new AppError('Complaint not found', 404);
+    throw new AppError("Complaint not found", 404);
   }
 
   res.json({ success: true, data: complaint });
@@ -78,17 +90,20 @@ export const getComplaintById = asyncHandler(async (req, res) => {
 export const updateComplaint = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError('Validation failed', 422, errors.array());
+    throw new AppError("Validation failed", 422, errors.array());
   }
 
-  const complaint = await Complaint.findOne({ _id: req.params.id, createdBy: req.user._id });
+  const complaint = await Complaint.findOne({
+    _id: req.params.id,
+    createdBy: req.user._id,
+  });
 
   if (!complaint) {
-    throw new AppError('Complaint not found', 404);
+    throw new AppError("Complaint not found", 404);
   }
 
-  if (complaint.status !== 'submitted') {
-    throw new AppError('Only submitted complaints can be edited', 400);
+  if (complaint.status !== "submitted") {
+    throw new AppError("Only submitted complaints can be edited", 400);
   }
 
   const { title, category, description, location } = req.body;
@@ -100,19 +115,22 @@ export const updateComplaint = asyncHandler(async (req, res) => {
 
   // Add new uploaded images to existing attachments
   if (req.files && req.files.length > 0) {
-    const newAttachments = req.files.map(file => file.path);
+    const newAttachments = req.files.map((file) => file.path);
     complaint.attachments = [...complaint.attachments, ...newAttachments];
   }
 
   const { score, priorityLevel, impactLevel, tags } = await predictPriority({
     category: complaint.category,
     description: complaint.description,
-    location: complaint.location
+    location: complaint.location,
   });
 
   // Validate score
   if (isNaN(score) || score === null || score === undefined) {
-    throw new AppError('Failed to calculate priority score. Please try again.', 500);
+    throw new AppError(
+      "Failed to calculate priority score. Please try again.",
+      500
+    );
   }
 
   complaint.impact = impactLevel; // AI-predicted impact
