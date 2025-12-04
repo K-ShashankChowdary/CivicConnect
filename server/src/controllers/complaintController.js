@@ -4,6 +4,11 @@ import Complaint from "../models/Complaint.js";
 import AppError from "../utils/AppError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { predictPriority } from "../services/priorityService.js";
+import {
+  attachComplaintEmbedding,
+  reRankComplaintsByIR,
+} from "../services/semanticService.js";
+import { inferComplaintMetadataFromImages } from "../services/visionService.js";
 
 export const createComplaint = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -18,7 +23,7 @@ export const createComplaint = asyncHandler(async (req, res) => {
       ? req.files.map((file) => file.path)
       : [];
 
-  const { score, priorityLevel, impactLevel, tags } = await predictPriority({
+  const { score, priorityLevel, tags } = await predictPriority({
     category,
     description,
     location,
@@ -37,7 +42,6 @@ export const createComplaint = asyncHandler(async (req, res) => {
     category,
     description,
     location,
-    impact: impactLevel, // AI-predicted impact
     incidentTime: new Date(), // Use current timestamp
     priorityScore: score,
     priorityLevel,
@@ -45,6 +49,9 @@ export const createComplaint = asyncHandler(async (req, res) => {
     attachments,
     createdBy: req.user._id,
   });
+
+  await attachComplaintEmbedding(complaint);
+  await complaint.save();
 
   res.status(201).json({
     success: true,
@@ -67,9 +74,11 @@ export const getMyComplaints = asyncHandler(async (req, res) => {
     ];
   }
 
-  const complaints = await Complaint.find(filter)
-    .sort({ createdAt: -1 })
-    .lean();
+  let complaints = await Complaint.find(filter).sort({ createdAt: -1 }).lean();
+
+  if (q) {
+    complaints = await reRankComplaintsByIR(q, complaints);
+  }
 
   res.json({ success: true, data: complaints });
 });
@@ -133,12 +142,43 @@ export const updateComplaint = asyncHandler(async (req, res) => {
     );
   }
 
-  complaint.impact = impactLevel; // AI-predicted impact
   complaint.priorityScore = score;
   complaint.priorityLevel = priorityLevel;
   complaint.tags = tags;
 
+  await attachComplaintEmbedding(complaint);
   await complaint.save();
 
   res.json({ success: true, data: complaint });
+});
+
+export const inferComplaintMetadata = asyncHandler(async (req, res) => {
+  const attachments =
+    Array.isArray(req.files) && req.files.length > 0
+      ? req.files.map((file) => file.path)
+      : [];
+
+  if (attachments.length === 0) {
+    throw new AppError("No images uploaded", 400);
+  }
+
+  const {
+    title: existingTitle,
+    description: existingDescription,
+    category: existingCategory,
+    location,
+  } = req.body || {};
+
+  const { title, description, category } =
+    await inferComplaintMetadataFromImages(attachments, {
+      title: existingTitle,
+      description: existingDescription,
+      category: existingCategory,
+      location,
+    });
+
+  res.json({
+    success: true,
+    data: { title, description, category },
+  });
 });

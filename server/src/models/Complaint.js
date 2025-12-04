@@ -14,11 +14,6 @@ const complaintSchema = new mongoose.Schema(
     category: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     location: { type: String, required: true, trim: true },
-    impact: {
-      type: String,
-      enum: ["low", "medium", "high", "critical"],
-      default: "medium",
-    },
     incidentTime: { type: Date },
     status: {
       type: String,
@@ -41,6 +36,7 @@ const complaintSchema = new mongoose.Schema(
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     resolutionNotes: { type: String, trim: true },
     resolvedAt: { type: Date },
+    embedding: { type: [Number] },
   },
   { timestamps: true }
 );

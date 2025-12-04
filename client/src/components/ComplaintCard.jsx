@@ -98,11 +98,13 @@ const ComplaintCard = ({ complaint, actions }) => {
               spacing={1}
               sx={{ flexWrap: "wrap", gap: 1 }}
             >
-              {complaint.tags?.map((tag) => (
-                <Tooltip key={tag.label} title={tag.label} arrow>
-                  <Chip label={tag.value} size="small" color="default" />
-                </Tooltip>
-              ))}
+              {complaint.tags
+                ?.filter((tag) => tag.label !== "Impact")
+                .map((tag) => (
+                  <Tooltip key={tag.label} title={tag.label} arrow>
+                    <Chip label={tag.value} size="small" color="default" />
+                  </Tooltip>
+                ))}
               {complaint.location && (
                 <Chip
                   label={`Location: ${complaint.location}`}

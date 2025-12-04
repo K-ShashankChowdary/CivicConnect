@@ -1,11 +1,40 @@
 # How the AI Priority Prediction Model Works - Complete Guide
 
-## 🎯 What Does the AI Do?
+## How to Use This Document
+
+This guide is written as a reference chapter for developers and stakeholders who want to understand **how the AI priority model is designed and implemented**.
+
+- If you want a **conceptual overview** of the whole product, start with `MASTER_DOCUMENTATION.md`.
+- If you want to understand **how priority scores are computed**, read this document from top to bottom.
+- If you only need certain parts:
+  - See **Part 1** for feature engineering (how text becomes numbers).
+  - See **Part 2** for the neural network architecture.
+  - See **Part 3** for the training loop.
+  - See **Part 4 and 5** for inference and real‑world examples.
+  - See **Part 7 and 8** for performance and limitations.
+
+## Table of Contents
+
+- [What Does the AI Do?](#what-does-the-ai-do)
+- [Complete Flow: From Complaint to Priority](#complete-flow-from-complaint-to-priority)
+- [Part 1: Feature Extraction (Text → Numbers)](#part-1-feature-extraction-text--numbers)
+- [Part 2: Neural Network Architecture](#part-2-neural-network-architecture)
+- [Part 3: Training Process](#part-3-training-process)
+- [Part 4: Making Predictions (Inference)](#part-4-making-predictions-inference)
+- [Part 5: Real-World Examples](#part-5-real-world-examples)
+- [Part 6: Why This Works](#part-6-why-this-works)
+- [Part 7: Performance Metrics](#part-7-performance-metrics)
+- [Part 8: Limitations & Edge Cases](#part-8-limitations--edge-cases)
+- [Summary: The Complete Picture](#summary-the-complete-picture)
+
+## What Does the AI Do?
 
 The AI model **predicts the priority score** (0 to 1) for municipal complaints based on:
 - **Category** (e.g., water_supply, waste_management)
 - **Description** (the complaint text)
 - **Location** (where the issue is)
+
+Under the hood, it is a **feed‑forward neural network regression model** implemented with **TensorFlow.js**, trained with **Mean Squared Error (MSE)** as the loss, evaluated primarily with **Mean Absolute Error (MAE)**, and typically achieves MAE around **0.06–0.08** (about 6–8% average error) and **85–90% accuracy** when predictions are bucketed into Low / Medium / High / Critical.
 
 **Example:**
 ```
@@ -15,7 +44,7 @@ Output: Priority Score = 0.68 → "High" priority
 
 ---
 
-## 📊 Complete Flow: From Complaint to Priority
+## Complete Flow: From Complaint to Priority
 
 ```
 User Submits Complaint
@@ -302,6 +331,8 @@ electricity,critical,Transformer explosion at MG Road,0.92
 roads,medium,Small pothole on Brigade Road,0.45
 ```
 
+Note: in the current implementation the model only uses the `category`, `description`, and `priority` columns. The `impact` column is present in some datasets but is ignored by the feature engineering pipeline.
+
 **Dataset:** 1,500 samples (or 14,703 real BBMP complaints)
 
 ### How Training Works
@@ -374,6 +405,48 @@ For epoch 1 to 200:
   If no improvement for 30 epochs → stop early
 ```
 
+### Mathematical View of the Loss and Training Objective
+
+At a higher level, the model learns a function that maps each 38-dimensional feature
+vector `x` to a priority score `ŷ` between 0 and 1. We can write this as:
+
+```text
+f(x; θ) → ŷ ∈ [0, 1]
+```
+
+- `x` is the encoded complaint in `R^38`.
+- `θ` collects all weights and biases in all layers.
+- `f(x; θ)` is implemented by stacking dense layers, ReLU activations and a final sigmoid.
+
+Given `N` training examples `(x_i, y_i)`, the model minimizes the Mean Squared Error (MSE):
+
+```text
+L(θ) = (1/N) · Σ_i (f(x_i; θ) - y_i)²
+```
+
+Gradient-based optimization (Adam) adjusts each parameter `w` in `θ` using:
+
+```text
+w_new = w_old - η · ∂L/∂w
+```
+
+For a single example with prediction `ŷ` and target `y`, the derivative of the loss
+with respect to the output is:
+
+```text
+∂L/∂ŷ = 2 · (ŷ - y)
+```
+
+This error signal is backpropagated through the layers using the chain rule to compute
+gradients for every weight and bias. Intuitively:
+
+- If the model overestimates priority (`ŷ > y`), gradients push scores down for similar
+  feature patterns.
+- If it underestimates (`ŷ < y`), gradients push scores up.
+
+Over many epochs, this gradually shapes the network so that high-impact complaints
+receive consistently higher scores than low-impact ones.
+
 ### Training Progress Example
 
 ```
@@ -430,7 +503,7 @@ textVector = [
 ]
 
 // Final feature vector (38 features)
-features = [0.07, 0.67, 0.18, 1.0, 1.0, 1.0, 0.0, 0.0, ...]
+features = [0.07, 0.67, 0.18, 1.0, 1.0, 1.0, ...]
 ```
 
 ### Step 2: Neural Network Processing
@@ -477,10 +550,8 @@ Result: 0.68 → 'Medium' (just below High threshold)
 {
   "score": 0.68,
   "priorityLevel": "Medium",
-  "impactLevel": "medium",
   "tags": [
     { "label": "Priority", "value": "Medium" },
-    { "label": "Impact", "value": "medium" },
     { "label": "Urgency Score", "value": "0.68" },
     { "label": "Location", "value": "Koramangala 5th Block" }
   ]
@@ -570,23 +641,23 @@ Priority Level: High
 
 ### 1. Feature Engineering Captures Important Signals
 
-✅ **Category:** Critical categories (water, electricity) get higher priority
-✅ **Urgency Keywords:** Detects emergency language
-✅ **Text Features:** Learns which words indicate serious issues
-✅ **Length:** Detailed descriptions often mean serious problems
+- **Category:** Critical categories (water, electricity) get higher priority
+- **Urgency Keywords:** Detects emergency language
+- **Text Features:** Learns which words indicate serious issues
+- **Length:** Detailed descriptions often mean serious problems
 
 ### 2. Neural Network Learns Patterns
 
-✅ **Layer 1:** Learns basic patterns ("water" + "leak" = problem)
-✅ **Layer 2:** Learns combinations ("major" + "flooding" = urgent)
-✅ **Layer 3:** Learns context (category + keywords + scale)
-✅ **Output:** Combines all signals into priority score
+- **Layer 1:** Learns basic patterns ("water" + "leak" = problem)
+- **Layer 2:** Learns combinations ("major" + "flooding" = urgent)
+- **Layer 3:** Learns context (category + keywords + scale)
+- **Output:** Combines all signals into priority score
 
 ### 3. Training on Real Data
 
-✅ **14,703 real BBMP complaints** teach realistic patterns
-✅ **Bengaluru-specific:** Learns local terminology (BBMP, Pourakarmikas)
-✅ **Actual priorities:** Based on real municipal response patterns
+- **14,703 real BBMP complaints** teach realistic patterns
+- **Bengaluru-specific:** Learns local terminology (BBMP, Pourakarmikas)
+- **Actual priorities:** Based on real municipal response patterns
 
 ---
 
@@ -612,22 +683,87 @@ Priority Level: High
 ## Part 8: Limitations & Edge Cases
 
 ### What the Model Does Well
-✅ Standard municipal complaints
-✅ Clear urgency indicators
-✅ Common categories
-✅ Bengaluru-specific issues
+
+- Standard municipal complaints
+- Clear urgency indicators
+- Common categories
+- Bengaluru-specific issues
 
 ### What It Struggles With
-⚠️ Sarcasm or unclear language
-⚠️ Very short descriptions (< 5 words)
-⚠️ New types of issues not in training data
-⚠️ Complaints in languages other than English
+
+- Sarcasm or unclear language
+- Very short descriptions (< 5 words)
+- New types of issues not in training data
+- Complaints in languages other than English
 
 ### Fallback Behavior
 If AI fails or is not ready:
+
 - Default priority: 0.5 (Medium)
 - Server continues working
 - Graceful degradation
+
+---
+
+## Part 9: Design Decisions and Alternatives
+
+This section explains why the current model and feature design were chosen, and what
+alternatives could be explored in future iterations.
+
+### 9.1 Why a Dense Neural Network
+
+- The mapping from complaint text to priority is strongly non-linear.
+- Certain combinations of words (for example "major" + "burst" + "homes flooded")
+  are much more serious than any word alone.
+- Category interacts with language (a "leak" in `water_supply` is more critical than a
+  minor "leak" elsewhere).
+- A dense network with ReLU activations can learn these interactions directly from data,
+  without manually encoding every rule.
+
+Alternatives that were considered:
+
+- Linear or logistic regression: simpler but too weak to capture complex language
+  patterns.
+- Tree-based models (random forests, gradient boosting): strong on tabular data, but
+  less natural to train and serve in the current TensorFlow.js / Node stack.
+- Large language models (transformers): powerful but heavier, slower, and more complex
+  to host for this use case.
+
+### 9.2 Why These Features
+
+- Category: encodes domain knowledge that certain categories (water, electricity) are
+  usually more critical.
+- Bag-of-words text features: capture which important words are present without
+  requiring a full deep NLP stack.
+- Urgency score: directly measures how much "emergency" language appears.
+- Length score: rewards detailed descriptions up to a point, then caps the effect.
+
+Richer alternatives (full TF-IDF, embeddings, transformer-based encoders) could be
+added later if the system needs deeper language understanding.
+
+### 9.3 Why Regression + Thresholds (Not Pure Classification)
+
+- The training data provides a numeric priority in `[0, 1]`, not just labels.
+- Training a regressor on this signal preserves nuance: scores 0.41 and 0.69 are both
+  "Medium", but they are not equally urgent.
+- Thresholds `{0.4, 0.7, 0.9}` convert the continuous score into
+  `Low / Medium / High / Critical` for the UI.
+
+Classification-only training would lose that nuance and make it harder to retune
+thresholds without retraining the model.
+
+### 9.4 Why TensorFlow.js
+
+- Keeps model training and inference in the same language (JavaScript/TypeScript).
+- Works naturally in the existing Node server environment.
+- Avoids introducing a separate Python stack for training.
+
+In the future, if the dataset becomes much larger or the architecture becomes more
+complex, the project could:
+
+- Train heavier models offline in Python (TensorFlow or PyTorch).
+- Export the trained weights to a format that can still be served efficiently from the
+  Node backend.
 
 ---
 
@@ -656,7 +792,7 @@ If AI fails or is not ready:
    Complaints sorted by priority for efficient handling
 ```
 
-**Result:** Municipal workers see the most urgent complaints first, improving response times and citizen satisfaction! 🎯
+**Result:** Municipal workers see the most urgent complaints first, improving response times and citizen satisfaction.
 
 ---
 

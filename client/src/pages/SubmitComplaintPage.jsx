@@ -46,6 +46,7 @@ const SubmitComplaintPage = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [inferring, setInferring] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -55,6 +56,54 @@ const SubmitComplaintPage = () => {
   const handleFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files || []);
     setFiles(selectedFiles);
+  };
+
+  const handleInferFromImages = async () => {
+    if (!files.length) {
+      setError("Please upload at least one image to generate details.");
+      return;
+    }
+
+    try {
+      setInferring(true);
+      setError(null);
+
+      const formData = new FormData();
+      // Include existing text context for the LLM
+      formData.append("title", form.title || "");
+      formData.append("description", form.description || "");
+      formData.append("category", form.category || "");
+      formData.append("location", form.location || "");
+
+      files.forEach((file) => {
+        formData.append("images", file);
+      });
+
+      const { data } = await api.post("/complaints/infer-metadata", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const { title, description, category } = data?.data || {};
+
+      setForm((prev) => ({
+        ...prev,
+        // Overwrite existing values if the model returns new ones
+        title: title || prev.title,
+        description: description || prev.description,
+        category:
+          (category && categories.includes(category) && category) ||
+          prev.category,
+      }));
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          "Failed to generate complaint details from images"
+      );
+    } finally {
+      setInferring(false);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -205,6 +254,17 @@ const SubmitComplaintPage = () => {
                   {files.length} image{files.length > 1 ? "s" : ""} selected
                 </Typography>
               )}
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleInferFromImages}
+                disabled={inferring || !files.length}
+                sx={{ alignSelf: "flex-start" }}
+              >
+                {inferring
+                  ? "Analyzing images..."
+                  : "Generate details from images"}
+              </Button>
             </Stack>
           </Stack>
 

@@ -13,10 +13,6 @@ export const buildAdminComplaintFilters = (query) => {
     filters.category = query.category;
   }
 
-  if (query.impact) {
-    filters.impact = query.impact;
-  }
-
   if (query.createdBy) {
     filters.createdBy = query.createdBy;
   }
@@ -45,9 +41,9 @@ export const buildAdminComplaintFilters = (query) => {
     }
   }
 
-  if (query.resolved === 'true') {
+  if (query.resolved === "true") {
     filters.resolvedAt = { $ne: null };
-  } else if (query.resolved === 'false') {
+  } else if (query.resolved === "false") {
     filters.resolvedAt = null;
   }
 
@@ -61,9 +57,9 @@ export const buildSearchQuery = (query) => {
 
   return {
     $or: [
-      { title: { $regex: query.q, $options: 'i' } },
-      { description: { $regex: query.q, $options: 'i' } },
-      { location: { $regex: query.q, $options: 'i' } }
-    ]
+      { title: { $regex: query.q, $options: "i" } },
+      { description: { $regex: query.q, $options: "i" } },
+      { location: { $regex: query.q, $options: "i" } },
+    ],
   };
 };
