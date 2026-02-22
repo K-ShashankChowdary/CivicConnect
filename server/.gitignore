@@ -34,3 +34,5 @@ coverage/
 /FEATURES_TO_IMPLEMENT.md
 /.env.exampl
 netlify.toml
+HOW_AI_WORKS.md
+*.md
