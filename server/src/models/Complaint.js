@@ -5,7 +5,7 @@ const tagSchema = new mongoose.Schema(
     label: { type: String, required: true },
     value: { type: String, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const complaintSchema = new mongoose.Schema(
@@ -14,6 +14,8 @@ const complaintSchema = new mongoose.Schema(
     category: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     location: { type: String, required: true, trim: true },
+    latitude: { type: Number },
+    longitude: { type: Number },
     incidentTime: { type: Date },
     status: {
       type: String,
@@ -26,6 +28,8 @@ const complaintSchema = new mongoose.Schema(
       enum: ["Low", "Medium", "High", "Critical"],
       default: "Medium",
     },
+    /** Short explanation from LLM when using Gemini for priority (optional) */
+    priorityReason: { type: String, trim: true },
     tags: [tagSchema],
     attachments: [{ type: String }],
     createdBy: {
@@ -38,7 +42,7 @@ const complaintSchema = new mongoose.Schema(
     resolvedAt: { type: Date },
     embedding: { type: [Number] },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 complaintSchema.index({ category: 1, priorityLevel: 1 });

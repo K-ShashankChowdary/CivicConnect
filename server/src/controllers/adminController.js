@@ -6,6 +6,7 @@ import {
   buildSearchQuery,
 } from "../services/complaintService.js";
 import { reRankComplaintsByIR } from "../services/semanticService.js";
+import { sendEmail } from "../services/emailService.js";
 
 export const listComplaints = asyncHandler(async (req, res) => {
   const filters = buildAdminComplaintFilters(req.query);
@@ -81,7 +82,10 @@ export const updateComplaintStatus = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { status, assignedTo, resolutionNotes } = req.body;
 
-  const complaint = await Complaint.findById(id);
+  const complaint = await Complaint.findById(id).populate(
+    "createdBy",
+    "name email",
+  );
   if (!complaint) {
     throw new AppError("Complaint not found", 404);
   }
@@ -103,6 +107,72 @@ export const updateComplaintStatus = asyncHandler(async (req, res) => {
   }
 
   await complaint.save();
+
+  try {
+    const user = complaint.createdBy;
+    if (user && user.email) {
+      const baseUrl = process.env.APP_BASE_URL;
+      const trimmedBaseUrl = baseUrl ? baseUrl.replace(/\/+$/, "") : null;
+      const detailsUrl = trimmedBaseUrl
+        ? `${trimmedBaseUrl}/complaints/${complaint._id}`
+        : null;
+      const statusLabel = complaint.status.replace("_", " ");
+
+      const plainLines = [
+        `Dear ${user.name || "Citizen"},`,
+        "",
+        `The status of your complaint '${complaint.title}' has been updated.`,
+        `New status: ${statusLabel}`,
+      ];
+
+      if (complaint.resolutionNotes) {
+        plainLines.push(`Resolution notes: ${complaint.resolutionNotes}`);
+      }
+
+      if (detailsUrl) {
+        plainLines.push(
+          "",
+          `You can view the full details here: ${detailsUrl}`,
+        );
+      }
+
+      plainLines.push("", "Thank you for your patience.");
+
+      const text = plainLines.join("\n");
+
+      const htmlLines = [
+        `<p>Dear ${user.name || "Citizen"},</p>`,
+        `<p>The status of your complaint titled <strong>${complaint.title}</strong> has been updated.</p>`,
+        "<ul>",
+        `<li><strong>Status:</strong> ${statusLabel}</li>`,
+      ];
+
+      if (complaint.resolutionNotes) {
+        htmlLines.push(
+          `<li><strong>Resolution notes:</strong> ${complaint.resolutionNotes}</li>`,
+        );
+      }
+
+      htmlLines.push("</ul>");
+
+      if (detailsUrl) {
+        htmlLines.push(
+          `<p>You can view the full details here: <a href="${detailsUrl}">${detailsUrl}</a></p>`,
+        );
+      }
+
+      htmlLines.push("<p>Thank you for your patience.</p>");
+
+      await sendEmail({
+        to: user.email,
+        subject: `Complaint status updated: ${statusLabel}`,
+        text,
+        html: htmlLines.join(""),
+      });
+    }
+  } catch (error) {
+    console.error("Failed to send complaint status update email", error);
+  }
 
   res.json({ success: true, data: complaint });
 });

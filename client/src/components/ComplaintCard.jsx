@@ -5,9 +5,10 @@ import CardActions from "@mui/material/CardActions";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
+
+import CategoryChip from "./CategoryChip.jsx";
 
 const statusColors = {
   submitted: "info",
@@ -26,96 +27,123 @@ const ComplaintCard = ({ complaint, actions }) => {
       ? `${complaint.description.slice(0, 220)}…`
       : complaint.description;
 
+  const priorityColor =
+    complaint.priorityLevel === "Critical"
+      ? "error"
+      : complaint.priorityLevel === "High"
+        ? "warning"
+        : complaint.priorityLevel === "Medium"
+          ? "info"
+          : "default";
+
   return (
     <Card
       elevation={0}
       sx={{
-        borderRadius: 3,
+        borderRadius: 2,
         border: "1px solid",
         borderColor: "divider",
-        transition: "all 0.3s ease",
+        borderLeft: { xs: "none", sm: "4px solid" },
+        ...(priorityColor !== "default" && {
+          borderLeftColor: {
+            sm: (theme) =>
+              theme.palette[priorityColor]?.main || theme.palette.divider,
+          },
+        }),
+        transition:
+          "box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease",
+        overflow: "hidden",
         "&:hover": {
-          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)",
-          transform: "translateY(-2px)",
+          boxShadow: "0 12px 28px -4px rgba(0,0,0,0.12)",
           borderColor: "primary.light",
+          transform: "translateY(-2px)",
         },
       }}
     >
-      <CardContent sx={{ p: 3 }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
-          {/* Left side - Tags */}
-          <Stack spacing={1.5} sx={{ minWidth: { xs: "100%", md: 160 } }}>
+      <CardContent
+        sx={{ p: { xs: 2, sm: 3 }, "&:last-child": { pb: { xs: 2, sm: 3 } } }}
+      >
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={{ xs: 2, md: 3 }}
+        >
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            gap={1}
+            sx={{ minWidth: { md: 140 }, rowGap: 1 }}
+          >
+            <CategoryChip category={complaint.category} />
+            <Tooltip title="AI-assigned priority" arrow>
+              <Chip
+                label={complaint.priorityLevel}
+                color={priorityColor}
+                size="small"
+                sx={{ fontWeight: 600 }}
+              />
+            </Tooltip>
             <Chip
-              label={complaint.category}
-              color="primary"
-              size="medium"
-              sx={{ fontWeight: 600 }}
-            />
-            <Chip
-              label={complaint.priorityLevel}
-              color={
-                complaint.priorityLevel === "Critical"
-                  ? "error"
-                  : complaint.priorityLevel === "High"
-                  ? "warning"
-                  : complaint.priorityLevel === "Medium"
-                  ? "info"
-                  : "default"
-              }
-              size="medium"
-              sx={{ fontWeight: 600 }}
-            />
-            <Chip
-              label={complaint.status.replace("_", " ").toUpperCase()}
+              label={complaint.status.replace("_", " ")}
               color={statusColors[complaint.status] || "default"}
-              size="medium"
+              size="small"
               variant="outlined"
-              sx={{ fontWeight: 600 }}
+              sx={{ fontWeight: 600, textTransform: "capitalize" }}
             />
           </Stack>
 
-          {/* Right side - Content */}
-          <Stack spacing={2} sx={{ flex: 1 }}>
+          <Stack spacing={1.5} sx={{ flex: 1, minWidth: 0 }}>
             <Typography
-              variant="h5"
-              sx={{ fontWeight: 700, color: "text.primary" }}
+              variant="subtitle1"
+              sx={{ fontWeight: 700, lineHeight: 1.3 }}
             >
               {complaint.title}
             </Typography>
 
-            <Typography variant="body2" color="text.secondary">
-              Reported {createdDate}
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              display="block"
+            >
+              {createdDate}
             </Typography>
 
-            <Divider sx={{ my: 1 }} />
-
-            <Typography variant="body1" sx={{ mb: 2, lineHeight: 1.7 }}>
+            <Typography
+              variant="body2"
+              sx={{ lineHeight: 1.6 }}
+              color="text.secondary"
+            >
               {descriptionPreview}
             </Typography>
 
-            <Stack
-              direction="row"
-              spacing={1}
-              sx={{ flexWrap: "wrap", gap: 1 }}
-            >
+            <Stack direction="row" flexWrap="wrap" gap={0.75} sx={{ mt: 0.5 }}>
               {complaint.tags
-                ?.filter((tag) => tag.label !== "Impact")
+                ?.filter(
+                  (tag) => tag.label !== "Impact" && tag.label !== "address",
+                )
                 .map((tag) => (
                   <Tooltip key={tag.label} title={tag.label} arrow>
-                    <Chip label={tag.value} size="small" color="default" />
+                    <Chip
+                      label={tag.value}
+                      size="small"
+                      color="default"
+                      sx={{ maxWidth: 240 }}
+                    />
                   </Tooltip>
                 ))}
               {complaint.location && (
-                <Chip
-                  label={`Location: ${complaint.location}`}
-                  size="small"
-                  variant="outlined"
-                />
+                <Tooltip title="Location" arrow>
+                  <Chip
+                    label={complaint.location}
+                    size="small"
+                    variant="outlined"
+                    sx={{ maxWidth: 420 }}
+                  />
+                </Tooltip>
               )}
               {complaint.incidentTime && (
                 <Chip
                   label={`Incident: ${new Date(
-                    complaint.incidentTime
+                    complaint.incidentTime,
                   ).toLocaleString()}`}
                   size="small"
                   variant="outlined"
@@ -136,17 +164,25 @@ const ComplaintCard = ({ complaint, actions }) => {
       </CardContent>
 
       {(resolvedDate || actions?.length) && (
-        <CardActions sx={{ justifyContent: "space-between", px: 3, pb: 2 }}>
-          <Box>
+        <CardActions
+          sx={{
+            justifyContent: "space-between",
+            px: { xs: 2, sm: 3 },
+            pb: 2,
+            pt: 0,
+            flexWrap: "wrap",
+            gap: 1,
+          }}
+        >
+          <Box sx={{ order: { xs: 2, sm: 1 } }}>
             {resolvedDate && (
               <Typography variant="caption" color="text.secondary">
-                Resolved on {resolvedDate}
+                Resolved {resolvedDate}
               </Typography>
             )}
           </Box>
-
-          {actions && actions.length > 0 && (
-            <Stack direction="row" spacing={1}>
+          {actions?.length > 0 && (
+            <Stack direction="row" spacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
               {actions.map((action) => (
                 <Box key={action.key}>{action.element}</Box>
               ))}
@@ -171,18 +207,20 @@ ComplaintCard.propTypes = {
       PropTypes.shape({
         label: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired,
-      })
+      }),
     ),
     attachments: PropTypes.arrayOf(PropTypes.string),
     createdAt: PropTypes.string.isRequired,
     incidentTime: PropTypes.string,
     resolvedAt: PropTypes.string,
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
   }).isRequired,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string.isRequired,
       element: PropTypes.node.isRequired,
-    })
+    }),
   ),
 };
 

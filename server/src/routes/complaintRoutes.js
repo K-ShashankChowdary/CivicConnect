@@ -5,7 +5,6 @@ import {
   getMyComplaints,
   getComplaintById,
   updateComplaint,
-  inferComplaintMetadata,
 } from "../controllers/complaintController.js";
 import { uploadComplaintImages } from "../middleware/uploadMiddleware.js";
 import { authenticate } from "../middleware/authMiddleware.js";
@@ -22,16 +21,15 @@ router.post(
   "/",
   uploadComplaintImages,
   complaintCreateValidator,
-  createComplaint
+  createComplaint,
 );
-router.post("/infer-metadata", uploadComplaintImages, inferComplaintMetadata);
 router.get("/", getMyComplaints);
 router.get("/:id", getComplaintById);
 router.put(
   "/:id",
   uploadComplaintImages,
   complaintUpdateValidator,
-  updateComplaint
+  updateComplaint,
 );
 
 export default router;

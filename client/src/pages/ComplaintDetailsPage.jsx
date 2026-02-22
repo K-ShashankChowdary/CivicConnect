@@ -11,6 +11,7 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid2";
 
 import { useAuth } from "../context/AuthContext.jsx";
+import CategoryChip from "../components/CategoryChip.jsx";
 
 const statusColors = {
   submitted: "info",
@@ -36,7 +37,7 @@ const ComplaintDetailsPage = () => {
         setComplaint(data.data);
       } catch (err) {
         setError(
-          err.response?.data?.message || "Failed to load complaint details"
+          err.response?.data?.message || "Failed to load complaint details",
         );
       } finally {
         setLoading(false);
@@ -48,21 +49,19 @@ const ComplaintDetailsPage = () => {
 
   if (loading) {
     return (
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        sx={{ minHeight: "60vh" }}
-      >
-        <CircularProgress />
-        <Typography sx={{ mt: 2 }}>Loading complaint details…</Typography>
+      <Stack alignItems="center" justifyContent="center" sx={{ minHeight: "50vh", py: 4 }}>
+        <CircularProgress size={40} />
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+          Loading…
+        </Typography>
       </Stack>
     );
   }
 
   if (error) {
     return (
-      <Stack spacing={2} alignItems="center" sx={{ minHeight: "60vh" }}>
-        <Alert severity="error">{error}</Alert>
+      <Stack spacing={2} alignItems="center" sx={{ minHeight: "50vh", py: 4 }}>
+        <Alert severity="error" sx={{ borderRadius: 2 }}>{error}</Alert>
         <Button variant="contained" onClick={() => navigate(-1)}>
           Go back
         </Button>
@@ -80,41 +79,73 @@ const ComplaintDetailsPage = () => {
     : null;
 
   return (
-    <Stack spacing={3}>
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+    <Stack spacing={{ xs: 2, sm: 3 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
         <Stack spacing={2}>
           <Button
             variant="text"
             onClick={() => navigate(-1)}
-            sx={{ alignSelf: "flex-start" }}
+            size="small"
+            sx={{ alignSelf: "flex-start", fontWeight: 600 }}
           >
-            Back to complaints
+            ← Back to complaints
           </Button>
 
-          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }} component="h1">
             {complaint.title}
           </Typography>
 
-          <Stack direction="row" spacing={1} flexWrap="wrap" rowGap={1}>
-            <Chip label={complaint.category} color="primary" />
+          <Stack direction="row" flexWrap="wrap" gap={1}>
+            <CategoryChip category={complaint.category} className="text-sm" />
             <Chip
-              label={complaint.status.replace("_", " ").toUpperCase()}
+              label={complaint.status.replace("_", " ")}
               color={statusColors[complaint.status] || "default"}
               variant="outlined"
+              size="small"
+              sx={{ textTransform: "capitalize" }}
             />
-            <Chip label={complaint.priorityLevel} />
-            {complaint.location && (
-              <Chip label={`Location: ${complaint.location}`} />
+            <Chip
+              label={complaint.priorityLevel}
+              size="small"
+              color={
+                complaint.priorityLevel === "Critical"
+                  ? "error"
+                  : complaint.priorityLevel === "High"
+                    ? "warning"
+                    : complaint.priorityLevel === "Medium"
+                      ? "info"
+                      : "default"
+              }
+            />
+            {typeof complaint.priorityScore === "number" && (
+              <Chip
+                label={`Score: ${complaint.priorityScore.toFixed(2)}`}
+                variant="outlined"
+                size="small"
+              />
             )}
-            {incidentDate && <Chip label={`Incident: ${incidentDate}`} />}
+            {complaint.location && (
+              <Chip label={complaint.location} size="small" variant="outlined" />
+            )}
+            {incidentDate && (
+              <Chip label={`Incident: ${incidentDate}`} size="small" variant="outlined" />
+            )}
           </Stack>
 
-          <Typography variant="body2" color="text.secondary">
-            Reported on {createdDate}
+          <Typography variant="caption" color="text.secondary" display="block">
+            Reported {createdDate}
           </Typography>
 
-          <Typography variant="h6" sx={{ mt: 2 }}>
-            Complaint details
+          {(typeof complaint.priorityScore === "number" || complaint.priorityReason) && (
+            <Typography variant="caption" color="text.secondary" display="block">
+              {complaint.priorityReason
+                ? `AI priority reason: ${complaint.priorityReason}`
+                : "Priority assigned by AI from category, description, and urgency."}
+            </Typography>
+          )}
+
+          <Typography variant="subtitle1" sx={{ fontWeight: 600, mt: 1 }}>
+            Description
           </Typography>
           <Typography
             variant="body1"
@@ -125,10 +156,10 @@ const ComplaintDetailsPage = () => {
         </Stack>
       </Paper>
 
-      {complaint.attachments && complaint.attachments.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Related images
+      {complaint.attachments?.length > 0 && (
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+            Attached images
           </Typography>
           <Grid container spacing={2}>
             {complaint.attachments.map((url) => (
@@ -142,7 +173,9 @@ const ComplaintDetailsPage = () => {
                     width: "100%",
                     borderRadius: 2,
                     objectFit: "cover",
-                    maxHeight: 260,
+                    maxHeight: 280,
+                    border: "1px solid",
+                    borderColor: "divider",
                   }}
                 />
               </Grid>

@@ -51,15 +51,35 @@ export const buildAdminComplaintFilters = (query) => {
 };
 
 export const buildSearchQuery = (query) => {
-  if (!query?.q) {
+  const raw = query?.q?.trim();
+  if (!raw) {
     return null;
   }
 
+  // Split on whitespace to support multi-word queries like "pothole road".
+  const terms = raw.split(/\s+/).filter(Boolean);
+
+  // Single term: keep behavior equivalent to previous implementation.
+  if (terms.length === 1) {
+    const term = terms[0];
+    return {
+      $or: [
+        { title: { $regex: term, $options: "i" } },
+        { description: { $regex: term, $options: "i" } },
+        { location: { $regex: term, $options: "i" } },
+      ],
+    };
+  }
+
+  // Multi-term: require that *each* term appears in at least one of the fields.
+  // This builds an $and of per-term $or conditions across title/description/location.
   return {
-    $or: [
-      { title: { $regex: query.q, $options: "i" } },
-      { description: { $regex: query.q, $options: "i" } },
-      { location: { $regex: query.q, $options: "i" } },
-    ],
+    $and: terms.map((term) => ({
+      $or: [
+        { title: { $regex: term, $options: "i" } },
+        { description: { $regex: term, $options: "i" } },
+        { location: { $regex: term, $options: "i" } },
+      ],
+    })),
   };
 };

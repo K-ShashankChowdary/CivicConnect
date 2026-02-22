@@ -3,12 +3,14 @@ import { validationResult } from "express-validator";
 import Complaint from "../models/Complaint.js";
 import AppError from "../utils/AppError.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { predictPriorityWithLLM } from "../services/priorityLLMService.js";
 import { predictPriority } from "../services/priorityService.js";
+import { buildSearchQuery } from "../services/complaintService.js";
 import {
   attachComplaintEmbedding,
   reRankComplaintsByIR,
 } from "../services/semanticService.js";
-import { inferComplaintMetadataFromImages } from "../services/visionService.js";
+import { sendEmail } from "../services/emailService.js";
 
 export const createComplaint = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -16,28 +18,48 @@ export const createComplaint = asyncHandler(async (req, res) => {
     throw new AppError("Validation failed", 422, errors.array());
   }
 
-  const { title, category, description, location } = req.body;
+  const { title, category, description, location, latitude, longitude } =
+    req.body;
 
   const attachments =
     Array.isArray(req.files) && req.files.length > 0
       ? req.files.map((file) => file.path)
       : [];
 
-  const { score, priorityLevel, tags } = await predictPriority({
+  // Prefer LLM (Gemini) when available; fall back to TF.js
+  let result = await predictPriorityWithLLM({
     category,
+    title,
     description,
     location,
   });
+  if (!result) {
+    result = await predictPriority({ category, description, location });
+  }
+  const { score, priorityLevel, tags, priorityReason } = result;
 
   // Validate score
   if (isNaN(score) || score === null || score === undefined) {
     throw new AppError(
       "Failed to calculate priority score. Please try again.",
-      500
+      500,
     );
   }
 
-  const complaint = await Complaint.create({
+  const lat =
+    typeof latitude !== "undefined" ? Number.parseFloat(latitude) : undefined;
+  const lng =
+    typeof longitude !== "undefined" ? Number.parseFloat(longitude) : undefined;
+
+  const geoTags = [];
+
+  if (location) {
+    geoTags.push({ label: "address", value: location });
+  }
+
+  const allTags = [...tags, ...geoTags];
+
+  const complaintData = {
     title,
     category,
     description,
@@ -45,13 +67,81 @@ export const createComplaint = asyncHandler(async (req, res) => {
     incidentTime: new Date(), // Use current timestamp
     priorityScore: score,
     priorityLevel,
-    tags,
+    ...(priorityReason && { priorityReason }),
+    tags: allTags,
     attachments,
     createdBy: req.user._id,
-  });
+  };
+
+  if (Number.isFinite(lat)) {
+    complaintData.latitude = lat;
+  }
+
+  if (Number.isFinite(lng)) {
+    complaintData.longitude = lng;
+  }
+
+  const complaint = await Complaint.create(complaintData);
 
   await attachComplaintEmbedding(complaint);
   await complaint.save();
+
+  try {
+    if (req.user && req.user.email) {
+      const baseUrl = process.env.APP_BASE_URL;
+      const trimmedBaseUrl = baseUrl ? baseUrl.replace(/\/+$/, "") : null;
+      const detailsUrl = trimmedBaseUrl
+        ? `${trimmedBaseUrl}/complaints/${complaint._id}`
+        : null;
+
+      const plainLines = [
+        `Dear ${req.user.name || "Citizen"},`,
+        "",
+        `We have received your complaint titled '${complaint.title}'.`,
+        `Current status: ${complaint.status}`,
+        `Priority: ${complaint.priorityLevel}`,
+        `Location: ${complaint.location}`,
+      ];
+
+      if (detailsUrl) {
+        plainLines.push(
+          "",
+          `You can view the full details here: ${detailsUrl}`,
+        );
+      }
+
+      plainLines.push("", "Thank you for helping us improve your community.");
+
+      const text = plainLines.join("\n");
+
+      const htmlLines = [
+        `<p>Dear ${req.user.name || "Citizen"},</p>`,
+        `<p>We have received your complaint titled <strong>${complaint.title}</strong>.</p>`,
+        "<ul>",
+        `<li><strong>Status:</strong> ${complaint.status}</li>`,
+        `<li><strong>Priority:</strong> ${complaint.priorityLevel}</li>`,
+        `<li><strong>Location:</strong> ${complaint.location}</li>`,
+        "</ul>",
+      ];
+
+      if (detailsUrl) {
+        htmlLines.push(
+          `<p>You can view the full details here: <a href="${detailsUrl}">${detailsUrl}</a></p>`,
+        );
+      }
+
+      htmlLines.push("<p>Thank you for helping us improve your community.</p>");
+
+      await sendEmail({
+        to: req.user.email,
+        subject: `Complaint received: ${complaint.title}`,
+        text,
+        html: htmlLines.join(""),
+      });
+    }
+  } catch (error) {
+    console.error("Failed to send complaint submission email", error);
+  }
 
   res.status(201).json({
     success: true,
@@ -66,18 +156,16 @@ export const getMyComplaints = asyncHandler(async (req, res) => {
 
   if (status) filter.status = status;
   if (priorityLevel) filter.priorityLevel = priorityLevel;
-  if (q) {
-    filter.$or = [
-      { title: { $regex: q, $options: "i" } },
-      { description: { $regex: q, $options: "i" } },
-      { location: { $regex: q, $options: "i" } },
-    ];
+
+  const search = buildSearchQuery(req.query);
+  if (search) {
+    Object.assign(filter, search);
   }
 
   let complaints = await Complaint.find(filter).sort({ createdAt: -1 }).lean();
 
-  if (q) {
-    complaints = await reRankComplaintsByIR(q, complaints);
+  if (q?.trim()) {
+    complaints = await reRankComplaintsByIR(q.trim(), complaints);
   }
 
   res.json({ success: true, data: complaints });
@@ -115,12 +203,27 @@ export const updateComplaint = asyncHandler(async (req, res) => {
     throw new AppError("Only submitted complaints can be edited", 400);
   }
 
-  const { title, category, description, location } = req.body;
+  const { title, category, description, location, latitude, longitude } =
+    req.body;
 
   if (title) complaint.title = title;
   if (category) complaint.category = category;
   if (description) complaint.description = description;
   if (location) complaint.location = location;
+
+  if (typeof latitude !== "undefined") {
+    const lat = Number.parseFloat(latitude);
+    if (Number.isFinite(lat)) {
+      complaint.latitude = lat;
+    }
+  }
+
+  if (typeof longitude !== "undefined") {
+    const lng = Number.parseFloat(longitude);
+    if (Number.isFinite(lng)) {
+      complaint.longitude = lng;
+    }
+  }
 
   // Add new uploaded images to existing attachments
   if (req.files && req.files.length > 0) {
@@ -128,57 +231,42 @@ export const updateComplaint = asyncHandler(async (req, res) => {
     complaint.attachments = [...complaint.attachments, ...newAttachments];
   }
 
-  const { score, priorityLevel, impactLevel, tags } = await predictPriority({
+  // Prefer LLM when available; fall back to TF.js
+  let updateResult = await predictPriorityWithLLM({
     category: complaint.category,
+    title: complaint.title,
     description: complaint.description,
     location: complaint.location,
   });
+  if (!updateResult) {
+    updateResult = await predictPriority({
+      category: complaint.category,
+      description: complaint.description,
+      location: complaint.location,
+    });
+  }
+  const { score, priorityLevel, tags, priorityReason } = updateResult;
 
   // Validate score
   if (isNaN(score) || score === null || score === undefined) {
     throw new AppError(
       "Failed to calculate priority score. Please try again.",
-      500
+      500,
     );
   }
 
   complaint.priorityScore = score;
   complaint.priorityLevel = priorityLevel;
-  complaint.tags = tags;
+  if (priorityReason !== undefined) complaint.priorityReason = priorityReason || undefined;
+
+  const geoTags = [];
+  if (complaint.location) {
+    geoTags.push({ label: "address", value: complaint.location });
+  }
+  complaint.tags = [...tags, ...geoTags];
 
   await attachComplaintEmbedding(complaint);
   await complaint.save();
 
   res.json({ success: true, data: complaint });
-});
-
-export const inferComplaintMetadata = asyncHandler(async (req, res) => {
-  const attachments =
-    Array.isArray(req.files) && req.files.length > 0
-      ? req.files.map((file) => file.path)
-      : [];
-
-  if (attachments.length === 0) {
-    throw new AppError("No images uploaded", 400);
-  }
-
-  const {
-    title: existingTitle,
-    description: existingDescription,
-    category: existingCategory,
-    location,
-  } = req.body || {};
-
-  const { title, description, category } =
-    await inferComplaintMetadataFromImages(attachments, {
-      title: existingTitle,
-      description: existingDescription,
-      category: existingCategory,
-      location,
-    });
-
-  res.json({
-    success: true,
-    data: { title, description, category },
-  });
 });

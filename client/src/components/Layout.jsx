@@ -37,42 +37,44 @@ const Layout = () => {
         position="static" 
         elevation={0}
         sx={{
-          background: 'linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
         }}
       >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', py: 1 }}>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontWeight: 700,
-                letterSpacing: '0.05rem',
-                color: 'white',
-                textDecoration: 'none',
-                alignItems: 'center',
-              }}
-            >
-              CivicConnect
-            </Typography>
+        <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3 } }}>
+          <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', py: { xs: 1, sm: 1.5 }, minHeight: { xs: 56, sm: 64 } }}>
             <Typography
               variant="h6"
               noWrap
               component="a"
               href="/"
               sx={{
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
+                mr: 2,
+                display: { xs: 'none', sm: 'flex' },
                 fontWeight: 700,
-                letterSpacing: '0.05rem',
+                letterSpacing: '0.02em',
                 color: 'white',
                 textDecoration: 'none',
                 alignItems: 'center',
+                fontSize: { sm: '1.1rem', md: '1.25rem' },
+              }}
+            >
+              CivicConnect
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                display: { xs: 'flex', sm: 'none' },
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: '0.02em',
+                color: 'white',
+                textDecoration: 'none',
+                alignItems: 'center',
+                fontSize: '1rem',
               }}
             >
               CivicConnect
@@ -148,24 +150,24 @@ const Layout = () => {
         </Container>
       </AppBar>
 
-      <Container maxWidth="xl" sx={{ flex: 1, py: 4 }}>
+      <Container maxWidth="xl" sx={{ flex: 1, py: { xs: 3, sm: 4 }, px: { xs: 2, sm: 3 } }} className="animate-fade-in">
         <Outlet />
       </Container>
 
       <Box 
         component="footer" 
         sx={{ 
-          py: 3, 
-          px: 2, 
+          py: { xs: 2, sm: 3 }, 
+          px: { xs: 2, sm: 3 }, 
           mt: 'auto',
-          bgcolor: 'grey.100',
+          bgcolor: 'grey.50',
           borderTop: '1px solid',
           borderColor: 'divider',
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3 } }}>
           <Typography variant="body2" color="text.secondary" align="center">
-            © {new Date().getFullYear()} CivicConnect. Powered by AI-driven municipal management.
+            © {new Date().getFullYear()} CivicConnect · AI-powered priority &amp; search
           </Typography>
         </Container>
       </Box>

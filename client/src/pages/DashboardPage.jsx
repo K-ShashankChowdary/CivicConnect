@@ -78,65 +78,65 @@ const DashboardPage = () => {
 
   if (loading && complaints.length === 0) {
     return (
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        sx={{ minHeight: "60vh" }}
-      >
-        <CircularProgress />
-        <Typography sx={{ mt: 2 }}>Loading your complaints…</Typography>
+      <Stack alignItems="center" justifyContent="center" sx={{ minHeight: "50vh", py: 4 }}>
+        <CircularProgress size={40} />
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>Loading…</Typography>
       </Stack>
     );
   }
 
   if (error) {
     return (
-      <Stack spacing={2} alignItems="center" sx={{ minHeight: "60vh" }}>
-        <Alert severity="error">{error}</Alert>
-        <Button variant="contained" onClick={fetchComplaints}>
-          Retry
-        </Button>
+      <Stack spacing={2} alignItems="center" sx={{ minHeight: "50vh", py: 4 }}>
+        <Alert severity="error" sx={{ borderRadius: 2 }}>{error}</Alert>
+        <Button variant="contained" onClick={fetchComplaints}>Retry</Button>
       </Stack>
     );
   }
 
+  const hasActiveFilters = filters.q || filters.status || filters.priorityLevel;
+
   return (
-    <Stack spacing={4}>
+    <Stack spacing={{ xs: 3, md: 4 }} className="animate-fade-in">
+      {/* Hero */}
       <Box
+        className="animate-slide-down"
         sx={{
-          background: "linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)",
-          borderRadius: 3,
-          p: 4,
+          background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
+          borderRadius: 2,
+          p: { xs: 3, sm: 4 },
           color: "white",
-          boxShadow: "0 4px 20px rgba(6, 182, 212, 0.3)",
+          boxShadow: "0 4px 24px rgba(13, 148, 136, 0.25)",
+          transition: "box-shadow 0.3s ease",
+          "&:hover": { boxShadow: "0 8px 32px rgba(13, 148, 136, 0.3)" },
         }}
       >
         <Stack
-          direction="row"
+          direction={{ xs: "column", sm: "row" }}
           justifyContent="space-between"
-          alignItems="center"
-          flexWrap="wrap"
+          alignItems={{ xs: "stretch", sm: "center" }}
           gap={2}
         >
-          <div>
-            <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
+          <Box>
+            <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }} component="h1">
               My Complaints
             </Typography>
-            <Typography variant="body1" sx={{ opacity: 0.9 }}>
+            <Typography variant="body2" sx={{ opacity: 0.9 }}>
               Track and manage your submitted complaints
             </Typography>
-          </div>
+          </Box>
           <Button
             variant="contained"
             href="/submit"
             size="large"
+            fullWidth={false}
             sx={{
+              alignSelf: { xs: "stretch", sm: "flex-end" },
               bgcolor: "white",
               color: "primary.main",
               fontWeight: 600,
-              "&:hover": {
-                bgcolor: "grey.100",
-              },
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+              "&:hover": { bgcolor: "grey.100", transform: "translateY(-1px)", boxShadow: 2 },
             }}
           >
             + New Complaint
@@ -144,47 +144,67 @@ const DashboardPage = () => {
         </Stack>
       </Box>
 
+      {/* Filters – redesigned with more space and clear hierarchy */}
       <Paper
+        className="animate-fade-in-up"
         elevation={0}
         sx={{
-          p: 3,
-          borderRadius: 3,
+          p: { xs: 2.5, sm: 3.5 },
+          borderRadius: 2,
           border: "1px solid",
           borderColor: "divider",
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+          "& .MuiOutlinedInput-root": {
+            transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+            "&:hover": { "& .MuiOutlinedInput-notchedOutline": { borderColor: "primary.light" } },
+            "&.Mui-focused": { "& .MuiOutlinedInput-notchedOutline": { borderWidth: 2 } },
+          },
         }}
       >
-        <Stack spacing={2}>
+        <Stack spacing={3}>
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
+            flexWrap="wrap"
+            gap={2}
           >
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
-              Filter & Search
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "text.primary" }}>
+              Filter & search
             </Typography>
-            <Button
-              variant="text"
-              size="small"
-              onClick={resetFilters}
-              sx={{ fontWeight: 600 }}
-            >
-              Reset
-            </Button>
+            {hasActiveFilters && (
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={resetFilters}
+                sx={{
+                  fontWeight: 600,
+                  transition: "transform 0.2s ease",
+                  "&:hover": { transform: "scale(1.02)" },
+                }}
+              >
+                Reset filters
+              </Button>
+            )}
           </Stack>
 
-          <Grid container spacing={2}>
-            <Grid xs={12} md={6}>
-              <TextField
-                label="Search"
-                name="q"
-                value={filters.q}
-                onChange={handleFilterChange}
-                placeholder="Search title, description, location..."
-                fullWidth
-              />
-            </Grid>
-            <Grid xs={6} md={3}>
+          {/* Row 1: Search full width with generous spacing */}
+          <TextField
+            label="Search"
+            name="q"
+            value={filters.q}
+            onChange={handleFilterChange}
+            placeholder="Search by title, description, or location"
+            fullWidth
+            size="small"
+            helperText={debouncedQuery ? "Results ranked by relevance" : null}
+            sx={{
+              "& .MuiInputBase-root": { borderRadius: 2 },
+            }}
+          />
+
+          {/* Row 2: Status and Priority with clear spacing */}
+          <Grid container spacing={3}>
+            <Grid xs={12} sm={6} md={5}>
               <TextField
                 select
                 label="Status"
@@ -192,7 +212,9 @@ const DashboardPage = () => {
                 value={filters.status}
                 onChange={handleFilterChange}
                 fullWidth
-                sx={{ minWidth: 150 }}
+                size="small"
+                SelectProps={{ MenuProps: { disableScrollLock: true } }}
+                sx={{ "& .MuiInputBase-root": { borderRadius: 2 } }}
               >
                 {statusOptions.map((option) => (
                   <MenuItem key={option.value || "all"} value={option.value}>
@@ -201,7 +223,7 @@ const DashboardPage = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid xs={6} md={3}>
+            <Grid xs={12} sm={6} md={5}>
               <TextField
                 select
                 label="Priority"
@@ -209,7 +231,9 @@ const DashboardPage = () => {
                 value={filters.priorityLevel}
                 onChange={handleFilterChange}
                 fullWidth
-                sx={{ minWidth: 150 }}
+                size="small"
+                SelectProps={{ MenuProps: { disableScrollLock: true } }}
+                sx={{ "& .MuiInputBase-root": { borderRadius: 2 } }}
               >
                 {priorityOptions.map((option) => (
                   <MenuItem key={option.value || "all"} value={option.value}>
@@ -223,36 +247,46 @@ const DashboardPage = () => {
       </Paper>
 
       {loading ? (
-        <Stack alignItems="center" py={4}>
-          <CircularProgress size={32} />
+        <Stack alignItems="center" py={5} className="animate-fade-in">
+          <CircularProgress size={40} />
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>Updating list…</Typography>
         </Stack>
       ) : complaints.length === 0 ? (
-        <Alert severity="info">
-          {filters.q || filters.status || filters.priorityLevel
-            ? "No complaints match your filters"
-            : "You have not submitted any complaints yet"}
+        <Alert
+          severity="info"
+          className="animate-fade-in-up"
+          sx={{ borderRadius: 2 }}
+        >
+          {hasActiveFilters
+            ? "No complaints match your filters. Try changing or resetting them."
+            : "You haven't submitted any complaints yet."}
         </Alert>
       ) : (
-        <Stack spacing={3}>
+        <Stack spacing={2} className="stagger-children">
           {complaints.map((complaint) => (
-            <ComplaintCard
-              key={complaint._id}
-              complaint={complaint}
-              actions={[
-                {
-                  key: "details",
-                  element: (
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => navigate(`/complaints/${complaint._id}`)}
-                    >
-                      Show details
-                    </Button>
-                  ),
-                },
-              ]}
-            />
+            <div key={complaint._id} className="stagger-child">
+              <ComplaintCard
+                complaint={complaint}
+                actions={[
+                  {
+                    key: "details",
+                    element: (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => navigate(`/complaints/${complaint._id}`)}
+                        sx={{
+                          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                          "&:hover": { transform: "translateY(-1px)" },
+                        }}
+                      >
+                        View details
+                      </Button>
+                    ),
+                  },
+                ]}
+              />
+            </div>
           ))}
         </Stack>
       )}

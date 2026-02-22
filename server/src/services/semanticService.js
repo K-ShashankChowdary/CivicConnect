@@ -120,6 +120,19 @@ export const reRankComplaintsByIR = (query, complaints) => {
 
   filtered.sort((a, b) => b.score - a.score);
 
+  // Log query, rank, and score for debugging IR ranking
+  filtered.forEach((item, index) => {
+    const complaint = item.complaint || {};
+    console.log(
+      '[IR] query="%s" rank=%d score=%f id=%s title="%s"',
+      query,
+      index + 1,
+      item.score,
+      complaint._id || "<no-id>",
+      complaint.title || "<no-title>"
+    );
+  });
+
   return filtered.map((item) => {
     const { complaint } = item;
     if (
