@@ -35,3 +35,4 @@ coverage/
 /.env.exampl
 HOW_AI_WORKS.md
 *.md
+*.pdf
