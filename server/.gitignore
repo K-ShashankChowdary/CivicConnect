@@ -26,3 +26,11 @@ coverage/
 .vscode/
 .idea/
 *.swp
+
+
+/AI_IMPROVEMENTS.md
+/PRIORITY_AI_RECOMMENDATION.md
+/semantic_search_tfidf.md   
+/FEATURES_TO_IMPLEMENT.md
+/.env.exampl
+netlify.toml
