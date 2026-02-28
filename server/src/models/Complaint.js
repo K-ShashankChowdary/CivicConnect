@@ -40,7 +40,17 @@ const complaintSchema = new mongoose.Schema(
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     resolutionNotes: { type: String, trim: true },
     resolvedAt: { type: Date },
-    embedding: { type: [Number] },
+    auditLog: [
+      {
+        status: String,
+        timestamp: Date,
+        updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        _id: false,
+      },
+    ],
+    severityScore: { type: Number, min: 1, max: 5 },
+    assignedDepartment: { type: String, trim: true },
+    descriptionEmbedding: { type: [Number] },
   },
   { timestamps: true },
 );

@@ -1,12 +1,13 @@
 import Complaint from "../models/Complaint.js";
 import AppError from "../utils/AppError.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { successResponse } from "../utils/apiResponse.js";
 import {
   buildAdminComplaintFilters,
   buildSearchQuery,
 } from "../services/complaintService.js";
 import { reRankComplaintsByIR } from "../services/semanticService.js";
-import { sendEmail } from "../services/emailService.js";
+import { getIO } from "../services/socketService.js";
 
 export const listComplaints = asyncHandler(async (req, res) => {
   const filters = buildAdminComplaintFilters(req.query);
@@ -36,14 +37,11 @@ export const listComplaints = asyncHandler(async (req, res) => {
     const ranked = await reRankComplaintsByIR(req.query.q, allItems);
     const items = ranked.slice(skip, skip + limit);
 
-    return res.json({
-      success: true,
-      data: {
-        items,
-        total,
-        page,
-        totalPages: Math.ceil(total / limit),
-      },
+    return successResponse(res, 200, {
+      items,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
     });
   }
 
@@ -67,14 +65,11 @@ export const listComplaints = asyncHandler(async (req, res) => {
 
   const items = rawItems;
 
-  res.json({
-    success: true,
-    data: {
-      items,
-      total,
-      page,
-      totalPages: Math.ceil(total / limit),
-    },
+  return successResponse(res, 200, {
+    items,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
   });
 });
 
@@ -90,8 +85,13 @@ export const updateComplaintStatus = asyncHandler(async (req, res) => {
     throw new AppError("Complaint not found", 404);
   }
 
-  if (status) {
+  if (status && complaint.status !== status) {
     complaint.status = status;
+    complaint.auditLog.push({
+      status,
+      timestamp: new Date(),
+      updatedBy: req.user._id,
+    });
   }
 
   if (assignedTo) {
@@ -108,71 +108,41 @@ export const updateComplaintStatus = asyncHandler(async (req, res) => {
 
   await complaint.save();
 
-  try {
-    const user = complaint.createdBy;
-    if (user && user.email) {
-      const baseUrl = process.env.APP_BASE_URL;
-      const trimmedBaseUrl = baseUrl ? baseUrl.replace(/\/+$/, "") : null;
-      const detailsUrl = trimmedBaseUrl
-        ? `${trimmedBaseUrl}/complaints/${complaint._id}`
-        : null;
-      const statusLabel = complaint.status.replace("_", " ");
+  const creatorId = complaint.createdBy._id 
+    ? complaint.createdBy._id.toString() 
+    : complaint.createdBy.toString();
 
-      const plainLines = [
-        `Dear ${user.name || "Citizen"},`,
-        "",
-        `The status of your complaint '${complaint.title}' has been updated.`,
-        `New status: ${statusLabel}`,
-      ];
+  getIO()
+    .to(creatorId)
+    .to("admin_events")
+    .to(`complaint_${complaint._id.toString()}`)
+    .emit("complaintUpdated", complaint);
 
-      if (complaint.resolutionNotes) {
-        plainLines.push(`Resolution notes: ${complaint.resolutionNotes}`);
-      }
+  return successResponse(res, 200, complaint);
+});
 
-      if (detailsUrl) {
-        plainLines.push(
-          "",
-          `You can view the full details here: ${detailsUrl}`,
-        );
-      }
-
-      plainLines.push("", "Thank you for your patience.");
-
-      const text = plainLines.join("\n");
-
-      const htmlLines = [
-        `<p>Dear ${user.name || "Citizen"},</p>`,
-        `<p>The status of your complaint titled <strong>${complaint.title}</strong> has been updated.</p>`,
-        "<ul>",
-        `<li><strong>Status:</strong> ${statusLabel}</li>`,
-      ];
-
-      if (complaint.resolutionNotes) {
-        htmlLines.push(
-          `<li><strong>Resolution notes:</strong> ${complaint.resolutionNotes}</li>`,
-        );
-      }
-
-      htmlLines.push("</ul>");
-
-      if (detailsUrl) {
-        htmlLines.push(
-          `<p>You can view the full details here: <a href="${detailsUrl}">${detailsUrl}</a></p>`,
-        );
-      }
-
-      htmlLines.push("<p>Thank you for your patience.</p>");
-
-      await sendEmail({
-        to: user.email,
-        subject: `Complaint status updated: ${statusLabel}`,
-        text,
-        html: htmlLines.join(""),
-      });
-    }
-  } catch (error) {
-    console.error("Failed to send complaint status update email", error);
+export const findSimilarToComplaint = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const complaint = await Complaint.findById(id).lean();
+  
+  if (!complaint) {
+    throw new AppError("Complaint not found", 404);
   }
 
-  res.json({ success: true, data: complaint });
+  const allItems = await Complaint.find({ _id: { $ne: id } })
+    .populate("createdBy", "name email role")
+    .populate("assignedTo", "name email role")
+    .lean();
+
+  const queryText = `${complaint.title} ${complaint.description} ${complaint.category}`;
+  const ranked = await reRankComplaintsByIR(queryText, allItems);
+  
+  const items = ranked.slice(0, 10);
+  
+  return successResponse(res, 200, {
+      items,
+      total: items.length,
+      page: 1,
+      totalPages: 1,
+  });
 });
