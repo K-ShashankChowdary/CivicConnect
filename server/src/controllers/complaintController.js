@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import Complaint from "../models/Complaint.js";
 import AppError from "../utils/AppError.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { successResponse } from "../utils/apiResponse.js";
 import { predictPriorityWithLLM } from "../services/priorityLLMService.js";
 import { predictPriority } from "../services/priorityService.js";
 import { buildSearchQuery } from "../services/complaintService.js";
@@ -10,7 +11,7 @@ import {
   attachComplaintEmbedding,
   reRankComplaintsByIR,
 } from "../services/semanticService.js";
-import { sendEmail } from "../services/emailService.js";
+import { getIO } from "../services/socketService.js";
 
 export const createComplaint = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -84,69 +85,13 @@ export const createComplaint = asyncHandler(async (req, res) => {
   const complaint = await Complaint.create(complaintData);
 
   await attachComplaintEmbedding(complaint);
-  await complaint.save();
-
-  try {
-    if (req.user && req.user.email) {
-      const baseUrl = process.env.APP_BASE_URL;
-      const trimmedBaseUrl = baseUrl ? baseUrl.replace(/\/+$/, "") : null;
-      const detailsUrl = trimmedBaseUrl
-        ? `${trimmedBaseUrl}/complaints/${complaint._id}`
-        : null;
-
-      const plainLines = [
-        `Dear ${req.user.name || "Citizen"},`,
-        "",
-        `We have received your complaint titled '${complaint.title}'.`,
-        `Current status: ${complaint.status}`,
-        `Priority: ${complaint.priorityLevel}`,
-        `Location: ${complaint.location}`,
-      ];
-
-      if (detailsUrl) {
-        plainLines.push(
-          "",
-          `You can view the full details here: ${detailsUrl}`,
-        );
-      }
-
-      plainLines.push("", "Thank you for helping us improve your community.");
-
-      const text = plainLines.join("\n");
-
-      const htmlLines = [
-        `<p>Dear ${req.user.name || "Citizen"},</p>`,
-        `<p>We have received your complaint titled <strong>${complaint.title}</strong>.</p>`,
-        "<ul>",
-        `<li><strong>Status:</strong> ${complaint.status}</li>`,
-        `<li><strong>Priority:</strong> ${complaint.priorityLevel}</li>`,
-        `<li><strong>Location:</strong> ${complaint.location}</li>`,
-        "</ul>",
-      ];
-
-      if (detailsUrl) {
-        htmlLines.push(
-          `<p>You can view the full details here: <a href="${detailsUrl}">${detailsUrl}</a></p>`,
-        );
-      }
-
-      htmlLines.push("<p>Thank you for helping us improve your community.</p>");
-
-      await sendEmail({
-        to: req.user.email,
-        subject: `Complaint received: ${complaint.title}`,
-        text,
-        html: htmlLines.join(""),
-      });
-    }
-  } catch (error) {
-    console.error("Failed to send complaint submission email", error);
-  }
-
-  res.status(201).json({
-    success: true,
-    data: complaint,
-  });
+  
+  getIO()
+    .to(complaint.createdBy.toString())
+    .to("admin_events")
+    .emit("complaintCreated", complaint);
+  
+  return successResponse(res, 201, complaint);
 });
 
 export const getMyComplaints = asyncHandler(async (req, res) => {
@@ -168,7 +113,7 @@ export const getMyComplaints = asyncHandler(async (req, res) => {
     complaints = await reRankComplaintsByIR(q.trim(), complaints);
   }
 
-  res.json({ success: true, data: complaints });
+  return successResponse(res, 200, complaints);
 });
 
 export const getComplaintById = asyncHandler(async (req, res) => {
@@ -181,7 +126,7 @@ export const getComplaintById = asyncHandler(async (req, res) => {
     throw new AppError("Complaint not found", 404);
   }
 
-  res.json({ success: true, data: complaint });
+  return successResponse(res, 200, complaint);
 });
 
 export const updateComplaint = asyncHandler(async (req, res) => {
@@ -268,5 +213,11 @@ export const updateComplaint = asyncHandler(async (req, res) => {
   await attachComplaintEmbedding(complaint);
   await complaint.save();
 
-  res.json({ success: true, data: complaint });
+  getIO()
+    .to(complaint.createdBy.toString())
+    .to("admin_events")
+    .to(`complaint_${complaint._id.toString()}`)
+    .emit("complaintUpdated", complaint);
+
+  return successResponse(res, 200, complaint);
 });
