@@ -5,6 +5,7 @@ import User from '../models/User.js';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
 import AppError from '../utils/AppError.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import { successResponse } from '../utils/apiResponse.js';
 
 export const register = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -62,15 +63,12 @@ export const register = asyncHandler(async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 
-  res.status(201).json({
-    success: true,
-    data: {
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
-      }
+  return successResponse(res, 201, {
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role
     }
   });
 });
@@ -111,15 +109,12 @@ export const login = asyncHandler(async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 
-  res.json({
-    success: true,
-    data: {
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
-      }
+  return successResponse(res, 200, {
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role
     }
   });
 });
@@ -131,18 +126,15 @@ export const getProfile = asyncHandler(async (req, res) => {
     throw new AppError('User not found', 404);
   }
 
-  res.json({
-    success: true,
-    data: {
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        address: user.address,
-        phone: user.phone,
-        createdAt: user.createdAt
-      }
+  return successResponse(res, 200, {
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      address: user.address,
+      phone: user.phone,
+      createdAt: user.createdAt
     }
   });
 });
@@ -172,10 +164,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       maxAge: 15 * 60 * 1000 // 15 minutes
     });
 
-    res.json({
-      success: true,
-      message: 'Access token refreshed successfully'
-    });
+    return successResponse(res, 200, null, 'Access token refreshed successfully');
   } catch (error) {
     throw new AppError('Invalid or expired refresh token. Please login again.', 401);
   }
@@ -193,8 +182,5 @@ export const logout = asyncHandler(async (req, res) => {
     expires: new Date(0)
   });
 
-  res.json({
-    success: true,
-    message: 'Logged out successfully'
-  });
+  return successResponse(res, 200, null, 'Logged out successfully');
 });

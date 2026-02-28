@@ -1,3 +1,5 @@
+import { errorResponse } from '../utils/apiResponse.js';
+
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, _next) => {
   const status = err.statusCode || 500;
@@ -8,11 +10,7 @@ const errorHandler = (err, req, res, _next) => {
     console.error('Error:', err);
   }
 
-  res.status(status).json({
-    success: false,
-    message,
-    ...(err.errors ? { errors: err.errors } : {})
-  });
+  return errorResponse(res, status, message, err.errors);
 };
 
 export default errorHandler;

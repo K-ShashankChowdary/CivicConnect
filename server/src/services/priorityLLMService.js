@@ -23,7 +23,7 @@ function parseJsonFromResponse(text) {
 /**
  * Predict priority using Gemini. Returns null if disabled, missing key, or API error (caller should fall back to TF.js).
  * @param {{ category: string, title?: string, description: string, location?: string }} payload
- * @returns {Promise<{ score: number, priorityLevel: string, priorityReason?: string, tags: Array<{label, value}> } | null>}
+ * @returns {Promise<{ score: number, priorityLevel: string, priorityReason?: string, tags: Array<{label, value}>, severityScore: number, assignedDepartment: string } | null>}
  */
 export async function predictPriorityWithLLM(payload) {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -32,15 +32,15 @@ export async function predictPriorityWithLLM(payload) {
   const { category = "", title = "", description = "", location = "" } = payload;
   if (!description) return null;
 
-  const prompt = `You are a civic complaint triage assistant. Given this municipal complaint, assign exactly one priority: Low, Medium, High, or Critical. Consider: public safety, health risk, property damage, and urgency. Be concise.
+  const prompt = `You are a civic complaint triage assistant. Given this municipal complaint, assign exactly one priority: Low, Medium, High, or Critical. Also assign a Severity Score (1-5, where 5 is maximum severity) and categorize the issue into a specific municipal Department. Consider: public safety, health risk, property damage, and urgency. Be concise.
 
 Category: ${category}
 Title: ${title}
 Description: ${description}
 Location: ${location || "Not provided"}
 
-Respond with ONLY a single JSON object, no other text. Use this exact structure:
-{"priority":"Critical|High|Medium|Low","reason":"one short sentence explaining why"}`;
+Respond with ONLY a single valid JSON object, no other text. Use this exact structure:
+{"priority":"Critical|High|Medium|Low","reason":"one short sentence explaining why","severityScore":<number 1-5>,"department":"<Department Name>"}`;
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -52,15 +52,21 @@ Respond with ONLY a single JSON object, no other text. Use this exact structure:
 
     const priorityLevel = parsed.priority;
     const score = LEVEL_TO_SCORE[priorityLevel] ?? 0.5;
+    const severityScore = parsed.severityScore || Math.ceil(score * 5);
+    const assignedDepartment = parsed.department || "General";
     const priorityReason = typeof parsed.reason === "string" ? parsed.reason.trim() : undefined;
 
     return {
       score,
       priorityLevel,
+      severityScore,
+      assignedDepartment,
       ...(priorityReason && { priorityReason }),
       tags: [
         { label: "Priority", value: priorityLevel },
         { label: "Urgency Score", value: score.toFixed(2) },
+        { label: "Severity Score", value: severityScore.toString() },
+        { label: "Department", value: assignedDepartment },
         { label: "Location", value: location || "Unknown" },
         ...(priorityReason ? [{ label: "AI reason", value: priorityReason }] : []),
       ],
