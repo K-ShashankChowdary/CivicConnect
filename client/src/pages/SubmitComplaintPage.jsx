@@ -1,17 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
-import MyLocationIcon from "@mui/icons-material/MyLocation";
-
 import { useAuth } from "../context/AuthContext.jsx";
 
 const categories = [
@@ -145,202 +133,181 @@ const SubmitComplaintPage = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 720, mx: "auto" }} className="animate-fade-in">
-      <Box
-        className="animate-slide-down"
-        sx={{
-          background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
-          borderRadius: 2,
-          p: { xs: 3, sm: 4 },
-          mb: { xs: 3, sm: 4 },
-          color: "white",
-          boxShadow: "0 4px 24px rgba(13, 148, 136, 0.2)",
-          transition: "box-shadow 0.3s ease",
-          "&:hover": { boxShadow: "0 8px 32px rgba(13, 148, 136, 0.25)" },
-        }}
-      >
-        <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }} component="h1">
-          Submit a complaint
-        </Typography>
-        <Typography variant="body2" sx={{ opacity: 0.95 }}>
-          Our AI assigns a priority from your description and category so urgent
-          issues get faster attention.
-        </Typography>
-      </Box>
+    <div className="max-w-3xl mx-auto animate-fade-in">
+      {/* Header Banner */}
+      <div className="bg-gradient-to-br from-teal-600 to-teal-500 rounded-2xl p-6 sm:p-8 mb-6 text-white shadow-lg animate-slide-down">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Submit a complaint</h1>
+        <p className="text-teal-50 text-sm sm:text-base opacity-95">
+          Our AI assigns a priority from your description and category so urgent issues get faster attention.
+        </p>
+      </div>
 
-      <Paper
-        elevation={0}
-        className="animate-fade-in-up"
-        sx={{ p: { xs: 2, sm: 4 }, borderRadius: 2 }}
-      >
-        <Stack component="form" spacing={3} onSubmit={handleSubmit}>
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-8 animate-fade-in-up">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <Alert
-              severity="error"
-              onClose={() => setError(null)}
-              sx={{ borderRadius: 2 }}
-            >
-              {error}
-            </Alert>
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+              <div className="flex justify-between">
+                <div className="flex">
+                  <svg className="h-5 w-5 text-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  <p className="text-sm text-red-700">{error}</p>
+                </div>
+                <button type="button" onClick={() => setError(null)} className="text-red-400 hover:text-red-500">
+                  <span className="sr-only">Close</span>
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                </button>
+              </div>
+            </div>
           )}
 
           {success && (
-            <Alert severity="success" sx={{ borderRadius: 2 }}>
-              Complaint submitted. Redirecting…
-            </Alert>
+            <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-md">
+              <div className="flex">
+                <svg className="h-5 w-5 text-emerald-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <p className="text-sm text-emerald-700 font-medium">Complaint submitted! Redirecting...</p>
+              </div>
+            </div>
           )}
 
-          <TextField
-            label="Title"
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            required
-            fullWidth
-            size="small"
-            placeholder="Brief summary of the issue"
-          />
-
-          <TextField
-            select
-            label="Category"
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            required
-            fullWidth
-            size="small"
-            SelectProps={{ MenuProps: { disableScrollLock: true } }}
-          >
-            {categories.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <TextField
-            label="Location"
-            name="location"
-            value={form.location}
-            onChange={handleChange}
-            required
-            fullWidth
-            size="small"
-            placeholder="Street address or landmark"
-            helperText={
-              "Use current location to auto-fill a nearby street address, or enter it manually."
-            }
-          />
-
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            alignItems={{ xs: "stretch", sm: "center" }}
-          >
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={handleUseCurrentLocation}
-              disabled={locating}
-              startIcon={
-                locating ? (
-                  <CircularProgress size={16} sx={{ color: "#f97316" }} />
-                ) : (
-                  <MyLocationIcon />
-                )
-              }
-              sx={{
-                minWidth: { sm: 220 },
-                borderColor: "rgba(249, 115, 22, 0.55)",
-                color: "#c2410c",
-                "&:hover": {
-                  borderColor: "rgba(249, 115, 22, 0.9)",
-                  backgroundColor: "rgba(249, 115, 22, 0.06)",
-                },
-              }}
-            >
-              {locating ? "Detecting location" : "Use current location"}
-            </Button>
-
-            {form.latitude && form.longitude && (
-              <Chip
-                variant="outlined"
-                size="small"
-                label={`${Number(form.latitude).toFixed(5)}, ${Number(form.longitude).toFixed(5)}`}
-                sx={{
-                  alignSelf: { xs: "flex-start", sm: "center" },
-                  borderColor: "rgba(148, 163, 184, 0.7)",
-                  color: "text.secondary",
-                }}
-              />
-            )}
-          </Stack>
-
-          <TextField
-            label="Detailed description"
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            required
-            fullWidth
-            multiline
-            minRows={4}
-            size="small"
-            placeholder="Include location, severity, and any immediate concerns."
-          />
-
-          <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            flexWrap="wrap"
-            gap={1}
-          >
-            <Button variant="outlined" component="label" size="medium">
-              Upload images
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="title">Title</label>
               <input
-                type="file"
-                accept="image/*"
-                multiple
-                hidden
-                onChange={handleFileChange}
+                id="title"
+                name="title"
+                value={form.title}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 mb-1 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                placeholder="Brief summary of the issue"
               />
-            </Button>
-            {files.length > 0 && (
-              <Typography variant="body2" color="text.secondary">
-                {files.length} image{files.length > 1 ? "s" : ""} selected
-              </Typography>
-            )}
-          </Stack>
+            </div>
 
-          <Stack
-            direction={{ xs: "column-reverse", sm: "row" }}
-            spacing={2}
-            justifyContent="flex-end"
-            sx={{ pt: 1 }}
-          >
-            <Button
-              variant="outlined"
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+              >
+                <option value="" disabled>Select a category</option>
+                {categories.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="location">Location</label>
+              <input
+                id="location"
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 mb-2 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                placeholder="Street address or landmark"
+              />
+              <p className="text-xs text-slate-500 mb-3">Use current location to auto-fill a nearby street address, or enter it manually.</p>
+              
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleUseCurrentLocation}
+                  disabled={locating}
+                  className="inline-flex items-center px-4 py-2 border border-orange-300 shadow-sm text-sm font-medium rounded-lg text-orange-700 bg-orange-50 hover:bg-orange-100 hover:border-orange-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors disabled:opacity-50"
+                >
+                  {locating ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Detecting location...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="-ml-1 mr-2 h-4 w-4 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      Use current location
+                    </>
+                  )}
+                </button>
+
+                {form.latitude && form.longitude && (
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                    {Number(form.latitude).toFixed(5)}, {Number(form.longitude).toFixed(5)}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="description">Detailed description</label>
+              <textarea
+                id="description"
+                name="description"
+                value={form.description}
+                onChange={handleChange}
+                required
+                rows={5}
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-y"
+                placeholder="Include location, severity, and any immediate concerns."
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Attachments</label>
+              <div className="flex flex-wrap items-center gap-4">
+                <label className="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 cursor-pointer focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-teal-500 transition-colors">
+                  <svg className="-ml-1 mr-2 h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  Upload images
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="sr-only"
+                    onChange={handleFileChange}
+                  />
+                </label>
+                {files.length > 0 && (
+                  <span className="text-sm text-slate-500 font-medium">
+                    {files.length} image{files.length > 1 ? "s" : ""} selected
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-6 mt-6 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+            <button
+              type="button"
               onClick={() => navigate(-1)}
-              fullWidth={false}
-              sx={{ alignSelf: { xs: "stretch", sm: "flex-end" } }}
+              className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-3 border border-slate-300 rounded-xl shadow-sm text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
             >
               Cancel
-            </Button>
-            <Button
+            </button>
+            <button
               type="submit"
-              variant="contained"
-              size="large"
               disabled={loading}
-              sx={{ alignSelf: { xs: "stretch", sm: "flex-end" } }}
+              className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? "Submitting…" : "Submit complaint"}
-            </Button>
-          </Stack>
-        </Stack>
-      </Paper>
-    </Box>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

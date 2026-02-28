@@ -19,8 +19,4 @@ export default {
     },
   },
   plugins: [],
-  // Preflight off so MUI and Tailwind can coexist; use Tailwind for new components or utilities
-  corePlugins: {
-    preflight: false,
-  },
 };

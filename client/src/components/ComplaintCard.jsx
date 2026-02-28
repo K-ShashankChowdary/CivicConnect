@@ -1,19 +1,17 @@
 import PropTypes from "prop-types";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Chip from "@mui/material/Chip";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
-
 import CategoryChip from "./CategoryChip.jsx";
 
-const statusColors = {
-  submitted: "info",
-  in_progress: "warning",
-  resolved: "success",
+const statusStyles = {
+  submitted: "bg-blue-50 text-blue-700 border-blue-200",
+  in_progress: "bg-amber-50 text-amber-700 border-amber-200",
+  resolved: "bg-emerald-50 text-emerald-700 border-emerald-200",
+};
+
+const priorityStyles = {
+  Critical: "bg-red-50 text-red-700 border-red-200",
+  High: "bg-orange-50 text-orange-700 border-orange-200",
+  Medium: "bg-sky-50 text-sky-700 border-sky-200",
+  Low: "bg-slate-50 text-slate-700 border-slate-200",
 };
 
 const ComplaintCard = ({ complaint, actions }) => {
@@ -22,175 +20,140 @@ const ComplaintCard = ({ complaint, actions }) => {
     ? new Date(complaint.resolvedAt).toLocaleString()
     : null;
 
+  const isSlaBreached =
+    complaint.status !== "resolved" &&
+    new Date() - new Date(complaint.createdAt) > 48 * 60 * 60 * 1000;
+
   const descriptionPreview =
     complaint.description && complaint.description.length > 220
       ? `${complaint.description.slice(0, 220)}…`
       : complaint.description;
 
-  const priorityColor =
-    complaint.priorityLevel === "Critical"
-      ? "error"
-      : complaint.priorityLevel === "High"
-        ? "warning"
-        : complaint.priorityLevel === "Medium"
-          ? "info"
-          : "default";
+  const priorityStyle = priorityStyles[complaint.priorityLevel] || priorityStyles.Low;
+  const statusStyle = statusStyles[complaint.status] || "bg-slate-50 text-slate-700 border-slate-200";
+
+  // Left border color based on priority
+  const borderLeftColor = 
+    complaint.priorityLevel === "Critical" ? "border-l-red-500" :
+    complaint.priorityLevel === "High" ? "border-l-orange-500" :
+    complaint.priorityLevel === "Medium" ? "border-l-sky-500" :
+    "border-l-slate-300";
 
   return (
-    <Card
-      elevation={0}
-      sx={{
-        borderRadius: 2,
-        border: "1px solid",
-        borderColor: "divider",
-        borderLeft: { xs: "none", sm: "4px solid" },
-        ...(priorityColor !== "default" && {
-          borderLeftColor: {
-            sm: (theme) =>
-              theme.palette[priorityColor]?.main || theme.palette.divider,
-          },
-        }),
-        transition:
-          "box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease",
-        overflow: "hidden",
-        "&:hover": {
-          boxShadow: "0 12px 28px -4px rgba(0,0,0,0.12)",
-          borderColor: "primary.light",
-          transform: "translateY(-2px)",
-        },
-      }}
-    >
-      <CardContent
-        sx={{ p: { xs: 2, sm: 3 }, "&:last-child": { pb: { xs: 2, sm: 3 } } }}
-      >
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={{ xs: 2, md: 3 }}
-        >
-          <Stack
-            direction="row"
-            flexWrap="wrap"
-            gap={1}
-            sx={{ minWidth: { md: 140 }, rowGap: 1 }}
-          >
+    <div className={`bg-white rounded-xl border border-slate-200 sm:border-l-4 ${borderLeftColor} shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-r-teal-200 hover:border-y-teal-200 transition-all duration-200 overflow-hidden`}>
+      <div className="p-4 sm:p-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+          
+          <div className="flex flex-row flex-wrap md:flex-col md:min-w-[140px] gap-2 md:gap-3 content-start">
             <CategoryChip category={complaint.category} />
-            <Tooltip title="AI-assigned priority" arrow>
-              <Chip
-                label={complaint.priorityLevel}
-                color={priorityColor}
-                size="small"
-                sx={{ fontWeight: 600 }}
-              />
-            </Tooltip>
-            <Chip
-              label={complaint.status.replace("_", " ")}
-              color={statusColors[complaint.status] || "default"}
-              size="small"
-              variant="outlined"
-              sx={{ fontWeight: 600, textTransform: "capitalize" }}
-            />
-          </Stack>
-
-          <Stack spacing={1.5} sx={{ flex: 1, minWidth: 0 }}>
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: 700, lineHeight: 1.3 }}
+            
+            <span
+              title="AI-assigned priority"
+              className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border ${priorityStyle}`}
             >
+              {complaint.priorityLevel}
+            </span>
+            
+            <span
+              className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold capitalize border ${statusStyle}`}
+            >
+              {complaint.status.replace("_", " ")}
+            </span>
+
+            {isSlaBreached && (
+              <span
+                className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border bg-red-50 text-red-700 border-red-300 animate-pulse shadow-sm"
+                title="SLA Breached (>48hrs unresolved)"
+              >
+                <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                SLA Breached
+              </span>
+            )}
+          </div>
+
+          <div className="flex-1 min-w-0 flex flex-col gap-2">
+            <h3 className="text-lg font-bold text-slate-900 leading-tight">
               {complaint.title}
-            </Typography>
+            </h3>
 
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              display="block"
-            >
+            <span className="text-xs font-medium text-slate-400 block">
               {createdDate}
-            </Typography>
+            </span>
 
-            <Typography
-              variant="body2"
-              sx={{ lineHeight: 1.6 }}
-              color="text.secondary"
-            >
+            <p className="text-sm text-slate-600 leading-relaxed mt-1">
               {descriptionPreview}
-            </Typography>
+            </p>
 
-            <Stack direction="row" flexWrap="wrap" gap={0.75} sx={{ mt: 0.5 }}>
+            <div className="flex flex-wrap gap-2 mt-2">
               {complaint.tags
                 ?.filter(
                   (tag) => tag.label !== "Impact" && tag.label !== "address",
                 )
                 .map((tag) => (
-                  <Tooltip key={tag.label} title={tag.label} arrow>
-                    <Chip
-                      label={tag.value}
-                      size="small"
-                      color="default"
-                      sx={{ maxWidth: 240 }}
-                    />
-                  </Tooltip>
+                  <span
+                    key={tag.label}
+                    title={tag.label}
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600 max-w-[240px] truncate"
+                  >
+                    {tag.value}
+                  </span>
                 ))}
               {complaint.location && (
-                <Tooltip title="Location" arrow>
-                  <Chip
-                    label={complaint.location}
-                    size="small"
-                    variant="outlined"
-                    sx={{ maxWidth: 420 }}
-                  />
-                </Tooltip>
+                <span
+                  title="Location"
+                  className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border border-slate-200 bg-white text-slate-600 max-w-[420px] truncate"
+                >
+                  <svg className="w-3 h-3 mr-1 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {complaint.location}
+                </span>
               )}
               {complaint.incidentTime && (
-                <Chip
-                  label={`Incident: ${new Date(
-                    complaint.incidentTime,
-                  ).toLocaleString()}`}
-                  size="small"
-                  variant="outlined"
-                />
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600">
+                  Incident: {new Date(complaint.incidentTime).toLocaleString()}
+                </span>
               )}
               {complaint.attachments && complaint.attachments.length > 0 && (
-                <Chip
-                  label={`${complaint.attachments.length} image${
-                    complaint.attachments.length > 1 ? "s" : ""
-                  }`}
-                  size="small"
-                  variant="outlined"
-                />
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600">
+                  <svg className="w-3 h-3 mr-1 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {complaint.attachments.length} image{complaint.attachments.length > 1 ? "s" : ""}
+                </span>
               )}
-            </Stack>
-          </Stack>
-        </Stack>
-      </CardContent>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {(resolvedDate || actions?.length) && (
-        <CardActions
-          sx={{
-            justifyContent: "space-between",
-            px: { xs: 2, sm: 3 },
-            pb: 2,
-            pt: 0,
-            flexWrap: "wrap",
-            gap: 1,
-          }}
-        >
-          <Box sx={{ order: { xs: 2, sm: 1 } }}>
+      {(resolvedDate || (actions && actions.length > 0)) && (
+        <div className="px-4 sm:px-6 py-3 bg-slate-50 border-t border-slate-100 flex flex-wrap justify-between items-center gap-3">
+          <div className="order-2 sm:order-1">
             {resolvedDate && (
-              <Typography variant="caption" color="text.secondary">
+              <span className="text-xs font-medium text-emerald-600 flex items-center">
+                <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
                 Resolved {resolvedDate}
-              </Typography>
+              </span>
             )}
-          </Box>
-          {actions?.length > 0 && (
-            <Stack direction="row" spacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
+          </div>
+          {actions && actions.length > 0 && (
+            <div className="flex gap-2 order-1 sm:order-2 w-full sm:w-auto">
               {actions.map((action) => (
-                <Box key={action.key}>{action.element}</Box>
+                <div key={action.key} className="w-full sm:w-auto">
+                  {action.element}
+                </div>
               ))}
-            </Stack>
+            </div>
           )}
-        </CardActions>
+        </div>
       )}
-    </Card>
+    </div>
   );
 };
 

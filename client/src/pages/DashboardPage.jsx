@@ -1,19 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid2";
-
 import ComplaintCard from "../components/ComplaintCard.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import useDebounce from "../hooks/useDebounce.js";
+import { socket } from "../services/socket.js";
 
 const statusOptions = [
   { label: "All statuses", value: "" },
@@ -31,7 +21,7 @@ const priorityOptions = [
 ];
 
 const DashboardPage = () => {
-  const { api } = useAuth();
+  const { api, user } = useAuth();
   const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,6 +55,29 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchComplaints();
+    
+    // Live update listeners
+    if (user?._id) {
+      socket.emit("join_user_room", user._id, user.role);
+    }
+
+    const handleCreated = () => {
+      fetchComplaints();
+    };
+
+    const handleUpdated = (updatedComplaint) => {
+      setComplaints((prev) =>
+        prev.map((c) => (c._id === updatedComplaint._id ? { ...c, ...updatedComplaint } : c))
+      );
+    };
+
+    socket.on("complaintCreated", handleCreated);
+    socket.on("complaintUpdated", handleUpdated);
+
+    return () => {
+      socket.off("complaintCreated", handleCreated);
+      socket.off("complaintUpdated", handleUpdated);
+    };
   }, [fetchComplaints]);
 
   const handleFilterChange = (event) => {
@@ -78,219 +91,179 @@ const DashboardPage = () => {
 
   if (loading && complaints.length === 0) {
     return (
-      <Stack alignItems="center" justifyContent="center" sx={{ minHeight: "50vh", py: 4 }}>
-        <CircularProgress size={40} />
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>Loading…</Typography>
-      </Stack>
+      <div className="min-h-[50vh] flex flex-col justify-center items-center py-10">
+        <svg className="animate-spin h-10 w-10 text-teal-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <p className="text-slate-500 font-medium">Loading complaints...</p>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Stack spacing={2} alignItems="center" sx={{ minHeight: "50vh", py: 4 }}>
-        <Alert severity="error" sx={{ borderRadius: 2 }}>{error}</Alert>
-        <Button variant="contained" onClick={fetchComplaints}>Retry</Button>
-      </Stack>
+      <div className="min-h-[50vh] flex flex-col justify-center items-center py-10">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-xl max-w-md text-center mb-4">
+          <p className="font-medium">{error}</p>
+        </div>
+        <button 
+          onClick={fetchComplaints}
+          className="px-6 py-2.5 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition-colors"
+        >
+          Retry
+        </button>
+      </div>
     );
   }
 
   const hasActiveFilters = filters.q || filters.status || filters.priorityLevel;
 
   return (
-    <Stack spacing={{ xs: 3, md: 4 }} className="animate-fade-in">
-      {/* Hero */}
-      <Box
-        className="animate-slide-down"
-        sx={{
-          background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
-          borderRadius: 2,
-          p: { xs: 3, sm: 4 },
-          color: "white",
-          boxShadow: "0 4px 24px rgba(13, 148, 136, 0.25)",
-          transition: "box-shadow 0.3s ease",
-          "&:hover": { boxShadow: "0 8px 32px rgba(13, 148, 136, 0.3)" },
-        }}
-      >
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "stretch", sm: "center" }}
-          gap={2}
-        >
-          <Box>
-            <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }} component="h1">
+    <div className="flex flex-col space-y-6 md:space-y-8 animate-fade-in">
+      {/* Hero Banner */}
+      <div className="bg-gradient-to-br from-teal-600 to-teal-500 rounded-2xl p-6 sm:p-8 text-white shadow-lg shadow-teal-600/20 animate-slide-down">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-1">
               My Complaints
-            </Typography>
-            <Typography variant="body2" sx={{ opacity: 0.9 }}>
+            </h1>
+            <p className="text-teal-50 font-medium">
               Track and manage your submitted complaints
-            </Typography>
-          </Box>
-          <Button
-            variant="contained"
-            href="/submit"
-            size="large"
-            fullWidth={false}
-            sx={{
-              alignSelf: { xs: "stretch", sm: "flex-end" },
-              bgcolor: "white",
-              color: "primary.main",
-              fontWeight: 600,
-              transition: "transform 0.2s ease, box-shadow 0.2s ease",
-              "&:hover": { bgcolor: "grey.100", transform: "translateY(-1px)", boxShadow: 2 },
-            }}
+            </p>
+          </div>
+          <button
+            onClick={() => navigate('/submit')}
+            className="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 border border-transparent shadow-sm text-sm font-bold rounded-xl text-teal-700 bg-white hover:bg-slate-50 transition-all focus:outline-none ring-1 ring-white/50"
           >
             + New Complaint
-          </Button>
-        </Stack>
-      </Box>
+          </button>
+        </div>
+      </div>
 
-      {/* Filters – redesigned with more space and clear hierarchy */}
-      <Paper
-        className="animate-fade-in-up"
-        elevation={0}
-        sx={{
-          p: { xs: 2.5, sm: 3.5 },
-          borderRadius: 2,
-          border: "1px solid",
-          borderColor: "divider",
-          "& .MuiOutlinedInput-root": {
-            transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-            "&:hover": { "& .MuiOutlinedInput-notchedOutline": { borderColor: "primary.light" } },
-            "&.Mui-focused": { "& .MuiOutlinedInput-notchedOutline": { borderWidth: 2 } },
-          },
-        }}
-      >
-        <Stack spacing={3}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            flexWrap="wrap"
-            gap={2}
-          >
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "text.primary" }}>
-              Filter & search
-            </Typography>
+      {/* Filters */}
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 animate-fade-in-up">
+        <div className="flex flex-col space-y-5">
+          <div className="flex flex-wrap justify-between items-center gap-3">
+            <h2 className="text-lg font-bold text-slate-800">Filter & Search</h2>
             {hasActiveFilters && (
-              <Button
-                variant="outlined"
-                size="small"
+              <button
                 onClick={resetFilters}
-                sx={{
-                  fontWeight: 600,
-                  transition: "transform 0.2s ease",
-                  "&:hover": { transform: "scale(1.02)" },
-                }}
+                className="text-sm px-3 py-1.5 font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 hover:text-slate-800 rounded-lg transition-colors border border-slate-200"
               >
                 Reset filters
-              </Button>
+              </button>
             )}
-          </Stack>
+          </div>
 
-          {/* Row 1: Search full width with generous spacing */}
-          <TextField
-            label="Search"
-            name="q"
-            value={filters.q}
-            onChange={handleFilterChange}
-            placeholder="Search by title, description, or location"
-            fullWidth
-            size="small"
-            helperText={debouncedQuery ? "Results ranked by relevance" : null}
-            sx={{
-              "& .MuiInputBase-root": { borderRadius: 2 },
-            }}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            {/* Search */}
+            <div className="md:col-span-12 lg:col-span-6">
+              <label htmlFor="search" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Search</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="search"
+                  name="q"
+                  value={filters.q}
+                  onChange={handleFilterChange}
+                  className="pl-10 block w-full shadow-sm sm:text-sm border-slate-300 rounded-xl focus:ring-teal-500 focus:border-teal-500 border p-2.5 transition-colors"
+                  placeholder="Search by title, description, or location"
+                />
+              </div>
+              {debouncedQuery && (
+                <p className="mt-1.5 text-xs text-teal-600 font-medium">Results ranked by AI relevance</p>
+              )}
+            </div>
 
-          {/* Row 2: Status and Priority with clear spacing */}
-          <Grid container spacing={3}>
-            <Grid xs={12} sm={6} md={5}>
-              <TextField
-                select
-                label="Status"
+            {/* Status */}
+            <div className="md:col-span-6 lg:col-span-3">
+              <label htmlFor="status" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Status</label>
+              <select
+                id="status"
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                fullWidth
-                size="small"
-                SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                sx={{ "& .MuiInputBase-root": { borderRadius: 2 } }}
+                className="block w-full shadow-sm sm:text-sm border-slate-300 rounded-xl focus:ring-teal-500 focus:border-teal-500 border p-2.5 bg-white transition-colors"
               >
-                {statusOptions.map((option) => (
-                  <MenuItem key={option.value || "all"} value={option.value}>
-                    {option.label}
-                  </MenuItem>
+                {statusOptions.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
-              </TextField>
-            </Grid>
-            <Grid xs={12} sm={6} md={5}>
-              <TextField
-                select
-                label="Priority"
+              </select>
+            </div>
+
+            {/* Priority */}
+            <div className="md:col-span-6 lg:col-span-3">
+              <label htmlFor="priorityLevel" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Priority</label>
+              <select
+                id="priorityLevel"
                 name="priorityLevel"
                 value={filters.priorityLevel}
                 onChange={handleFilterChange}
-                fullWidth
-                size="small"
-                SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                sx={{ "& .MuiInputBase-root": { borderRadius: 2 } }}
+                className="block w-full shadow-sm sm:text-sm border-slate-300 rounded-xl focus:ring-teal-500 focus:border-teal-500 border p-2.5 bg-white transition-colors"
               >
-                {priorityOptions.map((option) => (
-                  <MenuItem key={option.value || "all"} value={option.value}>
-                    {option.label}
-                  </MenuItem>
+                {priorityOptions.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
-              </TextField>
-            </Grid>
-          </Grid>
-        </Stack>
-      </Paper>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {loading ? (
-        <Stack alignItems="center" py={5} className="animate-fade-in">
-          <CircularProgress size={40} />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>Updating list…</Typography>
-        </Stack>
+        <div className="flex flex-col items-center py-10 animate-fade-in">
+          <svg className="animate-spin h-8 w-8 text-teal-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p className="text-slate-500 font-medium text-sm">Updating list...</p>
+        </div>
       ) : complaints.length === 0 ? (
-        <Alert
-          severity="info"
-          className="animate-fade-in-up"
-          sx={{ borderRadius: 2 }}
-        >
-          {hasActiveFilters
-            ? "No complaints match your filters. Try changing or resetting them."
-            : "You haven't submitted any complaints yet."}
-        </Alert>
+        <div className="bg-blue-50 border border-blue-200 text-blue-800 rounded-xl p-6 text-center animate-fade-in-up">
+          <p className="font-medium">
+            {hasActiveFilters
+              ? "No complaints match your filters. Try changing or resetting them."
+              : "You haven't submitted any complaints yet."}
+          </p>
+          {!hasActiveFilters && (
+            <button
+              onClick={() => navigate('/submit')}
+              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            >
+              Submit your first complaint
+            </button>
+          )}
+        </div>
       ) : (
-        <Stack spacing={2} className="stagger-children">
+        <div className="flex flex-col space-y-4">
           {complaints.map((complaint) => (
-            <div key={complaint._id} className="stagger-child">
-              <ComplaintCard
-                complaint={complaint}
-                actions={[
-                  {
-                    key: "details",
-                    element: (
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        onClick={() => navigate(`/complaints/${complaint._id}`)}
-                        sx={{
-                          transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                          "&:hover": { transform: "translateY(-1px)" },
-                        }}
-                      >
-                        View details
-                      </Button>
-                    ),
-                  },
-                ]}
-              />
-            </div>
+            <ComplaintCard
+              key={complaint._id}
+              complaint={complaint}
+              actions={[
+                {
+                  key: "details",
+                  element: (
+                    <button
+                      onClick={() => navigate(`/complaints/${complaint._id}`)}
+                      className="w-full sm:w-auto px-4 py-2 border border-slate-300 text-sm font-semibold rounded-lg text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                    >
+                      View details
+                    </button>
+                  ),
+                },
+              ]}
+            />
           ))}
-        </Stack>
+        </div>
       )}
-    </Stack>
+    </div>
   );
 };
 

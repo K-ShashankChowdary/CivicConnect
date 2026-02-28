@@ -1,15 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-
 import { useAuth } from '../context/AuthContext.jsx';
 
 const UserLoginPage = () => {
@@ -53,83 +43,90 @@ const UserLoginPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0fdfa 100%)',
-        py: 4
-      }}
-    >
-      <Container maxWidth="sm">
-        <Paper 
-          elevation={0} 
-          sx={{ 
-            p: 5, 
-            borderRadius: 4, 
-            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.08)',
-            border: '1px solid',
-            borderColor: 'rgba(8, 145, 178, 0.1)',
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(10px)',
-          }}
-        >
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1.5, color: 'primary.main' }}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f0f9ff] via-[#e0f2fe] to-[#f0fdfa] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-cyan-700/10 p-8 sm:p-10">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-extrabold text-teal-600 mb-2">
               Citizen Login
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
+            </h1>
+            <p className="text-slate-500 text-sm">
               Access your account to report and monitor municipal issues
-            </Typography>
-          </Box>
+            </p>
+          </div>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error}
-          </Alert>
-        )}
+          {error && (
+            <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-red-700">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
-        <Stack component="form" spacing={3} onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            fullWidth
-          />
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                placeholder="you@example.com"
+              />
+            </div>
 
-          <TextField
-            label="Password"
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            required
-            fullWidth
-          />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                placeholder="••••••••"
+              />
+            </div>
 
-          <Button type="submit" variant="contained" size="large" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign in'}
-          </Button>
-        </Stack>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm tracking-wide text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Signing in…' : 'Sign in'}
+            </button>
+          </form>
 
-        <Divider sx={{ my: 3 }} />
-
-          <Stack spacing={2}>
-            <Typography variant="body2" sx={{ textAlign: 'center' }}>
-              New to CivicConnect? <Link to="/register">Create an account</Link>
-            </Typography>
-            <Typography variant="body2" sx={{ textAlign: 'center' }}>
-              Are you an admin? <Link to="/admin/login">Admin login</Link>
-            </Typography>
-          </Stack>
-        </Paper>
-      </Container>
-    </Box>
+          <div className="mt-8 border-t border-slate-200 pt-6">
+            <div className="flex flex-col space-y-4 text-center text-sm">
+              <p className="text-slate-600">
+                New to CivicConnect?{' '}
+                <Link to="/register" className="font-semibold text-teal-600 hover:text-teal-500 transition-colors">
+                  Create an account
+                </Link>
+              </p>
+              <p className="text-slate-600">
+                Are you an admin?{' '}
+                <Link to="/admin/login" className="font-semibold text-teal-600 hover:text-teal-500 transition-colors">
+                  Admin login
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

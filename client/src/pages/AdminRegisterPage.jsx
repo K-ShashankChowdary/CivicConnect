@@ -1,16 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import LockIcon from '@mui/icons-material/Lock';
-
 import { useAuth } from '../context/AuthContext.jsx';
 
 const AdminRegisterPage = () => {
@@ -62,114 +51,161 @@ const AdminRegisterPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: '#f8fafc',
-        py: 4
-      }}
-    >
-      <Container maxWidth="sm">
-        <Paper elevation={0} sx={{ p: 4, borderRadius: 3, border: '1px solid', borderColor: 'divider' }}>
-          <Box sx={{ textAlign: 'center', mb: 3 }}>
-            <LockIcon sx={{ fontSize: 48, color: 'warning.main', mb: 2 }} />
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1, color: 'primary.main' }}>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-2xl p-8 sm:p-10 border border-slate-200">
+          <div className="text-center mb-8 flex flex-col items-center">
+            <div className="flex items-center justify-center mb-4 text-orange-500">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+            </div>
+            <h1 className="text-3xl font-extrabold text-teal-600 mb-2">
               Admin Registration
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
+            </h1>
+            <p className="text-slate-500 text-sm">
               Create an administrator account to manage municipal complaints.
-            </Typography>
-          </Box>
+            </p>
+          </div>
 
-          <Alert severity="warning" sx={{ mb: 3 }}>
-            Admin accounts have elevated privileges. Only authorized personnel should register.
-          </Alert>
+          <div className="mb-6 bg-amber-50 border-l-4 border-amber-500 p-4 rounded-md">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-amber-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-amber-700">Admin accounts have elevated privileges. Only authorized personnel should register.</p>
+              </div>
+            </div>
+          </div>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 3 }}>
-              {error}
-            </Alert>
+            <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-red-700">{error}</p>
+                </div>
+              </div>
+            </div>
           )}
 
-          <Stack component="form" spacing={3} onSubmit={handleSubmit}>
-          <TextField
-            label="Full Name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            fullWidth
-          />
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="name">Full Name</label>
+              <input
+                id="name"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="Manager Name"
+              />
+            </div>
 
-          <TextField
-            label="Official Email"
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            fullWidth
-          />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="email">Official Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="admin@municipality.org"
+              />
+            </div>
 
-          <TextField
-            label="Password"
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            required
-            fullWidth
-            helperText="Use 6 or more characters."
-          />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="••••••••"
+              />
+              <p className="mt-1 text-xs text-slate-500">Use 6 or more characters.</p>
+            </div>
 
-          <TextField
-            label="Admin Access Code"
-            type="password"
-            name="adminAccessCode"
-            value={form.adminAccessCode}
-            onChange={handleChange}
-            required
-            fullWidth
-            helperText="Enter the secure admin access code provided by your organization."
-          />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="adminAccessCode">Admin Access Code</label>
+              <input
+                id="adminAccessCode"
+                type="password"
+                name="adminAccessCode"
+                value={form.adminAccessCode}
+                onChange={handleChange}
+                required
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="••••••••"
+              />
+              <p className="mt-1 text-xs text-slate-500">Enter the secure admin access code provided by your organization.</p>
+            </div>
 
-          <TextField
-            label="Office Address"
-            name="address"
-            value={form.address}
-            onChange={handleChange}
-            fullWidth
-          />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="address">Office Address</label>
+              <input
+                id="address"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="City Hall, Room 101"
+              />
+            </div>
 
-          <TextField
-            label="Contact Number"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            fullWidth
-          />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1" htmlFor="phone">Contact Number</label>
+              <input
+                id="phone"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                className="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                placeholder="(555) 123-4567"
+              />
+            </div>
 
-          <Button type="submit" variant="contained" size="large" color="warning" disabled={loading}>
-            {loading ? 'Creating admin account…' : 'Create admin account'}
-          </Button>
-        </Stack>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-2 flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm tracking-wide text-sm font-bold text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Creating admin account…' : 'Create admin account'}
+            </button>
+          </form>
 
-        <Divider sx={{ my: 3 }} />
-
-        <Stack spacing={2}>
-          <Typography variant="body2" sx={{ textAlign: 'center' }}>
-            Already have an admin account? <Link to="/admin/login">Admin sign in</Link>
-          </Typography>
-          <Typography variant="body2" sx={{ textAlign: 'center' }}>
-            Not an admin? <Link to="/register">Citizen registration</Link>
-          </Typography>
-          </Stack>
-        </Paper>
-      </Container>
-    </Box>
+          <div className="mt-8 border-t border-slate-200 pt-6">
+            <div className="flex flex-col space-y-4 text-center text-sm">
+              <p className="text-slate-600">
+                Already have an admin account?{' '}
+                <Link to="/admin/login" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
+                  Admin sign in
+                </Link>
+              </p>
+              <p className="text-slate-600">
+                Not an admin?{' '}
+                <Link to="/register" className="font-semibold text-teal-600 hover:text-teal-500 transition-colors">
+                  Citizen registration
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
