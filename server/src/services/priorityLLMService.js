@@ -1,7 +1,3 @@
-/**
- * LLM-based priority prediction (Gemini) with structured output.
- * Use when GEMINI_API_KEY is set; controller falls back to TF.js otherwise.
- */
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const LEVEL_TO_SCORE = { Low: 0.25, Medium: 0.5, High: 0.75, Critical: 1.0 };
@@ -10,7 +6,6 @@ const VALID_LEVELS = new Set(["Low", "Medium", "High", "Critical"]);
 function parseJsonFromResponse(text) {
   if (!text || typeof text !== "string") return null;
   const trimmed = text.trim();
-  // Strip markdown code block if present
   const jsonMatch = trimmed.match(/\{[\s\S]*\}/);
   if (!jsonMatch) return null;
   try {
@@ -20,11 +15,6 @@ function parseJsonFromResponse(text) {
   }
 }
 
-/**
- * Predict priority using Gemini. Returns null if disabled, missing key, or API error (caller should fall back to TF.js).
- * @param {{ category: string, title?: string, description: string, location?: string }} payload
- * @returns {Promise<{ score: number, priorityLevel: string, priorityReason?: string, tags: Array<{label, value}>, severityScore: number, assignedDepartment: string } | null>}
- */
 export async function predictPriorityWithLLM(payload) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return null;
@@ -32,7 +22,17 @@ export async function predictPriorityWithLLM(payload) {
   const { category = "", title = "", description = "", location = "" } = payload;
   if (!description) return null;
 
-  const prompt = `You are a civic complaint triage assistant. Given this municipal complaint, assign exactly one priority: Low, Medium, High, or Critical. Also assign a Severity Score (1-5, where 5 is maximum severity) and categorize the issue into a specific municipal Department. Consider: public safety, health risk, property damage, and urgency. Be concise.
+  const prompt = `You are an expert municipal triage algorithm. Analyze this complaint and assign:
+1. One Priority Level: Low, Medium, High, or Critical.
+2. A Severity Score (1-5), where 5 is maximum severity.
+3. The specific municipal Department responsible.
+4. A concise reason (1 short sentence max).
+
+Rules for Priority:
+- CRITICAL (Score 4-5): Immediate risk to human life, massive gas leaks, active water main breaks flooding homes. Response needed within hours.
+- HIGH (Score 3-4): Significant property damage risk, large potholes on busy roads, entire blocks without power. Response needed within 1-2 days.
+- MEDIUM (Score 2-3): Nuisances causing moderate inconvenience. Overflowing garbage, noise complaints, dead street animals.
+- LOW (Score 1-2): Aesthetic issues, minor maintenance, requests with absolutely no urgency. Faded paint, a single cracked sidewalk tile, overgrown grass. Do not over-escalate standard maintenance to Medium.
 
 Category: ${category}
 Title: ${title}
@@ -40,7 +40,7 @@ Description: ${description}
 Location: ${location || "Not provided"}
 
 Respond with ONLY a single valid JSON object, no other text. Use this exact structure:
-{"priority":"Critical|High|Medium|Low","reason":"one short sentence explaining why","severityScore":<number 1-5>,"department":"<Department Name>"}`;
+{"priority":"Critical|High|Medium|Low","reason":"short sentence explaining why","severityScore":<number 1-5>,"department":"<Department Name>"}`;
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);

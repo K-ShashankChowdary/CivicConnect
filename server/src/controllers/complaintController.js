@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 
 import Complaint from "../models/Complaint.js";
 import AppError from "../utils/AppError.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { successResponse } from "../utils/apiResponse.js";
 import { predictPriorityWithLLM } from "../services/priorityLLMService.js";
 import { predictPriority } from "../services/priorityService.js";
@@ -11,7 +11,6 @@ import {
   attachComplaintEmbedding,
   reRankComplaintsByIR,
 } from "../services/semanticService.js";
-import { getIO } from "../services/socketService.js";
 
 export const createComplaint = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
@@ -86,11 +85,6 @@ export const createComplaint = asyncHandler(async (req, res) => {
 
   await attachComplaintEmbedding(complaint);
   
-  getIO()
-    .to(complaint.createdBy.toString())
-    .to("admin_events")
-    .emit("complaintCreated", complaint);
-  
   return successResponse(res, 201, complaint);
 });
 
@@ -101,11 +95,6 @@ export const getMyComplaints = asyncHandler(async (req, res) => {
 
   if (status) filter.status = status;
   if (priorityLevel) filter.priorityLevel = priorityLevel;
-
-  const search = buildSearchQuery(req.query);
-  if (search) {
-    Object.assign(filter, search);
-  }
 
   let complaints = await Complaint.find(filter).sort({ createdAt: -1 }).lean();
 
@@ -212,12 +201,6 @@ export const updateComplaint = asyncHandler(async (req, res) => {
 
   await attachComplaintEmbedding(complaint);
   await complaint.save();
-
-  getIO()
-    .to(complaint.createdBy.toString())
-    .to("admin_events")
-    .to(`complaint_${complaint._id.toString()}`)
-    .emit("complaintUpdated", complaint);
 
   return successResponse(res, 200, complaint);
 });

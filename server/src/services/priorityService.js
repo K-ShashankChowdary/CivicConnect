@@ -5,10 +5,10 @@ import * as tf from "@tensorflow/tfjs";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const MODEL_CONFIG = {
-  epochs: 200, // Reduced for faster training while maintaining accuracy
+  epochs: 250, // Slightly increased to allow the deeper network to converge
   batchSize: 32, // Larger batch size for faster training
-  learningRate: 0.001, // Slightly higher for faster convergence
-  validationSplit: 0.15, // Smaller validation split for more training data
+  learningRate: 0.001, // Tuned for stable convergence
+  validationSplit: 0.15, // Validation split to prevent overfitting
 };
 
 const PRIORITY_THRESHOLDS = [0.4, 0.7, 0.9];
@@ -43,10 +43,10 @@ const buildVocabulary = (samples) => {
     });
   });
 
-  // Get top 60 most important words - balanced for speed and context
+  // Get top 100 most important words - expanded to capture larger context variance
   const sortedWords = Object.entries(wordFreq)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 60)
+    .slice(0, 100)
     .map(([word]) => word);
 
   const wordToIndex = {};
@@ -99,46 +99,17 @@ const extractTextFeatures = (description, vocabulary) => {
     textVector[i] = textVector[i] / maxFreq;
   }
 
-  // Enhanced urgency keywords with more comprehensive list
+  // Enhanced urgency keywords encompassing structural, environmental, and medical threats
   const urgencyKeywords = [
-    "burst",
-    "flooding",
-    "critical",
-    "emergency",
-    "dangerous",
-    "urgent",
-    "toxic",
-    "hazardous",
-    "collapse",
-    "explosion",
-    "leak",
-    "contaminated",
-    "sparking",
-    "exposed",
-    "blocking",
-    "overflow",
-    "damage",
-    "severe",
-    "major",
-    "broken",
-    "failed",
-    "failure",
-    "accident",
-    "injury",
-    "injured",
-    "fire",
-    "smoke",
-    "gas",
-    "electrical",
-    "water",
-    "sewage",
-    "health",
-    "safety",
-    "risk",
-    "threat",
-    "immediate",
-    "multiple",
-    "widespread",
+    "burst", "flooding", "critical", "emergency", "dangerous", "urgent",
+    "toxic", "hazardous", "collapse", "explosion", "leak", "contaminated",
+    "sparking", "exposed", "blocking", "overflow", "damage", "severe",
+    "major", "broken", "failed", "failure", "accident", "injury", "injured",
+    "fire", "smoke", "gas", "electrical", "water", "sewage", "health",
+    "safety", "risk", "threat", "immediate", "multiple", "widespread",
+    "fatality", "death", "blood", "poison", "unstable", "collapsing",
+    "trapped", "outage", "blackout", "spill", "chemical", "crushed",
+    "bleeding", "unconscious", "violence", "weapon", "shooting", "stabbing"
   ];
 
   const urgencyCount = words.filter((w) => urgencyKeywords.includes(w)).length;
@@ -163,8 +134,8 @@ const encodeSample = ({ category, description }, encoder) => {
     encoder.vocabulary
   );
 
-  // Combine all features: category, urgency score, length score, + top 35 text features
-  const topTextFeatures = textVector.slice(0, 35); // Balanced feature count for speed
+  // Combine all features: category, urgency score, length score, + top 60 text features
+  const topTextFeatures = textVector.slice(0, 60); // Expanded text vector width
 
   return [categoryIdx, urgencyScore, lengthScore, ...topTextFeatures];
 };
@@ -183,7 +154,7 @@ const buildModel = (inputSize) => {
     })
   );
   net.add(tf.layers.batchNormalization());
-  net.add(tf.layers.dropout({ rate: 0.25 }));
+  net.add(tf.layers.dropout({ rate: 0.20 })); // Dropped slightly to retain more connections
 
   // Second hidden layer
   net.add(
@@ -193,7 +164,7 @@ const buildModel = (inputSize) => {
       kernelRegularizer: tf.regularizers.l2({ l2: 0.0005 }),
     })
   );
-  net.add(tf.layers.dropout({ rate: 0.2 }));
+  net.add(tf.layers.dropout({ rate: 0.15 }));
 
   // Third hidden layer
   net.add(
@@ -202,7 +173,7 @@ const buildModel = (inputSize) => {
       activation: "relu",
     })
   );
-  net.add(tf.layers.dropout({ rate: 0.15 }));
+  net.add(tf.layers.dropout({ rate: 0.10 }));
 
   // Output layer
   net.add(tf.layers.dense({ units: 1, activation: "sigmoid" }));

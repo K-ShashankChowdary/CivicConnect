@@ -1,23 +1,16 @@
 import Complaint from "../models/Complaint.js";
 import AppError from "../utils/AppError.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { successResponse } from "../utils/apiResponse.js";
 import {
   buildAdminComplaintFilters,
   buildSearchQuery,
 } from "../services/complaintService.js";
 import { reRankComplaintsByIR } from "../services/semanticService.js";
-import { getIO } from "../services/socketService.js";
 
 export const listComplaints = asyncHandler(async (req, res) => {
   const filters = buildAdminComplaintFilters(req.query);
-  const search = buildSearchQuery(req.query);
-
   const baseQuery = Complaint.find(filters);
-
-  if (search) {
-    baseQuery.find(search);
-  }
 
   const page = Number(req.query.page) || 1;
   const limit = Math.min(Number(req.query.limit) || 20, 100);
@@ -26,22 +19,19 @@ export const listComplaints = asyncHandler(async (req, res) => {
   // When a search query is present, rank the full filtered set by TF-IDF cosine
   // and then paginate to return the top-K documents for this page.
   if (req.query.q) {
-    const [allItems, total] = await Promise.all([
-      baseQuery
+    const allItems = await baseQuery
         .populate("createdBy", "name email role")
         .populate("assignedTo", "name email role")
-        .lean(),
-      Complaint.countDocuments(search ? { ...filters, ...search } : filters),
-    ]);
+        .lean();
 
     const ranked = await reRankComplaintsByIR(req.query.q, allItems);
     const items = ranked.slice(skip, skip + limit);
 
     return successResponse(res, 200, {
       items,
-      total,
+      total: ranked.length,
       page,
-      totalPages: Math.ceil(total / limit),
+      totalPages: Math.ceil(ranked.length / limit) || 1,
     });
   }
 
@@ -60,7 +50,7 @@ export const listComplaints = asyncHandler(async (req, res) => {
       .populate("createdBy", "name email role")
       .populate("assignedTo", "name email role")
       .lean(),
-    Complaint.countDocuments(search ? { ...filters, ...search } : filters),
+    Complaint.countDocuments(filters),
   ]);
 
   const items = rawItems;
@@ -107,16 +97,6 @@ export const updateComplaintStatus = asyncHandler(async (req, res) => {
   }
 
   await complaint.save();
-
-  const creatorId = complaint.createdBy._id 
-    ? complaint.createdBy._id.toString() 
-    : complaint.createdBy.toString();
-
-  getIO()
-    .to(creatorId)
-    .to("admin_events")
-    .to(`complaint_${complaint._id.toString()}`)
-    .emit("complaintUpdated", complaint);
 
   return successResponse(res, 200, complaint);
 });

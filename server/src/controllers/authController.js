@@ -4,7 +4,7 @@ import { validationResult } from 'express-validator';
 import User from '../models/User.js';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
 import AppError from '../utils/AppError.js';
-import asyncHandler from '../utils/asyncHandler.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 import { successResponse } from '../utils/apiResponse.js';
 
 export const register = asyncHandler(async (req, res) => {
