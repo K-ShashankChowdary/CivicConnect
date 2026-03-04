@@ -25,10 +25,10 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 font-sans text-slate-900">
-      <header className="bg-gradient-to-r from-teal-600 to-teal-500 shadow-md sticky top-0 z-50">
+      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm sticky top-0 z-50 transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="text-white text-xl font-bold tracking-wide hover:opacity-90 flex items-center transition-opacity">
+            <Link to="/" className="text-teal-700 text-2xl font-extrabold tracking-tight hover:text-teal-600 flex items-center transition-colors">
               CivicConnect
             </Link>
 
@@ -87,7 +87,7 @@ const Layout = () => {
       <footer className="bg-white border-t border-slate-200 py-6 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm font-medium text-slate-500">
-            © {new Date().getFullYear()} CivicConnect · AI-powered priority & search
+            © {new Date().getFullYear()} CivicConnect
           </p>
         </div>
       </footer>

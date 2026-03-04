@@ -9,6 +9,7 @@ import SubmitComplaintPage from "./pages/SubmitComplaintPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import AdminComplaintsPage from "./pages/AdminComplaintsPage.jsx";
 import ComplaintDetailsPage from "./pages/ComplaintDetailsPage.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
@@ -22,20 +23,7 @@ const App = () => {
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin/register" element={<AdminRegisterPage />} />
         <Route element={<Layout />}>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute
-                element={
-                  user?.role === "admin" ? (
-                    <Navigate to="/admin" />
-                  ) : (
-                    <DashboardPage />
-                  )
-                }
-              />
-            }
-          />
+          <Route path="/" element={<LandingPage />} />
           <Route
             path="/submit"
             element={<ProtectedRoute element={<SubmitComplaintPage />} />}
@@ -60,7 +48,7 @@ const App = () => {
         </Route>
         <Route
           path="*"
-          element={<Navigate to={user ? "/" : "/login"} replace />}
+          element={<Navigate to="/" replace />}
         />
       </Routes>
   );

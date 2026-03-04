@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import ComplaintCard from "../components/ComplaintCard.jsx";
 import useDebounce from "../hooks/useDebounce.js";
-import { socket } from "../services/socket.js";
 
 const statusOptions = [
   { label: "All statuses", value: "" },
@@ -90,31 +89,6 @@ const AdminComplaintsPage = () => {
 
   useEffect(() => {
     fetchComplaints(1);
-    
-    // Live update listeners
-    if (user?._id) {
-      socket.emit("join_user_room", user._id, user.role);
-    }
-
-    const handleCreated = () => {
-      // Refresh current page to see new items properly ranked/paginated
-      fetchComplaints();
-    };
-
-    const handleUpdated = (updatedComplaint) => {
-      // Optimistically update the card in place. 
-      setComplaints((prev) =>
-        prev.map((c) => (c._id === updatedComplaint._id ? { ...c, ...updatedComplaint } : c))
-      );
-    };
-
-    socket.on("complaintCreated", handleCreated);
-    socket.on("complaintUpdated", handleUpdated);
-
-    return () => {
-      socket.off("complaintCreated", handleCreated);
-      socket.off("complaintUpdated", handleUpdated);
-    };
   }, [fetchComplaints]);
 
   const handleFilterChange = (event) => {
@@ -220,13 +194,13 @@ const AdminComplaintsPage = () => {
       {/* Filters Card */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 animate-fade-in-up">
         <div className="flex flex-col space-y-5">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">
                 City-wide complaints
               </h1>
-              <p className="text-sm text-slate-500">
-                Filter by status, priority, and sort. Results are <strong className="text-teal-600">AI-ranked</strong> when searching.
+              <p className="text-base sm:text-lg font-medium text-slate-500">
+                Filter by status, priority, and sort. Results are <strong className="text-teal-600 bg-teal-50 px-1.5 py-0.5 rounded-md">AI-ranked</strong> when searching.
               </p>
             </div>
             <button

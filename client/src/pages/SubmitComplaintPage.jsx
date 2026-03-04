@@ -133,16 +133,22 @@ const SubmitComplaintPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto animate-fade-in">
+    <div className="max-w-4xl mx-auto animate-fade-in pb-12">
       {/* Header Banner */}
-      <div className="bg-gradient-to-br from-teal-600 to-teal-500 rounded-2xl p-6 sm:p-8 mb-6 text-white shadow-lg animate-slide-down">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Submit a complaint</h1>
-        <p className="text-teal-50 text-sm sm:text-base opacity-95">
-          Our AI assigns a priority from your description and category so urgent issues get faster attention.
-        </p>
+      <div className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 mb-8 shadow-sm animate-slide-down">
+        {/* Decorative Gradients */}
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-teal-100/50 blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-indigo-100/50 blur-3xl pointer-events-none"></div>
+        
+        <div className="relative z-10">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">Submit a complaint</h1>
+          <p className="text-slate-500 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
+            Describe the issue. Our Neural Network will automatically assign the correct priority based on the urgency of your description.
+          </p>
+        </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-8 animate-fade-in-up">
+      <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/60 p-6 sm:p-10 animate-fade-in-up">
         <form className="space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">

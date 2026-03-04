@@ -43,15 +43,21 @@ const UserLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f0f9ff] via-[#e0f2fe] to-[#f0fdfa] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-cyan-700/10 p-8 sm:p-10">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none flex justify-center overflow-hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-teal-200/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '7s' }}></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50rem] h-[50rem] bg-indigo-200/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s' }}></div>
+      </div>
+
+      <div className="relative z-10 max-w-md w-full animate-fade-in-up">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-white/50 p-8 sm:p-10">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold text-teal-600 mb-2">
-              Citizen Login
+            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+              Welcome back
             </h1>
-            <p className="text-slate-500 text-sm">
-              Access your account to report and monitor municipal issues
+            <p className="text-slate-500 font-medium">
+              Sign in to your <span className="text-teal-600 font-bold">CivicConnect</span> account
             </p>
           </div>
 
@@ -102,9 +108,9 @@ const UserLoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm tracking-wide text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-md shadow-teal-600/20 text-base font-bold text-white bg-slate-900 hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 focus:outline-none focus:ring-4 focus:ring-slate-900/10 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {loading ? 'Signing in…' : 'Sign in'}
+              {loading ? 'Authenticating…' : 'Sign In'}
             </button>
           </form>
 

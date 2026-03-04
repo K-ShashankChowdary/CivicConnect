@@ -2,7 +2,6 @@ import "dotenv/config";
 import app from "./app.js";
 import connectDB from "./src/config/db.js";
 import { initPriorityModel } from "./src/services/priorityService.js";
-import { initSocket } from "./src/services/socketService.js";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT || 5000;
@@ -24,9 +23,6 @@ const startServer = async () => {
     const server = app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });
-
-    initSocket(server);
-    console.log("Socket.io initialized successfully");
 
     // handle asynchronous unhandled rejections
     process.on("unhandledRejection", (err) => {

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import ComplaintCard from "../components/ComplaintCard.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import useDebounce from "../hooks/useDebounce.js";
-import { socket } from "../services/socket.js";
 
 const statusOptions = [
   { label: "All statuses", value: "" },
@@ -55,29 +54,6 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchComplaints();
-    
-    // Live update listeners
-    if (user?._id) {
-      socket.emit("join_user_room", user._id, user.role);
-    }
-
-    const handleCreated = () => {
-      fetchComplaints();
-    };
-
-    const handleUpdated = (updatedComplaint) => {
-      setComplaints((prev) =>
-        prev.map((c) => (c._id === updatedComplaint._id ? { ...c, ...updatedComplaint } : c))
-      );
-    };
-
-    socket.on("complaintCreated", handleCreated);
-    socket.on("complaintUpdated", handleUpdated);
-
-    return () => {
-      socket.off("complaintCreated", handleCreated);
-      socket.off("complaintUpdated", handleUpdated);
-    };
   }, [fetchComplaints]);
 
   const handleFilterChange = (event) => {
@@ -122,19 +98,23 @@ const DashboardPage = () => {
   return (
     <div className="flex flex-col space-y-6 md:space-y-8 animate-fade-in">
       {/* Hero Banner */}
-      <div className="bg-gradient-to-br from-teal-600 to-teal-500 rounded-2xl p-6 sm:p-8 text-white shadow-lg shadow-teal-600/20 animate-slide-down">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-sm animate-slide-down">
+        {/* Decorative Gradients */}
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-teal-100/50 blur-3xl pointer-events-none transform translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-indigo-100/50 blur-3xl pointer-events-none transform -translate-x-1/3 translate-y-1/3"></div>
+
+        <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-1">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">
               My Complaints
             </h1>
-            <p className="text-teal-50 font-medium">
+            <p className="text-slate-500 font-medium text-base sm:text-lg">
               Track and manage your submitted complaints
             </p>
           </div>
           <button
             onClick={() => navigate('/submit')}
-            className="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 border border-transparent shadow-sm text-sm font-bold rounded-xl text-teal-700 bg-white hover:bg-slate-50 transition-all focus:outline-none ring-1 ring-white/50"
+            className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-3.5 shadow-sm text-sm font-bold rounded-xl text-white bg-slate-900 hover:bg-slate-800 hover:shadow-md transition-all focus:outline-none focus:ring-4 focus:ring-slate-900/20 active:scale-95 whitespace-nowrap"
           >
             + New Complaint
           </button>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import CategoryChip from "../components/CategoryChip.jsx";
-import { socket } from "../services/socket.js";
 
 const statusStyles = {
   submitted: "bg-blue-50 text-blue-700 border-blue-200",
@@ -51,26 +50,7 @@ const ComplaintDetailsPage = () => {
     fetchComplaint();
   }, [api, id, user?.role]);
 
-  useEffect(() => {
-    if (user?._id) {
-      socket.emit("join_user_room", user._id, user.role);
-    }
-    if (id) {
-      socket.emit("join_complaint", id);
-    }
 
-    const handleUpdated = (updatedComplaint) => {
-      if (updatedComplaint._id === id) {
-        setComplaint(prev => ({ ...prev, ...updatedComplaint }));
-      }
-    };
-
-    socket.on("complaintUpdated", handleUpdated);
-
-    return () => {
-      socket.off("complaintUpdated", handleUpdated);
-    };
-  }, [id]);
 
   const handleFindSimilar = async () => {
     if (similarComplaints.length > 0) return; // already loaded
@@ -131,9 +111,9 @@ const ComplaintDetailsPage = () => {
   const statusStyle = statusStyles[complaint.status] || "bg-slate-50 text-slate-700 border-slate-200";
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm animate-fade-in-up">
-        <div className="flex flex-col space-y-5">
+    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-in pb-12">
+      <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] animate-fade-in-up">
+        <div className="flex flex-col space-y-6">
           <button
             onClick={() => navigate(-1)}
             className="text-sm font-semibold text-slate-500 hover:text-teal-600 self-start inline-flex items-center transition-colors"
@@ -144,11 +124,11 @@ const ComplaintDetailsPage = () => {
             Back to complaints
           </button>
 
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
             {complaint.title}
           </h1>
 
-          <div className="flex flex-wrap gap-2 pt-1 border-b border-slate-100 pb-4">
+          <div className="flex flex-wrap items-center gap-3 pt-2 border-b border-slate-100 pb-6">
             <CategoryChip category={complaint.category} />
             
             <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold capitalize border ${statusStyle}`}>
@@ -190,11 +170,9 @@ const ComplaintDetailsPage = () => {
 
           <div className="text-sm text-slate-500 space-y-1">
             <span className="block">Reported array {createdDate}</span>
-            {(typeof complaint.priorityScore === "number" || complaint.priorityReason) && (
+            {complaint.priorityReason && (
               <span className="block italic text-slate-400">
-                {complaint.priorityReason
-                  ? `AI reasoning: ${complaint.priorityReason}`
-                  : "Priority assigned by AI from category, description, and urgency."}
+                AI reasoning: {complaint.priorityReason}
               </span>
             )}
           </div>
@@ -217,18 +195,41 @@ const ComplaintDetailsPage = () => {
               </button>
 
               {similarComplaints.length > 0 && (
-                <div className="mt-4 space-y-3">
-                  <h4 className="font-semibold text-slate-800 text-sm">Similar Complaints Found:</h4>
-                  <div className="flex flex-col gap-2">
+                <div className="mt-6 space-y-4 animate-fade-in-up">
+                  <h4 className="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                    <svg className="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M9.75 3a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 019.75 3zm4.5 4a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0114.25 7zm-9 4a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm13.5 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm-14.7 6.45a.75.75 0 011.06 0l1.06 1.06a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm13.94 0a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    AI Suggested Similar Complaints:
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {similarComplaints.map(sim => (
-                      <div key={sim._id} className="p-3 bg-white border border-slate-200 rounded-lg text-sm flex justify-between items-center hover:bg-slate-50 cursor-pointer" onClick={() => navigate(`/complaints/${sim._id}`)}>
-                        <div>
-                          <p className="font-semibold text-slate-800">{sim.title}</p>
-                          <p className="text-slate-500 text-xs">Score: {(sim.score || 0).toFixed(2)}</p>
+                      <div 
+                        key={sim._id} 
+                        onClick={() => navigate(`/complaints/${sim._id}`)}
+                        className="p-4 bg-white border border-slate-200 rounded-xl flex flex-col justify-between hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group" 
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <p className="font-semibold text-slate-800 line-clamp-2 pr-2 group-hover:text-indigo-700 transition-colors leading-tight">
+                            {sim.title}
+                          </p>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase whitespace-nowrap ${statusStyles[sim.status] || "bg-slate-100 text-slate-600"}`}>
+                            {sim.status.replace("_", " ")}
+                          </span>
                         </div>
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase ${statusStyles[sim.status] || "bg-slate-100 text-slate-600"}`}>
-                          {sim.status.replace("_", " ")}
-                        </span>
+                        <div className="flex items-center gap-2 mt-auto pt-2 border-t border-slate-100">
+                          <span className="inline-flex items-center text-indigo-600 text-xs font-bold">
+                            <svg className="w-3 h-3 mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                            Score: {sim.score.toFixed(2)}
+                          </span>
+                          <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                          <span className="text-slate-500 text-xs font-medium truncate">
+                            {sim.category}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>

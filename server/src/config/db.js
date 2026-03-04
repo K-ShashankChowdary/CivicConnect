@@ -8,7 +8,12 @@ const connectDB = async (mongoUri) => {
 
     await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 5000,
-      maxPoolSize: 10
+      maxPoolSize: 10,
+      serverApi: {
+        version: "1",
+        strict: true,
+        deprecationErrors: true,
+      }
     });
 
     // eslint-disable-next-line no-console

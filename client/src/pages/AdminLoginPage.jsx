@@ -43,20 +43,26 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl p-8 sm:p-10 border border-slate-200">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Dynamic Background for Admin Area */}
+      <div className="absolute inset-0 z-0 pointer-events-none flex justify-center overflow-hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-orange-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '7s' }}></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50rem] h-[50rem] bg-red-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s' }}></div>
+      </div>
+
+      <div className="relative z-10 max-w-md w-full animate-fade-in-up">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-[0_8px_40px_rgba(0,0,0,0.15)] border border-slate-700 p-8 sm:p-10">
           <div className="text-center mb-8 flex flex-col items-center">
-            <div className="flex items-center justify-center mb-4 text-orange-500">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <div className="flex items-center justify-center mb-4 text-orange-600 bg-orange-50 p-3 rounded-2xl">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
               </svg>
             </div>
-            <h1 className="text-3xl font-extrabold text-teal-600 mb-2">
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
               Admin Portal
             </h1>
-            <p className="text-slate-500 text-sm">
-              Secure access for municipal administrators only.
+            <p className="text-slate-500 font-medium text-sm">
+              Secure endpoint for municipal administration.
             </p>
           </div>
 
@@ -107,7 +113,7 @@ const AdminLoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm tracking-wide text-sm font-bold text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full mt-4 flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-md shadow-orange-600/20 text-base font-bold text-white bg-orange-600 hover:bg-orange-700 hover:shadow-lg hover:shadow-orange-700/30 focus:outline-none focus:ring-4 focus:ring-orange-600/20 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? 'Authenticating…' : 'Admin Sign in'}
             </button>
