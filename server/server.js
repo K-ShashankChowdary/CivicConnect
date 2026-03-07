@@ -1,7 +1,7 @@
 import "dotenv/config";
 import app from "./app.js";
 import connectDB from "./src/config/db.js";
-import { initPriorityModel } from "./src/services/priorityService.js";
+import { initPriorityModel } from "./src/services/priority.service.js";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT || 5000;

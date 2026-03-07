@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import User from './src/models/User.js';
-import Complaint from './src/models/Complaint.js';
-import { attachComplaintEmbedding } from './src/services/semanticService.js';
+import User from './src/models/user.model.js';
+import Complaint from './src/models/complaint.model.js';
+import { attachComplaintEmbedding } from './src/services/semantic.service.js';
 import dotenv from 'dotenv';
 dotenv.config();
 

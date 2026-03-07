@@ -1,59 +1,66 @@
+// Auth controller: register, login, profile, refresh, logout
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
-
-import User from '../models/User.js';
+import User from '../models/user.model.js';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
-import AppError from '../utils/AppError.js';
+import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
-import { successResponse } from '../utils/apiResponse.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
 
 export const register = asyncHandler(async (req, res) => {
+  // 1. Initial validation
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError('Validation failed', 422, errors.array());
+    throw new ApiError(422, 'Validation failed', errors.array());
   }
 
   const { name, email, password, address, phone, role, adminAccessCode } = req.body;
 
-  // Verify admin access code if registering as admin
+  // 2. Verify admin access code if registering as 'admin'
   if (role === 'admin') {
     const correctAccessCode = process.env.ADMIN_ACCESS_CODE;
     if (!correctAccessCode) {
-      throw new AppError('Admin registration is not configured. Please contact system administrator.', 500);
+      throw new ApiError(500, 'Admin registration is not configured. Please contact system administrator.');
     }
     if (!adminAccessCode) {
-      throw new AppError('Admin access code is required for admin registration.', 400);
+      throw new ApiError(400, 'Admin access code is required for admin registration.');
     }
+    // Prevent brute force or guesswork
     if (adminAccessCode !== correctAccessCode) {
-      throw new AppError('Invalid admin access code. Please check your code and try again.', 403);
+      throw new ApiError(403, 'Invalid admin access code. Please check your code and try again.');
     }
   }
 
+  // 3. Ensure email uniqueness
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new AppError(`This email (${email}) is already registered. Please login or use a different email.`, 409);
+    throw new ApiError(409, `This email (${email}) is already registered. Please login or use a different email.`);
   }
 
+  // 4. Hash the password
   const passwordHash = await bcrypt.hash(password, 10);
 
+  // 5. Create user record
   const user = await User.create({
     name,
     email,
     passwordHash,
     address,
     phone,
-    role: role || 'citizen'
+    role: role || 'citizen' // default role is citizen if not specified
   });
 
+  // 6. Generate JWTs
   const accessToken = signAccessToken({ id: user._id, role: user.role });
   const refreshToken = signRefreshToken({ id: user._id, role: user.role });
 
-  // Set HTTP-only cookies
+  // 7. Set HTTP-only cookies
+  // Secure flag is true only in production to allow local HTTP development
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-    maxAge: 15 * 60 * 1000 // 15 minutes
+    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax', // basic CSRF protection
+    maxAge: 15 * 60 * 1000 // 15 minutes expiration matches token lifetime
   });
 
   res.cookie('refreshToken', refreshToken, {
@@ -63,34 +70,39 @@ export const register = asyncHandler(async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 
-  return successResponse(res, 201, {
+  // 8. Send response
+  return res.status(201).json(new ApiResponse(201, {
     user: {
       id: user._id,
       name: user.name,
       email: user.email,
       role: user.role
     }
-  });
+  }));
 });
 
+// Authenticate user and issue tokens
 export const login = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError('Validation failed', 422, errors.array());
+    throw new ApiError(422, 'Validation failed', errors.array());
   }
 
   const { email, password } = req.body;
 
+  // Find user by email
   const user = await User.findOne({ email });
   if (!user) {
-    throw new AppError('No account found with this email address. Please check your email or register.', 401);
+    throw new ApiError(401, 'No account found with this email address. Please check your email or register.');
   }
 
-  const passwordMatches = await bcrypt.compare(password, user.passwordHash);
-  if (!passwordMatches) {
-    throw new AppError('Incorrect password. Please try again or reset your password.', 401);
+  // Check password
+  const isMatch = await bcrypt.compare(password, user.passwordHash);
+  if (!isMatch) {
+    throw new ApiError(401, 'Incorrect password. Please try again or reset your password.');
   }
 
+  // Issue new tokens
   const accessToken = signAccessToken({ id: user._id, role: user.role });
   const refreshToken = signRefreshToken({ id: user._id, role: user.role });
 
@@ -109,24 +121,26 @@ export const login = asyncHandler(async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 
-  return successResponse(res, 200, {
+  return res.status(200).json(new ApiResponse(200, {
     user: {
       id: user._id,
       name: user.name,
       email: user.email,
       role: user.role
     }
-  });
+  }));
 });
 
+// Fetch the current user's profile
 export const getProfile = asyncHandler(async (req, res) => {
+  // .lean() returns plain JS object instead of Mongoose document for better performance
   const user = await User.findById(req.user._id).select('-passwordHash').lean();
 
   if (!user) {
-    throw new AppError('User not found', 404);
+    throw new ApiError(404, 'User not found');
   }
 
-  return successResponse(res, 200, {
+  return res.status(200).json(new ApiResponse(200, {
     user: {
       id: user._id,
       name: user.name,
@@ -136,14 +150,15 @@ export const getProfile = asyncHandler(async (req, res) => {
       phone: user.phone,
       createdAt: user.createdAt
     }
-  });
+  }));
 });
 
+// Refresh expired access token using refresh token
 export const refreshAccessToken = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
 
   if (!refreshToken) {
-    throw new AppError('Refresh token not found. Please login again.', 401);
+    throw new ApiError(401, 'Refresh token not found. Please login again.');
   }
 
   try {
@@ -151,12 +166,13 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     const user = await User.findById(decoded.id);
 
     if (!user) {
-      throw new AppError('User not found', 404);
+      throw new ApiError(404, 'User not found');
     }
 
-    // Generate new access token
+    // Generate new access token since the current one is likely expired
     const newAccessToken = signAccessToken({ id: user._id, role: user.role });
 
+    // Set new HTTP-only cookie
     res.cookie('accessToken', newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -164,23 +180,26 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       maxAge: 15 * 60 * 1000 // 15 minutes
     });
 
-    return successResponse(res, 200, null, 'Access token refreshed successfully');
+    return res.status(200).json(new ApiResponse(200, null, 'Access token refreshed successfully'));
   } catch (error) {
-    throw new AppError('Invalid or expired refresh token. Please login again.', 401);
+    // If token verification fails (expired, tampered)
+    throw new ApiError(401, 'Invalid or expired refresh token. Please login again.');
   }
 });
 
+// Logout user by clearing cookies
 export const logout = asyncHandler(async (req, res) => {
-  // Clear both tokens
+  // Clear access token cookie by expiring it immediately (Date(0))
   res.cookie('accessToken', '', {
     httpOnly: true,
     expires: new Date(0)
   });
   
+  // Clear refresh token cookie
   res.cookie('refreshToken', '', {
     httpOnly: true,
     expires: new Date(0)
   });
 
-  return successResponse(res, 200, null, 'Logged out successfully');
+  return res.status(200).json(new ApiResponse(200, null, 'Logged out successfully'));
 });

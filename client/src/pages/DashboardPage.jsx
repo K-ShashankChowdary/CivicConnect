@@ -31,12 +31,16 @@ const DashboardPage = () => {
     priorityLevel: "",
   });
 
+  // Debounce search query so we don't spam the backend on every keystroke
   const debouncedQuery = useDebounce(filters.q, 400);
 
+  // Fetch complaints from the backend
   const fetchComplaints = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
+      
+      // Build query params based on active filters
       const params = {};
 
       if (filters.status) params.status = filters.status;
@@ -44,14 +48,21 @@ const DashboardPage = () => {
       if (debouncedQuery) params.q = debouncedQuery;
 
       const { data } = await api.get("/complaints", { params });
-      setComplaints(data.data);
+      setComplaints(Array.isArray(data?.data) ? data.data : []);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to load complaints");
+      const d = err.response?.data;
+      const errors = d?.errors;
+      setError(
+        errors?.length
+          ? errors.map((e) => e.msg || e.message).join(". ")
+          : d?.message || "Failed to load complaints"
+      );
     } finally {
       setLoading(false);
     }
   }, [api, debouncedQuery, filters.priorityLevel, filters.status]);
 
+  // Refetch complaints whenever a filter or debounced query changes
   useEffect(() => {
     fetchComplaints();
   }, [fetchComplaints]);

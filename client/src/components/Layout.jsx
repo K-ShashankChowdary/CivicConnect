@@ -25,55 +25,82 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 font-sans text-slate-900">
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm sticky top-0 z-50 transition-all">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/60 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="text-teal-700 text-2xl font-extrabold tracking-tight hover:text-teal-600 flex items-center transition-colors">
+          <div className="flex justify-between items-center h-14 sm:h-16">
+            <Link
+              to="/"
+              className="font-display text-xl sm:text-2xl font-bold text-slate-900 hover:text-teal-600 transition-colors tracking-tight"
+            >
               CivicConnect
             </Link>
 
             <div className="relative" ref={menuRef}>
-              <button 
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-orange-600 text-white font-bold border-2 border-white/30 hover:border-white/60 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600 transform hover:scale-105 active:scale-95"
-                title={user?.name || 'User menu'}
-              >
-                {user?.name?.[0]?.toUpperCase() || '?'}
-              </button>
+              {user ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-teal-600 text-white font-semibold text-sm border-2 border-white/20 shadow-soft hover:bg-teal-500 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                    title={user.name || 'User menu'}
+                    aria-expanded={menuOpen}
+                    aria-haspopup="true"
+                  >
+                    {user.name?.[0]?.toUpperCase() || '?'}
+                  </button>
 
-              {menuOpen && (
-                <div className="absolute right-0 mt-2 w-56 rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] bg-white ring-1 ring-black/5 divide-y divide-slate-100 py-1 overflow-hidden origin-top-right transition-all animate-in fade-in zoom-in-95 duration-200">
-                  <div className="px-4 py-3">
-                    <p className="text-sm border-b border-gray-200 pb-2">Signed in as <br/><span className="font-semibold text-gray-900">{user?.name}</span></p>
-                  </div>
-                  <button
-                    onClick={() => {
-                      navigate(user?.role === 'admin' ? '/admin' : '/dashboard');
-                      setMenuOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-teal-600 font-medium transition-colors"
-                  >
-                    Dashboard
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate('/submit');
-                      setMenuOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-teal-600 font-medium transition-colors"
-                  >
-                    Submit Complaint
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setMenuOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 font-medium transition-colors"
-                  >
-                    Logout
-                  </button>
-                </div>
+                  {menuOpen && (
+                    <div
+                      className="absolute right-0 mt-2 w-52 rounded-xl bg-white border border-slate-200/80 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] py-1.5 animate-scale-in origin-top-right"
+                      role="menu"
+                    >
+                      <div className="px-4 py-2.5 border-b border-slate-100">
+                        <p className="text-xs text-slate-500">Signed in as</p>
+                        <p className="font-semibold text-slate-900 truncate">{user?.name}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigate(user?.role === 'admin' ? '/admin' : '/dashboard');
+                          setMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-teal-600 font-medium transition-colors"
+                        role="menuitem"
+                      >
+                        Dashboard
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigate('/submit');
+                          setMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-teal-600 font-medium transition-colors"
+                        role="menuitem"
+                      >
+                        Submit complaint
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleLogout();
+                          setMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"
+                        role="menuitem"
+                      >
+                        Log out
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className="inline-flex items-center px-4 py-2 text-sm font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100 rounded-lg border border-teal-200/80 transition-colors duration-200"
+                >
+                  Sign in
+                </Link>
               )}
             </div>
           </div>
@@ -84,11 +111,14 @@ const Layout = () => {
         <Outlet />
       </main>
 
-      <footer className="bg-white border-t border-slate-200 py-6 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-slate-500">
+      <footer className="mt-auto border-t border-slate-200/80 bg-white/60 py-5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p className="text-sm text-slate-500 font-medium">
             © {new Date().getFullYear()} CivicConnect
           </p>
+          <div className="flex items-center gap-6 text-sm">
+            <span className="text-slate-400">Report local issues. Get them resolved.</span>
+          </div>
         </div>
       </footer>
     </div>

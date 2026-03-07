@@ -62,7 +62,7 @@ const SubmitComplaintPage = () => {
       async (position) => {
         const { latitude, longitude } = position.coords;
 
-        // Reverse geocode to get street address
+        // Call OpenStreetMap Nominatim for Reverse Geocoding
         let address = null;
         try {
           const res = await fetch(
@@ -74,11 +74,13 @@ const SubmitComplaintPage = () => {
             address = data.display_name || null;
           }
         } catch {
-          // Fallback to coordinate string if geocoding fails
+          // Keep address as null if API fails so user can manually type
         }
 
+        // Provide a coordinate string if address is unavailable
         const fallback = `Lat ${latitude.toFixed(5)}, Lng ${longitude.toFixed(5)}`;
 
+        // Update form state with new location info
         setForm((prev) => ({
           ...prev,
           latitude: latitude.toString(),
@@ -106,15 +108,18 @@ const SubmitComplaintPage = () => {
       setError(null);
       setSuccess(false);
 
+      // Create multipart FormData to support image uploads
       const formData = new FormData();
       Object.entries(form).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
+      // Append all selected files
       files.forEach((file) => {
         formData.append("images", file);
       });
 
+      // Send POST to backend
       await api.post("/complaints", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -126,7 +131,14 @@ const SubmitComplaintPage = () => {
         navigate("/dashboard");
       }, 1200);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to submit complaint");
+      const data = err.response?.data;
+      const msg = data?.message || "Failed to submit complaint";
+      const validationErrors = data?.errors;
+      setError(
+        validationErrors?.length
+          ? validationErrors.map((e) => e.msg || e.message).join(". ")
+          : msg
+      );
     } finally {
       setLoading(false);
     }

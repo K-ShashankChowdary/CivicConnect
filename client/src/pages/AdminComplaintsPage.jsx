@@ -45,10 +45,11 @@ const AdminComplaintsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Debounce search query so we don't spam backend on every keystroke
   const debouncedQuery = useDebounce(filters.q, 400);
 
   const fetchComplaints = useCallback(
-    async (page = meta.page) => {
+    async (page = 1) => {
       try {
         setLoading(true);
         setError(null);
@@ -64,14 +65,21 @@ const AdminComplaintsPage = () => {
         if (debouncedQuery) params.q = debouncedQuery;
 
         const { data } = await api.get("/admin/complaints", { params });
-        setComplaints(data.data.items || []);
+        const payload = data?.data ?? {};
+        setComplaints(Array.isArray(payload.items) ? payload.items : []);
         setMeta({
-          page: data.data.page || 1,
-          totalPages: data.data.totalPages || 1,
-          total: data.data.total || 0,
+          page: payload.page ?? 1,
+          totalPages: payload.totalPages ?? 1,
+          total: payload.total ?? 0,
         });
       } catch (err) {
-        setError(err.response?.data?.message || "Failed to load complaints");
+        const d = err.response?.data;
+        const errors = d?.errors;
+        setError(
+          errors?.length
+            ? errors.map((e) => e.msg || e.message).join(". ")
+            : d?.message || "Failed to load complaints"
+        );
       } finally {
         setLoading(false);
       }
@@ -83,13 +91,8 @@ const AdminComplaintsPage = () => {
       filters.sortBy,
       filters.sortDirection,
       filters.status,
-      meta.page,
     ],
   );
-
-  useEffect(() => {
-    fetchComplaints(1);
-  }, [fetchComplaints]);
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
@@ -106,12 +109,9 @@ const AdminComplaintsPage = () => {
     });
   };
 
+  // Refetch from page 1 when filters or search change (not when fetchComplaints identity changes)
   useEffect(() => {
-    const handle = setTimeout(() => {
-      fetchComplaints(1);
-    }, 0);
-
-    return () => clearTimeout(handle);
+    fetchComplaints(1);
   }, [
     filters.priorityLevel,
     filters.sortBy,
@@ -127,12 +127,14 @@ const AdminComplaintsPage = () => {
       await api.patch(`/admin/complaints/${complaintId}`, { status });
       await fetchComplaints(meta.page);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to update status");
+      const d = err.response?.data;
+      setError(d?.errors?.length ? d.errors.map((e) => e.msg || e.message).join(". ") : d?.message || "Failed to update status");
     } finally {
       setLoading(false);
     }
   };
 
+  // Memoize card rendering to prevent unnecessary re-rendering during state updates
   const cards = useMemo(
     () =>
       complaints.map((complaint) => {

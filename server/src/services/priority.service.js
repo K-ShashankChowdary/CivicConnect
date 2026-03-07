@@ -2,6 +2,8 @@ import fs from "fs/promises";
 import path from "path";
 import * as tf from "@tensorflow/tfjs";
 
+import { ApiError } from "../utils/ApiError.js";
+
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const MODEL_CONFIG = {
@@ -11,11 +13,13 @@ const MODEL_CONFIG = {
   validationSplit: 0.15, // Validation split to prevent overfitting
 };
 
+// Boundaries for AI predictions: < 0.4 is Low, 0.4-0.7 is Medium, >0.7 is High/Critical
 const PRIORITY_THRESHOLDS = [0.4, 0.7, 0.9];
 
 let model;
 let encoders;
 
+// Converts a 0-1 float score into a text priority label
 const priorityLevelFromScore = (score) => {
   if (score >= PRIORITY_THRESHOLDS[2]) return "Critical";
   if (score >= PRIORITY_THRESHOLDS[1]) return "High";
@@ -300,6 +304,7 @@ export const initPriorityModel = async () => {
   labelTensor.dispose();
 };
 
+// Predicts priority using the local TensorFlow.js model (fallback when LLM fails)
 export const predictPriority = async (payload) => {
   try {
     if (!model) {
@@ -309,16 +314,13 @@ export const predictPriority = async (payload) => {
 
     // Validate payload
     if (!payload.category || !payload.description) {
-      console.error("Missing required fields:", payload);
-      throw new Error("Missing required fields: category or description");
+      throw new ApiError(400, "Missing required fields: category or description");
     }
 
     const encodedSample = encodeSample(payload, encoders);
 
-    // Check for NaN in encoded features
     if (encodedSample.some((val) => isNaN(val))) {
-      console.error("NaN detected in encoded features:", encodedSample);
-      throw new Error("Invalid feature encoding");
+      throw new ApiError(500, "Invalid feature encoding");
     }
 
     const input = tf.tensor2d([encodedSample]);
@@ -328,10 +330,8 @@ export const predictPriority = async (payload) => {
     input.dispose();
     output.dispose();
 
-    // Validate score
     if (isNaN(score) || score === null || score === undefined) {
-      console.error("Invalid score generated:", score);
-      throw new Error("Failed to generate valid priority score");
+      throw new ApiError(500, "Failed to generate valid priority score");
     }
 
     const priorityLevel = priorityLevelFromScore(score);

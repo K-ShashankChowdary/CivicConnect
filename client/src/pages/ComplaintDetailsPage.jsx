@@ -26,6 +26,7 @@ const ComplaintDetailsPage = () => {
   const [error, setError] = useState(null);
   const [similarComplaints, setSimilarComplaints] = useState([]);
   const [findingSimilar, setFindingSimilar] = useState(false);
+  const [similarError, setSimilarError] = useState(null);
 
   useEffect(() => {
     const fetchComplaint = async () => {
@@ -35,8 +36,10 @@ const ComplaintDetailsPage = () => {
         // Using admin route if admin, otherwise normal relative route
         const endpoint = user?.role === 'admin' ? `/admin/complaints` : `/complaints`;
         const { data } = await api.get(`${endpoint}/${id}`);
-        // The endpoints are slightly different, standard users get array of 1 from /complaints/:id?
-        // Wait, normally /complaints/:id returns standard payload data.data 
+        if (data?.data == null) {
+          setError("Complaint not found or invalid response.");
+          return;
+        }
         setComplaint(data.data);
       } catch (err) {
         setError(
@@ -54,13 +57,14 @@ const ComplaintDetailsPage = () => {
 
   const handleFindSimilar = async () => {
     if (similarComplaints.length > 0) return; // already loaded
+    setSimilarError(null);
     try {
       setFindingSimilar(true);
       const { data } = await api.get(`/admin/complaints/${id}/similar`);
-      setSimilarComplaints(data.data.items || []);
+      const raw = data?.data?.items ?? data?.data;
+      setSimilarComplaints(Array.isArray(raw) ? raw : []);
     } catch (err) {
-      console.error(err);
-      alert("Failed to find similar complaints");
+      setSimilarError(err.response?.data?.message || "Failed to find similar complaints. Try again.");
     } finally {
       setFindingSimilar(false);
     }
@@ -103,10 +107,6 @@ const ComplaintDetailsPage = () => {
     ? new Date(complaint.incidentTime).toLocaleString()
     : null;
 
-  const isSlaBreached =
-    complaint.status !== "resolved" &&
-    new Date() - new Date(complaint.createdAt) > 48 * 60 * 60 * 1000;
-
   const priorityStyle = priorityStyles[complaint.priorityLevel] || priorityStyles.Low;
   const statusStyle = statusStyles[complaint.status] || "bg-slate-50 text-slate-700 border-slate-200";
 
@@ -135,12 +135,6 @@ const ComplaintDetailsPage = () => {
               {complaint.status.replace("_", " ")}
             </span>
             
-            {isSlaBreached && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border bg-red-50 text-red-700 border-red-300 shadow-sm animate-pulse">
-                SLA Breached (&gt;48h)
-              </span>
-            )}
-
             <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border ${priorityStyle}`}>
               {complaint.priorityLevel}
             </span>
@@ -169,7 +163,7 @@ const ComplaintDetailsPage = () => {
           </div>
 
           <div className="text-sm text-slate-500 space-y-1">
-            <span className="block">Reported array {createdDate}</span>
+            <span className="block">Reported at {createdDate}</span>
             {complaint.priorityReason && (
               <span className="block italic text-slate-400">
                 AI reasoning: {complaint.priorityReason}
@@ -189,10 +183,16 @@ const ComplaintDetailsPage = () => {
               <button
                 onClick={handleFindSimilar}
                 disabled={findingSimilar}
-                className="inline-flex items-center px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-sm rounded-lg transition-colors border border-indigo-200"
+                className="inline-flex items-center px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-sm rounded-lg transition-colors border border-indigo-200 disabled:opacity-70"
               >
-                {findingSimilar ? 'Analyzing vectors...' : 'Find Similar Complaints (AI)'}
+                {findingSimilar ? 'Finding similar…' : 'Find Similar Complaints (AI)'}
               </button>
+              {similarError && (
+                <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+                  {similarError}
+                  <button type="button" onClick={() => setSimilarError(null)} className="underline">Dismiss</button>
+                </p>
+              )}
 
               {similarComplaints.length > 0 && (
                 <div className="mt-6 space-y-4 animate-fade-in-up">
@@ -204,9 +204,9 @@ const ComplaintDetailsPage = () => {
                     AI Suggested Similar Complaints:
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {similarComplaints.map(sim => (
+                    {similarComplaints.map((sim, idx) => (
                       <div 
-                        key={sim._id} 
+                        key={sim?._id ?? `similar-${idx}`} 
                         onClick={() => navigate(`/complaints/${sim._id}`)}
                         className="p-4 bg-white border border-slate-200 rounded-xl flex flex-col justify-between hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group" 
                       >
@@ -223,7 +223,7 @@ const ComplaintDetailsPage = () => {
                             <svg className="w-3 h-3 mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
-                            Score: {sim.score.toFixed(2)}
+                            Score: {(sim.score ?? 0).toFixed(2)}
                           </span>
                           <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                           <span className="text-slate-500 text-xs font-medium truncate">
@@ -244,8 +244,8 @@ const ComplaintDetailsPage = () => {
         <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
           <h3 className="text-lg font-bold text-slate-900 mb-4">Attached images</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {complaint.attachments.map((url) => (
-              <div key={url} className="rounded-xl overflow-hidden shadow-sm border border-slate-200 bg-slate-50 h-64">
+            {complaint.attachments.map((url, idx) => (
+              <div key={`attachment-${idx}-${url}`} className="rounded-xl overflow-hidden shadow-sm border border-slate-200 bg-slate-50 h-64">
                 <img
                   src={url}
                   alt={complaint.title}

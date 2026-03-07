@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+// Map text priority levels to numerical scores (1.0 is highest)
 const LEVEL_TO_SCORE = { Low: 0.25, Medium: 0.5, High: 0.75, Critical: 1.0 };
 const VALID_LEVELS = new Set(["Low", "Medium", "High", "Critical"]);
 
@@ -15,6 +16,7 @@ function parseJsonFromResponse(text) {
   }
 }
 
+// Uses Gemini AI to intelligently analyze complaint text and assign a priority level and department
 export async function predictPriorityWithLLM(payload) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return null;

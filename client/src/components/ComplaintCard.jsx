@@ -20,10 +20,6 @@ const ComplaintCard = ({ complaint, actions }) => {
     ? new Date(complaint.resolvedAt).toLocaleString()
     : null;
 
-  const isSlaBreached =
-    complaint.status !== "resolved" &&
-    new Date() - new Date(complaint.createdAt) > 48 * 60 * 60 * 1000;
-
   const descriptionPreview =
     complaint.description && complaint.description.length > 220
       ? `${complaint.description.slice(0, 220)}…`
@@ -60,17 +56,6 @@ const ComplaintCard = ({ complaint, actions }) => {
               {complaint.status.replace("_", " ")}
             </span>
 
-            {isSlaBreached && (
-              <span
-                className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border bg-red-50 text-red-700 border-red-300 animate-pulse shadow-sm"
-                title="SLA Breached (>48hrs unresolved)"
-              >
-                <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                SLA Breached
-              </span>
-            )}
           </div>
 
           <div className="flex-1 min-w-0 flex flex-col gap-2">
@@ -83,7 +68,7 @@ const ComplaintCard = ({ complaint, actions }) => {
             </span>
 
             <p className="text-sm text-slate-600 leading-relaxed mt-1">
-              {descriptionPreview}
+              {descriptionPreview ?? ""}
             </p>
 
             <div className="flex flex-wrap gap-2 mt-2">
@@ -91,9 +76,9 @@ const ComplaintCard = ({ complaint, actions }) => {
                 ?.filter(
                   (tag) => tag.label !== "Impact" && tag.label !== "address",
                 )
-                .map((tag) => (
+                .map((tag, idx) => (
                   <span
-                    key={tag.label}
+                    key={[tag.label, tag.value].filter(Boolean).join("-") || `tag-${idx}`}
                     title={tag.label}
                     className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600 max-w-[240px] truncate"
                   >

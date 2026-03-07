@@ -1,28 +1,20 @@
-/**
- * Custom API Error Class
- * Extends the native Error class to include HTTP status codes and structured error arrays.
- */
+// API error with statusCode and optional errors array for validation
 class ApiError extends Error {
-    constructor(
-        statusCode,
-        message = "Something went wrong",
-        errors = [],
-        stack = ""
-    ) {
-        super(message);
-        this.statusCode = statusCode;
-        this.data = null; // Standardizes response structure
-        this.message = message;
-        this.success = false; // Flag for frontend logic
-        this.errors = errors;
+  constructor(statusCode, message = "Something went wrong", errors = [], stack = "") {
+    super(message);
+    this.name = "ApiError";
+    this.statusCode = statusCode;
+    this.data = null;
+    this.message = message;
+    this.success = false;
+    this.errors = Array.isArray(errors) ? errors : [];
 
-        // Capture stack trace for debugging in development
-        if (stack) {
-            this.stack = stack;
-        } else {
-            Error.captureStackTrace(this, this.constructor);
-        }
+    if (stack) {
+      this.stack = stack;
+    } else {
+      Error.captureStackTrace(this, this.constructor);
     }
+  }
 }
 
 export { ApiError };

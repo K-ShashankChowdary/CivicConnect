@@ -64,7 +64,8 @@ export const AuthProvider = ({ children }) => {
       try {
         setLoading(true);
         const { data } = await authorizedApi.get("/auth/profile");
-        setUser(data.data.user);
+        const userFromProfile = data?.data?.user ?? null;
+        setUser(userFromProfile);
       } catch (error) {
         console.error("Failed to fetch profile", error);
         setUser(null);
@@ -80,7 +81,10 @@ export const AuthProvider = ({ children }) => {
     const { data } = await axios.post("/api/auth/login", credentials, {
       withCredentials: true, // Send cookies
     });
-    const { user: profile } = data.data;
+    const profile = data?.data?.user;
+    if (!profile) {
+      throw new Error("Invalid login response. Please try again.");
+    }
     setUser(profile);
     return profile;
   };
@@ -89,7 +93,10 @@ export const AuthProvider = ({ children }) => {
     const { data } = await axios.post("/api/auth/register", payload, {
       withCredentials: true, // Send cookies
     });
-    const { user: profile } = data.data;
+    const profile = data?.data?.user;
+    if (!profile) {
+      throw new Error("Invalid registration response. Please try again.");
+    }
     setUser(profile);
     return profile;
   };

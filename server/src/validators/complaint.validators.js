@@ -1,3 +1,4 @@
+// Validation for complaint create/update; errors go to ApiError(422, ..., errors.array())
 import { body } from 'express-validator';
 
 export const complaintCreateValidator = [

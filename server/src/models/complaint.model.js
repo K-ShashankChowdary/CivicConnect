@@ -28,7 +28,7 @@ const complaintSchema = new mongoose.Schema(
       enum: ["Low", "Medium", "High", "Critical"],
       default: "Medium",
     },
-    /** Short explanation from LLM when using Gemini for priority (optional) */
+    // Short reason from LLM when using Gemini for priority (optional)
     priorityReason: { type: String, trim: true },
     tags: [tagSchema],
     attachments: [{ type: String }],

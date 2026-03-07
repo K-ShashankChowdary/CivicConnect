@@ -4,10 +4,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
-import authRoutes from './src/routes/authRoutes.js';
-import complaintRoutes from './src/routes/complaintRoutes.js';
-import adminRoutes from './src/routes/adminRoutes.js';
-import errorHandler from './src/middleware/errorHandler.js';
+import authRoutes from './src/routes/auth.routes.js';
+import complaintRoutes from './src/routes/complaint.routes.js';
+import adminRoutes from './src/routes/admin.routes.js';
+import errorHandler from './src/middleware/error.middleware.js';
 
 const app = express();
 

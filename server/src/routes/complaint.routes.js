@@ -5,13 +5,13 @@ import {
   getMyComplaints,
   getComplaintById,
   updateComplaint,
-} from "../controllers/complaintController.js";
-import { uploadComplaintImages } from "../middleware/uploadMiddleware.js";
-import { authenticate } from "../middleware/authMiddleware.js";
+} from "../controllers/complaint.controller.js";
+import { uploadComplaintImages } from "../middleware/upload.middleware.js";
+import { authenticate } from "../middleware/auth.middleware.js";
 import {
   complaintCreateValidator,
   complaintUpdateValidator,
-} from "../validators/complaintValidators.js";
+} from "../validators/complaint.validators.js";
 
 const router = express.Router();
 

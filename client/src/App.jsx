@@ -12,11 +12,14 @@ import ComplaintDetailsPage from "./pages/ComplaintDetailsPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { user } = useAuth();
 
   return (
+    <>
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/login" element={<UserLoginPage />} />
         <Route path="/register" element={<UserRegisterPage />} />
@@ -51,6 +54,7 @@ const App = () => {
           element={<Navigate to="/" replace />}
         />
       </Routes>
+    </>
   );
 };
 

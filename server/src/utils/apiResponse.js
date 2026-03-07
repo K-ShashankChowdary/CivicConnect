@@ -1,20 +1,9 @@
-export const successResponse = (res, statusCode, data, message = "Success") => {
-  return res.status(statusCode).json({
-    status: "success",
-    message,
-    data,
-  });
-};
-
-export const errorResponse = (res, statusCode, message = "Error", errors = null) => {
-  const response = {
-    status: "error",
-    message,
-  };
-  
-  if (errors) {
-    response.errors = errors;
+// Success response wrapper: { success, statusCode, data, message }
+export class ApiResponse {
+  constructor(statusCode, data, message = "Success") {
+    this.statusCode = statusCode;
+    this.data = data;
+    this.message = message;
+    this.success = statusCode < 400;
   }
-  
-  return res.status(statusCode).json(response);
-};
+}

@@ -1,3 +1,4 @@
+// Build MongoDB filter from admin list query params
 export const buildAdminComplaintFilters = (query) => {
   const filters = {};
 
@@ -50,6 +51,7 @@ export const buildAdminComplaintFilters = (query) => {
   return filters;
 };
 
+// Build MongoDB text search from query.q (single or multi-term)
 export const buildSearchQuery = (query) => {
   const raw = query?.q?.trim();
   if (!raw) {
@@ -83,3 +85,5 @@ export const buildSearchQuery = (query) => {
     })),
   };
 };
+
+
