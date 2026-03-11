@@ -17,7 +17,7 @@ app.use(helmet());
 // Allow configuring allowed frontend origins via APP_BASE_URL (comma-separated)
 const allowedOrigins = (process.env.APP_BASE_URL || 'http://localhost:5173')
   .split(',')
-  .map((origin) => origin.trim())
+  .map((origin) => origin.trim().replace(/\/$/, '')) // strip trailing slash
   .filter(Boolean);
 
 app.use(cors({
