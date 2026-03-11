@@ -5,7 +5,10 @@ import { initPriorityModel } from "./src/services/priority.service.js";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/municipal-complaints";
+const isProduction = process.env.NODE_ENV === "production";
+const MONGO_URI =
+  process.env.MONGO_URI ||
+  (!isProduction ? "mongodb://localhost:27017/municipal-complaints" : undefined);
 
 // handle synchronous unhandled exceptions
 process.on("uncaughtException", (err) => {

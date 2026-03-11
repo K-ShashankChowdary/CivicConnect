@@ -2,6 +2,9 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
+// Base URL for API requests; comes from Vite env in production, falls back to /api in dev
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -11,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   // Configure axios to send cookies with requests
   const authorizedApi = useMemo(() => {
     const api = axios.create({
-      baseURL: "/api",
+      baseURL: API_BASE_URL,
       withCredentials: true, // Send cookies with requests
     });
 
@@ -38,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
           try {
             await axios.post(
-              "/api/auth/refresh",
+              `${API_BASE_URL}/auth/refresh`,
               {},
               { withCredentials: true }
             );
@@ -78,7 +81,7 @@ export const AuthProvider = ({ children }) => {
   }, [authorizedApi]);
 
   const login = async (credentials) => {
-    const { data } = await axios.post("/api/auth/login", credentials, {
+    const { data } = await axios.post(`${API_BASE_URL}/auth/login`, credentials, {
       withCredentials: true, // Send cookies
     });
     const profile = data?.data?.user;
@@ -90,7 +93,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (payload) => {
-    const { data } = await axios.post("/api/auth/register", payload, {
+    const { data } = await axios.post(`${API_BASE_URL}/auth/register`, payload, {
       withCredentials: true, // Send cookies
     });
     const profile = data?.data?.user;

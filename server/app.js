@@ -12,10 +12,18 @@ import errorHandler from './src/middleware/error.middleware.js';
 const app = express();
 
 app.use(helmet());
-app.use(cors({ 
-  origin: 'http://localhost:5173', // Frontend URL
-  credentials: true // Allow cookies
+
+// Allow configuring allowed frontend origins via APP_BASE_URL (comma-separated)
+const allowedOrigins = (process.env.APP_BASE_URL || 'http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // Allow cookies
 }));
+
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use(morgan('dev'));
