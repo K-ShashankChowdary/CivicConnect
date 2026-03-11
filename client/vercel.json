@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "https://civicconnect-api-n6j6.onrender.com/api/$1"
+        }
+    ]
+}
