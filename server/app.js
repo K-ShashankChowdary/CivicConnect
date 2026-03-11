@@ -10,6 +10,7 @@ import adminRoutes from './src/routes/admin.routes.js';
 import errorHandler from './src/middleware/error.middleware.js';
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(helmet());
 
