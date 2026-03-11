@@ -32,6 +32,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/complaints', complaintRoutes);
 app.use('/api/admin', adminRoutes);
 
+app.get('/', (_req, res) => {
+  res.json({ status: 'ok', message: 'CivicConnect API is running...' });
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
