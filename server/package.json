@@ -2,11 +2,11 @@
   "name": "municipal-complaints-server",
   "version": "1.0.0",
   "description": "Backend API for municipal complaints portal with AI-powered prioritization.",
-  "main": "src/server.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true && nodemon server.js",
-    "start": "node src/server.js",
+    "start": "node server.js",
     "kill-port": "lsof -ti:5000 | xargs kill -9 2>/dev/null || true"
   },
   "author": "",
