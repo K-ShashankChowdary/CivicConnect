@@ -31,24 +31,25 @@ const startServer = async () => {
     process.on("unhandledRejection", (err) => {
       console.error("Unhandled Rejection. Shutting down server.");
       console.error(err.name, err.message);
-      server.close(() => {
-        process.exit(1);
-      });
+      shutdown("unhandledRejection", 1);
     });
 
     // graceful shutdown for termination signals
-    const shutdown = () => {
-      console.log("Shutdown signal received. Closing HTTP server and database connection.");
-      server.close(() => {
-        mongoose.connection.close(false, () => {
-          console.log("MongoDB connection closed. Process exiting.");
-          process.exit(0);
-        });
-      });
+    const shutdown = async (signal, exitCode = 0) => {
+      console.log(`${signal} received. Closing HTTP server and database connection.`);
+      server.close();
+      try {
+        await mongoose.connection.close();
+        console.log("MongoDB connection closed. Process exiting.");
+        process.exit(exitCode);
+      } catch (error) {
+        console.error("Error during shutdown:", error);
+        process.exit(1);
+      }
     };
 
-    process.on("SIGTERM", shutdown);
-    process.on("SIGINT", shutdown);
+    process.on("SIGTERM", () => shutdown("SIGTERM"));
+    process.on("SIGINT", () => shutdown("SIGINT"));
 
     // train AI model in background
     console.log("Training AI model in background...");
