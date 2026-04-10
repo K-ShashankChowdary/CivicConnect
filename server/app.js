@@ -28,7 +28,8 @@ app.use(cors({
   credentials: true, // Allow cookies
 }));
 
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ limit: '20mb', extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
 
