@@ -22,10 +22,10 @@ export const createComplaint = asyncHandler(async (req, res) => {
   const { title, category, description, location, latitude, longitude } =
     req.body;
 
-  // Cloudinary populates req.files via Multer. Map output to file URLs.
+  // S3 (multer-s3) populates req.files via Multer. Map output to S3 public URLs.
   const attachments =
     Array.isArray(req.files) && req.files.length > 0
-      ? req.files.map((file) => file.path)
+      ? req.files.map((file) => file.location)
       : [];
 
   // Prefer LLM (Gemini) when available; fall back to TF.js
@@ -197,7 +197,7 @@ export const updateComplaint = asyncHandler(async (req, res) => {
 
   // Add new uploaded images to existing attachments array
   if (req.files && req.files.length > 0) {
-    const newAttachments = req.files.map((file) => file.path);
+    const newAttachments = req.files.map((file) => file.location);
     complaint.attachments = [...complaint.attachments, ...newAttachments];
   }
 
