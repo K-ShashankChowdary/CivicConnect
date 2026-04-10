@@ -1,5 +1,12 @@
 // Global error handler; use ApiError in controllers for correct status/message
 export const errorHandler = (err, req, res, next) => {
+  // Log error for debugging in PM2
+  console.error('SERVER ERROR:', {
+    message: err.message,
+    stack: err.stack,
+    errors: err.errors
+  });
+
   const status = err.statusCode || 500;
   let message = err.message || "Something went wrong";
 
