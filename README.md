@@ -25,7 +25,6 @@ High-availability is verified through rigorous stress testing. The system mainta
 | **Primary Triage Latency (Gemini)** | < 1.2s | 980ms |
 | **Failover Triage Latency (TF.js)** | < 150ms | 45ms |
 | **Search (Vector + BM25 RRF)** | < 400ms | 315ms |
-| **WebSocket Sync Latency** | < 50ms | 18ms |
 
 *Load testing conducted using Artillery simulating 50 concurrent administrative sessions and peak ingestion rate of 10 issues/sec.*
 
@@ -49,8 +48,8 @@ graph TD
   C --> E[Priority Classification]
   D --> E
   E --> F[MongoDB Persistence]
-  F --> G[Real-time WebSocket Broadcast]
-  G --> H[Admin Action]
+  F --> G[Admin Dashboard Update]
+  G --> H[Action Taken]
 ```
 
 ### Hybrid Search Engine
@@ -123,7 +122,6 @@ $$
 - **Fault-Tolerant Infrastructure:** Dual-layer search and classification guarantees system uptime during external service degradation.
 - **Spatial Tracking:** Integrates **Nominatim** (OpenStreetMap) to geocode issues, attaching precise longitude/latitude coordinates.
 - **Secure Administrator RBAC:** Enforces strict Role-Based Access Control, utilizing stateless JWT Bearer Token authentication for cross-domain security and precise status management.
-- **Real-time State Sync:** Instantaneous dashboard updates via **WebSockets** for administrative oversight.
 
 ---
 
@@ -169,7 +167,7 @@ Fault-tolerant logic is validated across three layers:
 
 - **Unit Testing (Jest):** Validates the mathematical correctness of BM25 frequency scoring and RRF positional math.
 - **Failover Validation:** Simulated API timeouts trigger the TensorFlow.js fallback to ensure zero-downtime triage.
-- **Integration Testing:** Supertest-driven verification of the full ingestion pipeline from request to WebSocket broadcast.
+- **Integration Testing:** Supertest-driven verification of the full ingestion pipeline from request to database persistence.
 
 Deployment follows a Blue/Green strategy on AWS, managed via PM2 for the backend and S3 Static Hosting for the frontend.
 
