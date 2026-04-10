@@ -12,7 +12,10 @@ import errorHandler from './src/middleware/error.middleware.js';
 const app = express();
 app.set('trust proxy', 1);
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP to avoid blocking HTTP resources
+  hsts: false, // Disable HSTS (force-HTTPS) for HTTP-only hosting
+}));
 
 // Allow configuring allowed frontend origins via APP_BASE_URL (comma-separated)
 const allowedOrigins = (process.env.APP_BASE_URL || 'http://localhost:5173')

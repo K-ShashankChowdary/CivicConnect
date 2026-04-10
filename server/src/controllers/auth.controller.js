@@ -58,15 +58,15 @@ export const register = asyncHandler(async (req, res) => {
   // Secure flag is true only in production to allow local HTTP development
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // modified to support cross-origin
+    secure: false, // Changed for HTTP-only AWS deployment
+    sameSite: 'lax', // Changed for HTTP-only AWS deployment
     maxAge: 15 * 60 * 1000 // 15 minutes expiration matches token lifetime
   });
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // modified to support cross-origin
+    secure: false, // Changed for HTTP-only AWS deployment
+    sameSite: 'lax', // Changed for HTTP-only AWS deployment
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 
@@ -109,15 +109,15 @@ export const login = asyncHandler(async (req, res) => {
   // Set HTTP-only cookies
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // modified to support cross-origin
+    secure: false,
+    sameSite: 'lax',
     maxAge: 15 * 60 * 1000 // 15 minutes
   });
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // modified to support cross-origin
+    secure: false,
+    sameSite: 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
 
@@ -175,8 +175,8 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     // Set new HTTP-only cookie
     res.cookie('accessToken', newAccessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // modified to support cross-origin
+      secure: false,
+      sameSite: 'lax',
       maxAge: 15 * 60 * 1000 // 15 minutes
     });
 
