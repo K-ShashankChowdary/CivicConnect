@@ -16,18 +16,6 @@
   </a>
 </div>
 
-## 📊 System Benchmarks
-
-High-availability is verified through rigorous stress testing. The system maintains triage capability even during upstream provider outages.
-
-| Metric | Target | Actual (p95) |
-| :--- | :--- | :--- |
-| **Primary Triage Latency (Gemini)** | < 1.2s | 980ms |
-| **Failover Triage Latency (TF.js)** | < 150ms | 45ms |
-| **Search (Vector + BM25 RRF)** | < 400ms | 315ms |
-
-*Load testing conducted using Artillery simulating 50 concurrent administrative sessions and peak ingestion rate of 10 issues/sec.*
-
 ## 📖 Overview
 
 CivicConnect is a high-availability platform engineered to streamline municipal issue tracking by bridging the gap between citizens and local authorities. Unlike standard CRUD applications, CivicConnect is designed around a **"Dual-Layer Intelligence"** architecture. It utilizes state-of-the-art Large Language Models (LLMs) for primary semantic routing and prioritization, while maintaining mathematically rigorous, locally hosted machine learning and lexical algorithms as fail-safes. This ensures continuous triage and search availability even during upstream API outages or aggressive rate limiting.
