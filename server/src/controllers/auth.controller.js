@@ -77,7 +77,9 @@ export const register = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role
-    }
+    },
+    accessToken,
+    refreshToken
   }));
 });
 
@@ -127,7 +129,9 @@ export const login = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role
-    }
+    },
+    accessToken,
+    refreshToken
   }));
 });
 
@@ -180,7 +184,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       maxAge: 15 * 60 * 1000 // 15 minutes
     });
 
-    return res.status(200).json(new ApiResponse(200, null, 'Access token refreshed successfully'));
+    return res.status(200).json(new ApiResponse(200, { accessToken: newAccessToken }, 'Access token refreshed successfully'));
   } catch (error) {
     // If token verification fails (expired, tampered)
     throw new ApiError(401, 'Invalid or expired refresh token. Please login again.');

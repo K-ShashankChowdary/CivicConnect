@@ -11,11 +11,19 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Configure axios to send cookies with requests
+  // Configure axios to send tokens in Authorization header
   const authorizedApi = useMemo(() => {
     const api = axios.create({
       baseURL: API_BASE_URL,
-      withCredentials: true, // Send cookies with requests
+    });
+
+    // Add request interceptor to attach token from localStorage
+    api.interceptors.request.use((config) => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
     });
 
     // Add response interceptor to handle token refresh
@@ -40,15 +48,26 @@ export const AuthProvider = ({ children }) => {
           originalRequest._retry = true;
 
           try {
-            await axios.post(
+            const refreshToken = localStorage.getItem("refreshToken");
+            const { data } = await axios.post(
               `${API_BASE_URL}/auth/refresh`,
               {},
-              { withCredentials: true }
+              { 
+                headers: { Cookie: `refreshToken=${refreshToken}` }, // fallback for cookie support
+                withCredentials: true 
+              }
             );
-            // Retry the original request
-            return api(originalRequest);
+
+            const newAccessToken = data?.data?.accessToken;
+            if (newAccessToken) {
+              localStorage.setItem("accessToken", newAccessToken);
+              originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+              return api(originalRequest);
+            }
           } catch (refreshError) {
             // Refresh failed, logout user
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             setUser(null);
             window.location.href = "/login";
             return Promise.reject(refreshError);
@@ -64,6 +83,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         const { data } = await authorizedApi.get("/auth/profile");
@@ -71,6 +96,8 @@ export const AuthProvider = ({ children }) => {
         setUser(userFromProfile);
       } catch (error) {
         console.error("Failed to fetch profile", error);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         setUser(null);
       } finally {
         setLoading(false);
@@ -81,25 +108,35 @@ export const AuthProvider = ({ children }) => {
   }, [authorizedApi]);
 
   const login = async (credentials) => {
-    const { data } = await axios.post(`${API_BASE_URL}/auth/login`, credentials, {
-      withCredentials: true, // Send cookies
-    });
+    const { data } = await axios.post(`${API_BASE_URL}/auth/login`, credentials);
     const profile = data?.data?.user;
-    if (!profile) {
+    const accessToken = data?.data?.accessToken;
+    const refreshToken = data?.data?.refreshToken;
+
+    if (!profile || !accessToken) {
       throw new Error("Invalid login response. Please try again.");
     }
+
+    localStorage.setItem("accessToken", accessToken);
+    if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+
     setUser(profile);
     return profile;
   };
 
   const register = async (payload) => {
-    const { data } = await axios.post(`${API_BASE_URL}/auth/register`, payload, {
-      withCredentials: true, // Send cookies
-    });
+    const { data } = await axios.post(`${API_BASE_URL}/auth/register`, payload);
     const profile = data?.data?.user;
-    if (!profile) {
+    const accessToken = data?.data?.accessToken;
+    const refreshToken = data?.data?.refreshToken;
+
+    if (!profile || !accessToken) {
       throw new Error("Invalid registration response. Please try again.");
     }
+
+    localStorage.setItem("accessToken", accessToken);
+    if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+
     setUser(profile);
     return profile;
   };
@@ -110,6 +147,8 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       setUser(null);
     }
   };
