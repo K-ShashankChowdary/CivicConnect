@@ -27,4 +27,6 @@ coverage/
 .idea/
 *.swp
 
-
+*.md
+*.pdf
+*.txt

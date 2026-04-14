@@ -14,13 +14,14 @@ const complaintSchema = new mongoose.Schema(
     category: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     location: { type: String, required: true, trim: true },
+    wardName: { type: String, trim: true },
     latitude: { type: Number },
     longitude: { type: Number },
     incidentTime: { type: Date },
     status: {
       type: String,
-      enum: ["submitted", "in_progress", "resolved"],
-      default: "submitted",
+      enum: ["PENDING_EMBEDDING", "EMBEDDING_FAILED", "submitted", "in_progress", "resolved"],
+      default: "PENDING_EMBEDDING",
     },
     priorityScore: { type: Number, default: 0.5 },
     priorityLevel: {
@@ -50,13 +51,14 @@ const complaintSchema = new mongoose.Schema(
     ],
     severityScore: { type: Number, min: 1, max: 5 },
     assignedDepartment: { type: String, trim: true },
-    descriptionEmbedding: { type: [Number] },
+    clusterId: { type: mongoose.Schema.Types.ObjectId, ref: "Cluster" },
   },
   { timestamps: true },
 );
 
 complaintSchema.index({ category: 1, priorityLevel: 1 });
 complaintSchema.index({ location: "text", description: "text", title: "text" });
+complaintSchema.index({ wardName: 1, status: 1, createdAt: -1 });
 
 const Complaint = mongoose.model("Complaint", complaintSchema);
 
